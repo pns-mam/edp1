@@ -9,7 +9,7 @@
 
 [Plan du cours](cm/cm.md)
 
-[TD 1 - Équation des ondes](td6/td6.pdf)
+[TD 1](td1/td1.pdf)
 
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1/exam-cc1-corr.pdf))
