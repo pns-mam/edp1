@@ -12,9 +12,9 @@
 [TD 1](td1/td1.pdf)
 
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
-([corrigé](exam-cc1/exam-cc1-corr.pdf))
+([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
 
-[Exam CC 2 (2023-24)](exam-cc2/exam-cc2.md)
+[Exam CC 2 (2023-24)](exam-cc2-old/exam-cc2.md)
 
 # Bibliographie
 [Allaire, G. Approximation numérique et optimisation. École Polytechnique, 2019. cel-02168288](https://hal.science/cel-02168288/document)
