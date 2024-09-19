@@ -10,6 +10,7 @@
 [Plan du cours](cm/cm.md)
 
 [TD 1](td1/td1.pdf)
+([corrigé](td1/td1-corr.pdf))
 
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
