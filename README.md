@@ -12,6 +12,8 @@
 [TD 1](td1/td1.pdf)
 ([corrigé](td1/td1-corr.pdf))
 
+[TD 2](td2/td2.pdf)
+
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
 
@@ -30,3 +32,4 @@
 # Intervenants
 - [J.-B. Caillau](mailto:jean-baptiste.caillau@univ-cotedazur.fr) (CM et TD)
 - [C. Simeoni](mailto:chiara.simeoni@univ-cotedazur.fr) (TD)
+- Remerciements à [V. Dolean](http://www.victoritadolean.com) pour les textes de TD
