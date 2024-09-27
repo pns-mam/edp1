@@ -48,7 +48,7 @@ On discr\'etise le domaine en utilisant un maillage r\'egulier
 $(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,
 j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$. 
 
-\noindent Les conditions aux limites sont des conditions de Dirichlet homogènes:
+\noindent Les conditions aux limites sont des conditions de Dirichlet homog\`enes:
 $u(0,t)=u(1,t)=0,\,\forall t$. \\
 
 \noindent Le but de cette s\'erie d'exercices est d'illuster dans un premier temps la propri\'et\'e de consistance
@@ -56,7 +56,7 @@ d'\'evaluer la pr\'ecision de quelques sch\'emas. Ceci se fera en calculant l'er
 Taylor. 
  
 \noindent Ensuite on va travailler sur la
-propri\'et\'e de stabilit\'e en norme $L^2$. On va évaluer le facteur
+propri\'et\'e de stabilit\'e en norme $L^2$. On va \'evaluer le facteur
 d'amplification de chaque sch\'ema en y injectant un mode de Fourier
 et on \'etablira sous quelles conditions ce facteur d'amplification
 est inferieur \`a un en module. 
@@ -85,7 +85,7 @@ $$
 \frac{u_j^{n+1}-u_j^n}{\Delta t}-\theta\nu \frac{u_{j+1}^{n}-2u_j^n+u_{j-1}^{n}}{\Delta x^2}-(1-\theta)\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0.
 $$
 
-On va remarquer que les développement faits pour ce schéma permettront de déduire les conclusions pour les schémas d'Euler implicite et explicite (fait en cours) et Crank-Nicolson qui sont des cas particuliers de $\theta$ schéma.
+On va remarquer que les d\'eveloppement faits pour ce sch\'ema permettront de d\'eduire les conclusions pour les sch\'emas d'Euler implicite et explicite (fait en cours) et Crank-Nicolson qui sont des cas particuliers de $\theta$ sch\'ema.
 %\item {\it Sch\'ema aux six points}
 %$$
 %\begin{array}{lcl}
@@ -107,12 +107,12 @@ $$
 \noindent {\bf Consistance et ordre d'approximation}\\
 Montrer que:
 \begin{itemize}
-\item  le $\theta$ sch\'ema est pr\'ecis à l'ordre
+\item  le $\theta$ sch\'ema est pr\'ecis \`a l'ordre
 $1$ en temps et l'ordre $2$ en espace.
 \item le sch\'ema de Crank-Nicolson
-est pr\'ecis à l'ordre $2$ en temps et l'ordre $2$
+est pr\'ecis \`a l'ordre $2$ en temps et l'ordre $2$
 en espace
-%\item le sch\'emas à six points est pr\'ecis à l'ordre $2$ en temps et l'ordre $4$ en espace. 
+%\item le sch\'emas \`a six points est pr\'ecis \`a l'ordre $2$ en temps et l'ordre $4$ en espace. 
 \item Que peut-on dire du sch\'ema de
 DuFort-Frankel?
 \end{itemize}
@@ -161,7 +161,7 @@ est convergent (on dit qu'il est "conditionnellement'' convergent).
 %\noindent{\bf Evaluation du cours \'Equations aux D\'eriv\'ees Partielles :}
 %\begin{itemize}
 %\item[$\bullet$] Un contr\^ole \'ecrit le vendredi $23$ Octobre (pendant la s\'eance de cours). 
-%\item[$\bullet$] Une note de devoir maison/projet (présentation orale le 4 décembre).
+%\item[$\bullet$] Une note de devoir maison/projet (pr\'esentation orale le 4 d\'ecembre).
 %\item[$\bullet$] Un examen \'ecrit pendant la session d'examen. 
 %\end{itemize}
 %La note finale est : $30\%$(note contr\^ole) $+$
