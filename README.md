@@ -13,6 +13,7 @@
 ([corrigé](td1/td1-corr.pdf))
 
 [TD 2](td2/td2.pdf)
+([corrigé](td2/td2-corr.pdf))
 
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1-old/exam-cc1-corr.pdf))

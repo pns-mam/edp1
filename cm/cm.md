@@ -10,7 +10,7 @@
 - équation de Laplace en dimension deux
 - régime instationnaire : équation de la chaleur (conditions initiale et aux limites associées)
 - équation de convection (advection, diffusion)
-- classifiction des EDP linéaires du deuxième ordre
+- classification des EDP linéaires du deuxième ordre
 - plan du cours
 - noyau de la chaleur en dimension $1$ et propriétés (vitesse de propagaton infinie)
 - différences finies et théorème de Lax
