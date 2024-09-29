@@ -6,6 +6,7 @@
 # 2024-25
 
 ## 1. Équation de la chaleur
+
 - équation $-u'' = f$ en dimension $1$ et conditions aux limites associées (Dirichlet, Neumann, Robin)
 - équation de Laplace en dimension deux
 - régime instationnaire : équation de la chaleur (conditions initiale et aux limites associées)
@@ -16,6 +17,11 @@
 - différences finies et théorème de Lax
 
 ## 2. Consistance
+
+- équation de la chaleur 1D sur un ouvert borné, CL de Dirichlet
+- exemple de schémas : explicite, implicite, $\theta$-schéma
+- déf. schéma numérique (et support associé)
+- déf. consistance et ordre (en temps et en espace) d'un schéma
 
 ## 3. Stabilité
 
