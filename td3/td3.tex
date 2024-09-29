@@ -46,7 +46,7 @@ u(x,0)=u_0(x),\,\forall x\in (0,1).
 $$
 On discr\'etise le domaine en utilisant un maillage r\'egulier
 $(t_n,x_j)=(n\Delta t,j\Delta x)$,  $\forall n\ge 0,
-j\in\{0,1,...,N+1\}$ o\`u $\Delta x=1/(N+1)$ et $\Delta t>0$. 
+j\in\{0,1,...,N\}$ o\`u $\Delta x=1/N$ et $\Delta t>0$. 
 
 \noindent Les conditions aux limites sont des conditions de Dirichlet homog\`enes:
 $u(0,t)=u(1,t)=0,\,\forall t$. \\
@@ -94,7 +94,7 @@ On va remarquer que les d\'eveloppement faits pour ce sch\'ema permettront de d\
 %\end{array}
 %$$
 
-\item {\it Sch\'ema de DuFort-Frankel}
+\item {\it Sch\'ema de Du Fort-Frankel}
 $$
 \frac{u_j^{n+1}-u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n}-u_j^{n+1}-u_j^{n-1}+u_{j-1}^{n}}{\Delta x^2}=0.
 $$
@@ -114,7 +114,7 @@ est pr\'ecis \`a l'ordre $2$ en temps et l'ordre $2$
 en espace
 %\item le sch\'emas \`a six points est pr\'ecis \`a l'ordre $2$ en temps et l'ordre $4$ en espace. 
 \item Que peut-on dire du sch\'ema de
-DuFort-Frankel?
+Du Fort-Frankel?
 \end{itemize}
 
 Quelques r\`egles \`a suivre 
@@ -140,11 +140,11 @@ Montrer que:
 {\it inconditionnellement stable} en norme $L^2$ si $\theta \le 1/2$ et que si $1/2 < \theta \le 1$ alors il est
 stable sous la condition $$2(2\theta-1)\frac{\nu\Delta
     t}{\Delta x^2} \le 1.$$ 
-    \item le sch\'ema de DuFort-Frankel est inconditionnellement
+    \item le sch\'ema de Du Fort-Frankel est inconditionnellement
 stable en norme $L^2$.
 \item si on fait tendre $\Delta t$ et
 $\Delta x$ simultanement vers $0$ de mani\`ere que le rapport $\Delta
-t/\Delta x$ tende aussi vers $0$, alors le sch\'ema de DuFort-Frankel
+t/\Delta x$ tende aussi vers $0$, alors le sch\'ema de Du Fort-Frankel
 est convergent (on dit qu'il est "conditionnellement'' convergent).  
 \end{itemize}
 
