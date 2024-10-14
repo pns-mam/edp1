@@ -23,8 +23,12 @@
 - déf. schéma numérique (et support / stencil associé)
 - déf. erreur de troncature, consistance et ordre (en temps et en espace) d'un schéma
 - équation équivalente associée à un schéma
+- exemple : Lax-Friedrichs (advection) et diffusion numérique
 
 ## 3. Stabilité
+- stabilité au sens $L^\infty$
+- stabilité au sens $L^2$ (et interprétation par Fourier)
+- exemple : Lax-Friedrichs (advection) 
 
 ## 4. Convergence
 
