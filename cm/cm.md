@@ -20,7 +20,7 @@
 
 - équation de la chaleur 1D sur un ouvert borné, CL de Dirichlet
 - exemple de schémas : explicite, implicite, $\theta$-schéma
-- déf. schéma numérique (et support associé)
+- déf. schéma numérique (et support / stencil associé)
 - déf. erreur de troncature, consistance et ordre (en temps et en espace) d'un schéma
 - équation équivalente associée à un schéma
 
