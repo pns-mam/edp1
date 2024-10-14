@@ -28,7 +28,8 @@
 ## 3. Stabilité
 - stabilité au sens $L^\infty$
 - stabilité au sens $L^2$ (et interprétation par Fourier)
-- exemple : Lax-Friedrichs (advection) 
+- exemple : Lax-Friedrichs (advection)
+- cas multiniveaux
 
 ## 4. Convergence
 
