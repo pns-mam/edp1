@@ -29,12 +29,9 @@
 - stabilité au sens $L^\infty$
 - stabilité au sens $L^2$ (et interprétation par Fourier)
 - exemple : Lax-Friedrichs (advection)
+- théorème de Lax
 - cas multiniveaux
 
-## 4. Convergence
+## 4. Équation des ondes
 
-## 5. Équation d'advection
-
-## 6. Équation des ondes
-
-## 7. Équation de Laplace
+## 5. Équation de Laplace
