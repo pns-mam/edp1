@@ -12,7 +12,6 @@
 - régime instationnaire : équation de la chaleur (conditions initiale et aux limites associées)
 - équation de convection (advection, diffusion)
 - classification des EDP linéaires du deuxième ordre
-- plan du cours
 - noyau de la chaleur en dimension $1$ et propriétés (vitesse de propagaton infinie)
 - différences finies et théorème de Lax
 
@@ -33,5 +32,13 @@
 - cas multiniveaux
 
 ## 4. Équation des ondes
+- équations des ondes 1D sur un domaine borné, CL périodiques
+- condition de moyenne nulle (solutions bornées)
+- motivation (corde, son, lumière / électromagnétisme)
+- autres CL (Dirichlet, Neumann...)
+- conservation de l'énergie
+- unicité
+- $\theta$-schéma
+- écriture à l'ordre 1 en vectoriel et schéma de Lax-Friedrichs associé
 
 ## 5. Équation de Laplace
