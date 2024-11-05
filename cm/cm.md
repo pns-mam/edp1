@@ -36,8 +36,7 @@
 - condition de moyenne nulle (solutions bornées)
 - motivation (corde, son, lumière / électromagnétisme)
 - autres CL (Dirichlet, Neumann...)
-- conservation de l'énergie
-- unicité
+- conservation de l'énergie et unicité
 - $\theta$-schéma
 - écriture à l'ordre 1 en vectoriel et schéma de Lax-Friedrichs associé
 
