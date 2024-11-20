@@ -24,6 +24,8 @@
 
 [TP 1 - Advection](tp1/tp1.md)
 
+[Exam CC 1](exam-cc1/exam-cc1.md)
+
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
 
