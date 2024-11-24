@@ -133,19 +133,19 @@ faisant varier le nombre de Courant. Discuter les performances relatives des sch
 
 u = u0.(x)
 
-A = spdiagm(-1 => -σ^2/2*ones(J), 0 => (1+σ^2)*ones(J+1), 1 => -σ^2/2*ones(J))
+A = spdiagm(-1 => -.5σ^2 * ones(J), 0 => (1 + σ^2) * ones(J + 1), 1 => -.5σ^2 * ones(J))
 A[1, end] = -.5σ^2
 A[end, 1] = -.5σ^2
 
 F = cholesky(A) # Cholesky factorisation on sparse symmetric matrix
 
-w = zeros(J+1)
+w = zeros(J + 1)
 
 for n ∈ 1:N
     w[2:end-1] = u[2:end-1] - .5σ * (u[3:end] - u[1:end-2])
     w[1] = u0(x[1] - V * n * Δt)
     w[end] = w[1]
-    u = F\w
+    u = F \ w
 end
 
 # Plots
