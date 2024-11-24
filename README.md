@@ -23,8 +23,9 @@
 [TD 5](td5/td5.pdf)
 
 [TP 1 - Advection](tp1/tp1.md)
+([corrigé](tp1/tp1-corr.md))
 
-[Exam CC 1](exam-cc1/exam-cc1.md)
+[TP 2 - Chaleur](tp2/tp2.md)
 
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
