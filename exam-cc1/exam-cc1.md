@@ -41,7 +41,7 @@ En déduire que $E$ est décroissante et qu'on a unicité de solution pour l'EDP
 
 Montrer que le schéma implicite centré ci-dessous
 
-$$ \frac{u^{n+1}_j-u^n_j}{\Delta t} + V \frac{u^{n+1}_{j+1}-u^{n+1}_{j-1}}{2\Delta x} = 0 $$
+$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V \frac{u_{j+1}^{n+1}}-u_{j-1}^{n+1}}{2\Delta x} = 0 $$
 
 est consistant  pour l'équation d'advection avec $V > 0$ (on précisera les ordres en $t$ en $x$, par exemple en faisant un développement en $(t,x) = (t_{n+1},x_j)$) :
 
@@ -51,7 +51,7 @@ $$ \frac{\partial u}{\partial t}(t, x) + V\frac{\partial u}{\partial x}(t, x) = 
 
 Montrer que le schéma décentré aval ci-dessous, avec $V < 0$,
 
-$$ \frac{u^{n+1}_j-u^n_j}{\Delta t} + V \frac{u^n_{j+1}-u^n_j}{\Delta x} = 0 $$
+$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V \frac{u_{j+1}^n-u_j^n}{\Delta x} = 0 $$
 
 vérifie le principe du maximum discret : si $u^0_j \in [m, M]$ pour tout $j$, alors $u^n_j \in [m, M]$ pour tout $j$ et tout $n > 0$.
 
@@ -61,4 +61,4 @@ Que peut-on en déduire ?
 
 Étudier la stabilité au sens $L^2$ du schéma implicite suivant ($\nu > 0$) :
 
-$$ \frac{2u^{n+1}_j - 3u^n_j + u^{n-1}_j}{\Delta t} - \nu \frac{u^{n+1}_{j+1} - 2u^{n+1}_j + u^{n+1}_{j-1}}{\Delta x^2} = 0. $$
+$$ \frac{2u_j^{n+1} - 3u_j^n + u_j^{n-1}}{\Delta t} - \nu \frac{u_{j+1}^{n+1} - 2u_j^{n+1} + u_{j-1}^{n+1}}{\Delta x^2} = 0. $$
