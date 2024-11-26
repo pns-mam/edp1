@@ -41,7 +41,7 @@ En déduire que $E$ est décroissante et qu'on a unicité de solution pour l'EDP
 
 Montrer que le schéma implicite centré ci-dessous
 
-$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V \frac{u_{j+1}^{n+1}}-u_{j-1}^{n+1}}{2\Delta x} = 0 $$
+$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V \frac{u_{j+1}^{n+1}-u_{j-1}^{n+1}}{2\Delta x} = 0 $$
 
 est consistant  pour l'équation d'advection avec $V > 0$ (on précisera les ordres en $t$ en $x$, par exemple en faisant un développement en $(t,x) = (t_{n+1},x_j)$) :
 
