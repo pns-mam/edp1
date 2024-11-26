@@ -49,7 +49,7 @@ $$ \frac{\partial u}{\partial t}(t, x) + V\frac{\partial u}{\partial x}(t, x) = 
 
 ## Exercice 3 (4 points)
 
-Montrer que le schéma décentré aval ci-dessous, avec $V < 0$ tel que $\sigma := |V|\Delta t\Delta x \leq 1$,
+Montrer que le schéma décentré aval ci-dessous, avec $V < 0$ tel que $\sigma := |V|\Delta t/\Delta x \leq 1$,
 
 $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V \frac{u_{j+1}^n-u_j^n}{\Delta x} = 0 $$
 
