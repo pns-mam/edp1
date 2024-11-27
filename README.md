@@ -26,6 +26,7 @@
 ([corrigé](tp1/tp1-sol.md))
 
 [TP 2 - Chaleur](tp2/tp2.md)
+([corrigé](tp2/tp2-sol.md))
 
 [Exam CC 1](exam-cc1/exam-cc1.md)
 
