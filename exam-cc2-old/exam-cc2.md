@@ -157,7 +157,7 @@ $$ |A(k)|^2 = 1 + \sigma^2\sin^2(2\pi k\Delta x) \geq 1. $$
 ### 3.3
 Quel schéma obtient-on si on utilise l'équation équivalente pour améliorer le schéma précédent ?
 
-**Réponse.** En retrenchant le terme principal (d'ordre un) de l'erreur,
+**Réponse.** En retranchant le terme principal (d'ordre un) de l'erreur,
 
 $$ \frac{1}{2}\frac{\partial^2 u}{\partial t^2}(x_j,t_n) \Delta t = \frac{V^2}{2}\frac{\partial^2 u}{\partial x^2}(x_j,t_n) \Delta t \simeq \frac{V^2 \Delta t}{2}\frac{u(x_{j+1},t_n)-2u(x_j,t_n)+u(x_{j-1},t_n)}{\Delta x^2}, $$
 
