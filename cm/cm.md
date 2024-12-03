@@ -40,7 +40,7 @@
 - $\theta$-schéma
 - écriture à l'ordre 1 en vectoriel et schéma de Lax-Friedrichs associé
 
-## 5. Formulation variationnelle
+## 5. Introduction aux formulations variationnelles
 - équation $-\Delta u + \alpha u = f$ avec CL de Neumann
 - déf. espace $H^1(\Omega)$
 - A. toute solution forte est solution faible
