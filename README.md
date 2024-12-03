@@ -19,8 +19,10 @@
 ([corrigé](td3/td3-corr.pdf))
 
 [TD 4](td4/td4.pdf)
+([corrigé](td4/td4-corr.pdf))
 
 [TD 5](td5/td5.pdf)
+([corrigé](td5/td5-corr.pdf))
 
 [TP 1 - Advection](tp1/tp1.md)
 ([corrigé](tp1/tp1-sol.md))
@@ -29,6 +31,7 @@
 ([corrigé](tp2/tp2-sol.md))
 
 [Exam CC 1](exam-cc1/exam-cc1.md)
+([corrigé](exam-cc1/exam-cc1-corr.pdf))
 
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
