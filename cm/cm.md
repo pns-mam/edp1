@@ -45,4 +45,4 @@
 - A. toute solution forte est solution faible
 - Th. de Lax-Milgram
 - B. existence et unicité de solution faible
-- C. toute solution faible *assez régulière* est solution forte
+- D. toute solution faible *assez régulière (C.)* est solution forte
