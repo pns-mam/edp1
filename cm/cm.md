@@ -42,6 +42,8 @@
 
 ## 5. Formulation variationnelle
 - équation $-\Delta u + \alpha u = f$ avec CL de Neumann
-- A. toute solution forte est solution faible, espace $H^1(\Omega)$
+- déf. espace $H^1(\Omega)$
+- A. toute solution forte est solution faible
+- Th. de Lax-Milgram
 - B. existence et unicité de solution faible
-- C. sous hypothèse de régularité toute solution faible est solution forte
+- C. toute solution faible *assez régulière* est solution forte
