@@ -39,7 +39,8 @@ $$
 $$
 pour les conditions aux limites $u(t,0)=u(t,1)=0$ %et l'in\'egalit\'e de Poincar\'e
 
-par lin\'earit\'e de l'\'equation, la diff\'erence de deux solutions $u_1$ et $u_2$ v\'erifie le m\^eme probl\`eme avec donn\'ee initiale nulle, et la d\'ecroissance de l'\'energie implique que $E(t)\leq E(0)=0,\,\forall t$\\
+par lin\'earit\'e de l'\'equation, la diff\'erence de deux solutions $u_1$ et $u_2$ v\'erifie le m\^eme probl\`eme avec donn\'ee initiale nulle, et la d\'ecroissance de l'\'energie implique que $E(t)\leq E(0)=0,\,\forall t$ : comme l'énergie est positive, elle est nécessairement nulle pour tout 
+temps, d'o\`u l'unicit\'e.\\
 
 %------------------------------------------------------------------------------------------
 
@@ -65,7 +66,8 @@ le sch\'ema est d'ordre 1 en temps et d'ordre 2 en espace, et il est stable pour
 
 3) le sch\'ema explicite (en temps) d\'ecentr\'e aval (en espace) pour l'\'equation d'advection avec vitesse $V<0$ se r\'e\'ecrit comme une combinaison lin\'eaire convexe
 $$ u_j^{n+1} = \big( 1 - \sigma \big) u_j^n + \sigma u_{j+1}^n \quad {\rm avec} \quad \sigma = |V| \frac{\Delta t}{\Delta x} \leq 1 $$
-et le principe du maximum discret est v\'erifi\'e sous la condition de stabilit\'e (CFL) pour la norme uniforme\\
+sous la condition de stabilit\'e (CFL), de sorte qu'on reste dans le convexe $[m,M]$. 
+Le principe du maximum discret est donc v\'erifi\'e sous la condition CFL pour la norme uniforme\\
 
 %------------------------------------------------------------------------------------------
 
@@ -83,8 +85,8 @@ $$ \cos\!\big( (2 \pi) k \Delta x \big) = \cos^2\!\big( \pi k \Delta x \big) - \
 \'etude des racines de l'\'equation alg\'ebrique du second degr\'e ci-dessus
 $$ A_{1,2}(k) = \frac{3 \pm \sqrt{ 9 - 8 \left( 1 + 2 \gamma \right) }}{4 \left( 1 + 2 \gamma \right)} = \frac{3 \pm \sqrt{ 1 - 16 \gamma }}{4 \left( 1 + 2 \gamma \right)} \quad {\rm avec} \quad \gamma = \nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) $$
 
-\noindent pour $\displaystyle 1 - 16\,\nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) < 0$ les racines sont complexes conjugu\'ees et $\big| A_{1,2}(k) \big| < 1$
+\noindent pour $\displaystyle 1 - 16\,\nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) < 0$ les racines sont complexes conjugu\'ees et $\big| A_{1,2}(k) \big| < 1$ puisque leur produit, qui est égal à leur module au carré, est strictement inférieur à $1$
 
-\noindent pour $\displaystyle 1 - 16\,\nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) \geq 0$ les racines sont r\'eelles (et positives) et aussi $\big| A_{1,2}(k) \big| < 1$
+\noindent pour $\displaystyle 1 - 16\,\nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) \geq 0$ les racines sont r\'eelles et on voit que $0 \leq A_1(k) \leq A_2(k) \leq 1$ dans la mesure où $ 2 \leq 3 \pm \sqrt{1-16\gamma} \leq 4$
 
 \end{document}
