@@ -40,4 +40,8 @@
 - $\theta$-schéma
 - écriture à l'ordre 1 en vectoriel et schéma de Lax-Friedrichs associé
 
-## 5. Équation de Laplace
+## 5. Formulation variationnelle
+- équation $-\Delta u + \alpha u = f$ avec CL de Neumann
+- A. toute solution forte est solution faible, espace $H^1(\Omega)$
+- B. existence et unicité de solution faible
+- C. sous hypothèse de régularité toute solution faible est solution forte
