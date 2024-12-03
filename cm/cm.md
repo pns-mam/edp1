@@ -10,10 +10,9 @@
 - équation $-u'' = f$ en dimension $1$ et conditions aux limites associées (Dirichlet, Neumann, Robin)
 - équation de Laplace en dimension deux
 - régime instationnaire : équation de la chaleur (conditions initiale et aux limites associées)
-- équation de convection (advection, diffusion)
+- équation de convection (diffusion, advection)
 - classification des EDP linéaires du deuxième ordre
-- noyau de la chaleur en dimension $1$ et propriétés (vitesse de propagaton infinie)
-- différences finies et théorème de Lax
+- noyau de la chaleur en dimension $1$, principe du maximum, vitesse de propagation infinie
 
 ## 2. Consistance
 
