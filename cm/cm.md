@@ -10,10 +10,9 @@
 - équation $-u'' = f$ en dimension $1$ et conditions aux limites associées (Dirichlet, Neumann, Robin)
 - équation de Laplace en dimension deux
 - régime instationnaire : équation de la chaleur (conditions initiale et aux limites associées)
-- équation de convection (advection, diffusion)
+- équation de convection (diffusion, advection)
 - classification des EDP linéaires du deuxième ordre
-- noyau de la chaleur en dimension $1$ et propriétés (vitesse de propagaton infinie)
-- différences finies et théorème de Lax
+- noyau de la chaleur en dimension $1$, principe du maximum, vitesse de propagation infinie
 
 ## 2. Consistance
 
@@ -40,4 +39,10 @@
 - $\theta$-schéma
 - écriture à l'ordre 1 en vectoriel et schéma de Lax-Friedrichs associé
 
-## 5. Équation de Laplace
+## 5. Introduction aux formulations variationnelles
+- équation $-\Delta u + \alpha u = f$ avec CL de Neumann
+- déf. espace $H^1(\Omega)$
+- A. toute solution forte est solution faible
+- Th. de Lax-Milgram
+- B. existence et unicité de solution faible
+- D. toute solution faible *assez régulière (C.)* est solution forte
