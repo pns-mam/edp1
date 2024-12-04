@@ -33,6 +33,8 @@
 [Exam CC 1](exam-cc1/exam-cc1.md)
 ([corrigé](exam-cc1/exam-cc1-corr.pdf))
 
+[Exam CC 2](exam-cc2/exam-cc2.md)
+
 [Exam CC 1 (2023-24)](exam-cc1-old/exam-cc1.pdf)
 ([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
 
