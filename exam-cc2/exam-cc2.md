@@ -93,7 +93,7 @@ Quel est l'intérêt d'utiliser la fonction `spdiagm` pour construire la matrice
 
 ### 4.3
 
-Expliquer pourquoi on calcule `w[1]` *après* `w[2:end]`.
+Expliquer pourquoi on calcule `w[1]` *après* `w[2:end-1]`.
 
 ### 4.4
 
