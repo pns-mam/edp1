@@ -29,7 +29,7 @@ Montrer que le schéma est consistant à l'ordre $2$ à la fois en temps et en e
 
 ### 2.1
 
-On considère le schéma de Dufort-Frankel :
+On considère le schéma de Dufort-Frankel (avec $\nu > 0$) :
 
 $$ \frac{u_j^{n+1} - u_j^{n-1}}{2\Delta t} - \nu \frac{u_{j+1}^n - u_j^{n+1} - u_j^{n-1} + u_{j-1}^n}{\Delta x^2} = 0. $$
 
@@ -45,11 +45,11 @@ En déduire la stabilité $L^\infty$ de ce schéma sous cette même condition.
 
 On considère l'équation des ondes sur un domaine $\Omega \subset \mathbf{R}$
 
-$$ \frac{\partial^2 u}{\partial t^2}(t,x) - \frac{\partial^2 u}{\partial x^2}(t,x),\quad t > 0,\quad x \in \Omega. $$
+$$ \frac{\partial^2 u}{\partial t^2}(t,x) - \frac{\partial^2 u}{\partial x^2}(t,x) = 0,\quad t > 0,\quad x \in \Omega. $$
 
 Montrer qu'en posant $v := \partial u/\partial t$, $w := \partial u/\partial x$ et $U : = (v,w)$ on peut mettre l'équation sous la forme
 
-$$ \frac{\partial U}{\partial t}(t,x) - J \frac{\partial U}{\partial x}(t,x),\quad t > 0,\quad x \in \Omega, $$
+$$ \frac{\partial U}{\partial t}(t,x) - J \frac{\partial U}{\partial x}(t,x) = 0,\quad t > 0,\quad x \in \Omega, $$
 
 où $J$ est une matrice $2 \times 2$ que l'on précisera.
 
