@@ -32,4 +32,4 @@
 # Intervenants
 - [J.-B. Caillau](mailto:jean-baptiste.caillau@univ-cotedazur.fr) (CM et TD)
 - [L. Sacchelli](mailto:ludovic.sacchelli@univ-cotedazur.fr) (TD)
-- Remerciements à [V. Dolean](http://www.victoritadolean.com) pour certains textes de TD / TP
+- Remerciements à [V. Dolean](https://www.tue.nl/en/research/researchers/victorita-dolean-maini) pour certains textes de TD / TP
