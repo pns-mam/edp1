@@ -1,0 +1,92 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{verbatim}
+\usepackage{epsfig,xcolor}
+
+\newcommand{\qed}{\hfill$\qedsquare$\goodbreak\bigskip}
+
+\def\e{{\mathchoice{\hbox{\mathbb{R}m e}}{\hbox{\mathbb{R}m e}}%
+        {\hbox{\mathbb{R}m \scriptsize e}}{\hbox{\mathbb{R}m \tiny e}}}}
+        
+\advance\voffset by -35mm \advance\hoffset by -25mm
+\setlength{\textwidth}{175mm} \setlength{\textheight}{260mm}
+\pagestyle{empty}
+
+\begin{document}
+
+\noindent Universit\'e C\^ote d'Azur -- Polytech Nice Sophia 2024-25\\
+\noindent Math\'ematiques Appliqu\'ees et Mod\'elisation (MAM4)\\
+
+\hrule \bigskip
+
+\begin{center}
+{\bf \'Equations aux d\'eriv\'ees partielles (EDP1) -- contr\^ole 06-11-2024 (corrig\'e)}
+\end{center}
+
+\bigskip
+%------------------------------------------------------------------------------------------
+
+1) \'equation de la chaleur $\,\displaystyle \frac{\partial u}{\partial t} - \frac{\partial^2 u}{\partial x^2} = 0$ avec coefficient de diffusion $\nu =1$
+
+$$
+\begin{array}{l}
+\displaystyle \int_0^1 \frac{\partial u}{\partial t} \cdot u \,dx - \int_0^1 \frac{\partial^2 u}{\partial x^2} \cdot u \,dx = \int_0^1 \frac12 \frac{\partial u^2}{\partial t} dx - \left[ \frac{\partial u}{\partial x} \cdot u \right]_0^1 + \int_0^1 \left( \frac{\partial u}{\partial x} \right)^{\!\!2} dx = 0 \\[2ex]
+\qquad \displaystyle \Longrightarrow \quad \frac12 \frac{d}{d t} \int_0^1 u^2 dx = - \int_0^1 \left( \frac{\partial u}{\partial x} \right)^{\!\!2} dx \leq 0
+%\leq -\! \int_0^1 u^2 dx \quad \Longrightarrow \quad \frac{d}{d t} E(t) \leq - 2\,E(t)
+\end{array}
+$$
+pour les conditions aux limites $u(t,0)=u(t,1)=0$ qui annulent le terme intégré 
+
+par lin\'earit\'e de l'\'equation, la diff\'erence de deux solutions $u_1$ et $u_2$ v\'erifie le m\^eme probl\`eme avec donn\'ee initiale nulle, et la d\'ecroissance de l'\'energie implique que $E(t)\leq E(0)=0,\,\forall t$ : comme l'énergie est positive, elle est nécessairement nulle pour tout 
+temps, d'o\`u l'unicit\'e.\\
+
+%------------------------------------------------------------------------------------------
+
+2) erreur de troncature du sch\'ema implicite (en temps) centr\'e (en espace) pour l'\'equation d'advection
+$$
+\begin{array}{l}
+{\cal E}^n_j = \displaystyle \frac{u(x_j,t_{n+1}) - u(x_j,t_n)}{\Delta t} 
++ V\,\frac{u(x_{j+1},t_{n+1})-u(x_{j-1},t_{n+1})}{2\,\Delta x} \\[2ex]
+  \quad = \displaystyle \textcolor{red}{ \frac{\partial u}{\partial t}(x_j,t_{n+1}) } - \frac{\Delta t}{2}
+\frac{\partial^2 u}{\partial t^2}(x_j,t_{n+1}) + {\cal O}(\Delta t^2) \textcolor{red}{ \,+\, V\,\frac{\partial u}{\partial
+  x}(x_j,t_{n+1}) } + V\,\frac{\Delta x^2}{6}\frac{\partial^3 u}{\partial
+  x^3}(x_j,t_{n+1}) + {\cal O}(\Delta x^4) \\[2ex]
+    \quad =\, \displaystyle - V^2 \frac{\Delta t}{2}
+\frac{\partial^2 u}{\partial x^2}(x_j,t_{n+1}) + V\,\frac{\Delta x^2}{6}\frac{\partial^3 u}{\partial
+  x^3}(x_j,t_{n+1}) + {\cal O}(\Delta t^2) + {\cal O}(\Delta x^4)
+\end{array}
+$$
+en utilisant l'\'equation $\displaystyle \frac{\partial u}{\partial t} + V \,\frac{\partial u}{\partial x}=0$ et ses cons\'equences $\displaystyle \frac{\partial^2 u}{\partial t^2} = V^2 \frac{\partial^2 u}{\partial x^2}$
+
+le sch\'ema est d'ordre 1 en temps et d'ordre 2 en espace, et il est stable pour tout $V\in \mathbb{R}$ (propri\'et\'es de diffusion et dispersion num\'erique)\\
+
+%------------------------------------------------------------------------------------------
+
+3) le sch\'ema explicite (en temps) d\'ecentr\'e aval (en espace) pour l'\'equation d'advection avec vitesse $V<0$ se r\'e\'ecrit comme une combinaison lin\'eaire convexe
+$$ u_j^{n+1} = \big( 1 - \sigma \big) u_j^n + \sigma u_{j+1}^n \quad {\rm avec} \quad \sigma = |V| \frac{\Delta t}{\Delta x} \leq 1 $$
+sous la condition de stabilit\'e (CFL), de sorte qu'on reste dans le convexe $[m,M]$. 
+Le principe du maximum discret est donc v\'erifi\'e sous la condition CFL pour la norme uniforme\\
+
+%------------------------------------------------------------------------------------------
+
+4) on injecte un mode de Fourier $u_j^n=A(k)^n \exp\!\big( (2 i \pi) j k \Delta x \big)$ dans le sch\'ema 
+(en simplifiant les facteurs communs)
+$$
+\begin{array}{l}
+\displaystyle \frac{2 A(k)^2 - 3 A(k) + 1}{\Delta t} - \nu \frac{A(k)^2 \exp((2 i \pi) k \Delta x) - 2 A(k)^2 + A(k)^2 \exp(-(2 i \pi) k \Delta x)}{\Delta x^2} = 0 \\[2ex]
+\quad \Longrightarrow \quad \displaystyle 2 A(k)^2 - 3 A(k) + 1 - \nu \frac{\Delta t}{\Delta x^2} A(k)^2 \big( 2 \cos\!\big( (2 \pi) k \Delta x \big) - 2 \big)  \\[2ex]
+\qquad \qquad =\, \displaystyle 2 A(k)^2 \left( 1 + 2\,\nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) \right) - 3 A(k) + 1 = 0
+\end{array}
+$$
+en utilisant les formules trigonom\'etriques
+$$ \cos\!\big( (2 \pi) k \Delta x \big) = \cos^2\!\big( \pi k \Delta x \big) - \sin^2\!\big( \pi k \Delta x \big) \quad {\rm et} \quad \cos^2\!\big( \pi k \Delta x \big) + \sin^2\!\big( \pi k \Delta x \big) = 1 $$
+\'etude des racines de l'\'equation alg\'ebrique du second degr\'e ci-dessus
+$$ A_{1,2}(k) = \frac{3 \pm \sqrt{ 9 - 8 \left( 1 + 2 \gamma \right) }}{4 \left( 1 + 2 \gamma \right)} = \frac{3 \pm \sqrt{ 1 - 16 \gamma }}{4 \left( 1 + 2 \gamma \right)} \quad {\rm avec} \quad \gamma = \nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) $$
+
+\noindent (i) pour $\displaystyle 1 - 16\,\nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) < 0$ les racines sont complexes conjugu\'ees et $\big| A_{1,2}(k) \big| \leq 1$ puisque leur produit, qui est \'egal à leur module au carr\'e, est inf\'erieur \`a $1$
+
+\noindent (ii) pour $\displaystyle 1 - 16\,\nu \frac{\Delta t}{\Delta x^2} \sin^2\!\big( \pi k \Delta x \big) \geq 0$ les racines sont r\'eelles et on voit que $0 \leq A_1(k) \leq A_2(k) \leq 1$ dans la mesure o\`u $ 2 \leq 3 \pm \sqrt{1-16\gamma} \leq 4$
+
+\end{document}
