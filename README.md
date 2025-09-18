@@ -10,6 +10,7 @@
 [Plan du cours](cm/cm.md)
 
 [TD 1 - Propriétés qualitatives de quelques EDP](td1/td1.pdf)
+([corrigé](td1/td1-corr.pdf))
 
 [TP 1 - Advection](tp1/tp1.md)
 
