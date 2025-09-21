@@ -12,6 +12,8 @@
 [TD 1 - Propriétés qualitatives de quelques EDP](td1/td1.pdf)
 ([corrigé](td1/td1-corr.pdf))
 
+[TD 2 - Étude de consistance](td2/td2.pdf)
+
 [TP 1 - Advection](tp1/tp1.md)
 
 [TP 2 - Chaleur](tp2/tp2.md)
