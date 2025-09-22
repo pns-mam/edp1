@@ -87,9 +87,9 @@ u(0,x) & = & u_0(x),\,x\in \mathbf{R}.
 
 ### 3.1
 
-Montrer que pour toute fonction dérivable $v : \mathbf{R}^2 \to \mathbf{R}$ on a
+Montrer que pour toute fonction dérivable $v : \mathbf{R}^n \to \mathbf{R}$ on a
 
-$$\mathrm{Re}\left(\frac{\partial v}{\partial t}\bar v\right)(t,x) = \frac{1}{2}\frac{\partial |v|^2}{\partial t}(t,x),$$
+$$ \mathrm{Re}\left(\frac{\partial v}{\partial y_i}\bar v\right)(y) = \frac{1}{2}\frac{\partial |v|^2}{\partial y_i}(y),\quad i=1,\dots,n. $$
 
 où $\mathrm{Re}(v)$ désigne la partie réelle de la fonction $v$, et $\bar v$ sa conjuguée.
 
