@@ -13,6 +13,7 @@
 ([corrigé](td1/td1-corr.pdf))
 
 [TD 2 - Étude de consistance](td2/td2.pdf)
+([corrigé](td2/td2-corr.pdf))
 
 [TP 1 - Advection](tp1/tp1.md)
 
