@@ -24,13 +24,14 @@
 - exemple : Lax-Friedrichs (advection) et diffusion numérique
 
 ## 3. Stabilité
+
+- schéma semi-discret, TF et stabilité au sens de Von Neuman
+- exemple Euler explicite / implicite pour la chaleur
 - stabilité au sens $L^\infty$
-- stabilité au sens $L^2$ (et interprétation par Fourier)
-- exemple : Lax-Friedrichs (advection)
 - théorème de Lax
-- cas multiniveaux
 
 ## 4. Équation des ondes
+
 - équations des ondes 1D sur un domaine borné, CL périodiques
 - condition de moyenne nulle (solutions bornées)
 - motivation (corde, son, lumière / électromagnétisme)
