@@ -15,6 +15,8 @@
 [TD 2 - Étude de consistance](td2/td2.pdf)
 ([corrigé](td2/td2-corr.pdf))
 
+[TD 3 - Stabilité (1/2)](td3/td3.pdf)
+
 [TP 1 - Advection](tp1/tp1.md)
 
 [TP 2 - Chaleur](tp2/tp2.md)
