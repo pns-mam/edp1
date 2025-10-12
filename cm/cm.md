@@ -25,9 +25,11 @@
 
 ## 3. Stabilité
 
-- schéma semi-discret, TF et stabilité au sens de Von Neuman
+- schéma semi-discret, stabilité au sens de Von Neuman
 - exemple Euler explicite / implicite pour la chaleur
+- condition CFL (Courant-Friedrichs-Lewy)
 - stabilité au sens $L^\infty$
+- exemple Euler explicite pour la chaleur
 - théorème de Lax
 
 ## 4. Équation des ondes
