@@ -17,6 +17,8 @@
 
 [TD 3 - Stabilité (1/2)](td3/td3.pdf)
 
+[TD 4 - Stabilité (2/2)](td4/td4.pdf)
+
 [TP 1 - Advection](tp1/tp1.md)
 
 [TP 2 - Chaleur](tp2/tp2.md)
