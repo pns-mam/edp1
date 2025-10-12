@@ -27,6 +27,8 @@ Supposons que la condition CFL précédente n'est pas vérifiée ; montrer que, 
 
 ## Exercice 2
 
+### 2.1
+
 Montrer que le schéma d'Euler implicite pour la chaleur (avec coefficient de diffusion $\nu > 0$)
 
 $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} - \nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2} = 0,\quad j=1,\dots,J-1,\quad n \in \mathbf{N}, $$
