@@ -33,7 +33,7 @@ Montrer que le schéma d'Euler implicite pour la chaleur (avec coefficient de di
 
 $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} - \nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2} = 0,\quad j=1,\dots,J-1,\quad n \in \mathbf{N}, $$
 
-et $u_0^{n+1} = u_J^{n+1} = 0$ (Dirichlet), se met sous la forme $U^{n+1} = AU^n$, avec $U_n := (u^n_j)_{j=0,\dots,J}$ et $A$ une matrice inversible que l'on précisera.
+et $u_0^{n+1} = u_J^{n+1} = 0$ (Dirichlet), se met sous la forme $AU^{n+1} = U^n$, avec $U_n := (u^n_j)_{j=0,\dots,J}$ et $A$ une matrice inversible que l'on précisera.
 
 ### 2.2
 
