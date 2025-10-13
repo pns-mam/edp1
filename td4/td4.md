@@ -55,6 +55,6 @@ En déduire que, sous cette condition, ce schéma est stable au sens $L^\infty$,
 
 $$ u^n_j \in [m, M],\quad j \in \mathbf{Z},\quad n \in \mathbf{N}. $$
 
-### 3.2
+### 3.3
 
 Supposons que la condition CFL précédente n'est pas vérifiée ; montrer que, pour $u^0_j = (-1)^j$, $j \in \mathbf{Z}$, les $u^n_j$ ne sont pas bornés.
