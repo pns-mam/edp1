@@ -16,6 +16,7 @@
 ([corrigé](td2/td2-corr.pdf))
 
 [TD 3 - Stabilité (1/2)](td3/td3.pdf)
+([corrigé](td3/td3-corr.pdf))
 
 [TD 4 - Stabilité (2/2)](td4/td4.pdf)
 
