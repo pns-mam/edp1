@@ -24,7 +24,8 @@
 
 [TP 2 - Chaleur](tp2/tp2.md)
 
-[Exam CC 1 (2024-25)](exam-cc1-old/exam-cc1-corr.pdf)
+[Exam CC 1 (2024-25)](exam-cc1-old/exam-cc1.pdf)
+([corrigé](exam-cc1-old/exam-cc1-corr.pdf))
 
 [Exam CC 2 (2024-25)](exam-cc2-old/exam-cc2.pdf)
 
