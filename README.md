@@ -34,6 +34,8 @@
 # Bibliographie
 [Allaire, G. Approximation numérique et optimisation. École Polytechnique, 2019. cel-02168288](https://hal.science/cel-02168288/document)
 
+[Trefethen, L. N. Finite Difference and Spectral Methods for Ordinary and Partial Differential Equations, unpublished, 1996](http://people.maths.ox.ac.uk/trefethen/pdetext.html)
+
 # Évaluation
 2 exams CC (tous coeff. 1)
 
