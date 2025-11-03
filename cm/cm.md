@@ -34,7 +34,7 @@
 
 ## 4. Équation des ondes
 
-- équations des ondes 1D sur un domaine borné, CL périodiques
+- équations des ondes 1D sur un domaine borné, CL périodiques, hyperbolicité
 - condition de moyenne nulle (solutions bornées)
 - motivation (corde, son, lumière / électromagnétisme)
 - autres CL (Dirichlet, Neumann...)
@@ -43,7 +43,7 @@
 - écriture à l'ordre 1 en vectoriel et schéma de Lax-Friedrichs associé
 
 ## 5. Introduction aux formulations variationnelles
-- équation $-\Delta u + \alpha u = f$ avec CL de Neumann
+- équation $-\Delta u + \alpha u = f$ avec CL de Neumann, ellipticité
 - déf. espace $H^1(\Omega)$
 - A. toute solution forte est solution faible
 - Th. de Lax-Milgram
