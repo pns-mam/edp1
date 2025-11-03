@@ -4,7 +4,7 @@
 
 # EDP1
 # 2025-26
-# TD 4 - Ondes
+# TD 5 - Ondes
 
 
 ## Exercice 1
@@ -23,4 +23,4 @@ $$ \frac{2U_j^{n+1}-U_{j+1}^{n}-U_{j-1}^n}{2\Delta t} + A \frac{U_{j+1}^{n}-U_{j
 
 Étudier la stabilité au sens de Von Neumann du schéma vectoriel de Lax-Wendroff ci-dessous :
 
-$$ \frac{2U_j^{n+1}-U_{j+1}^{n}-U_{j-1}^n}{2\Delta t} + A \frac{U_{j+1}^{n}-U_{j-1}^{n}}{2\Delta x} + A^2\Delta t \frac{U_{j+1}^{n}-2U_{j}^{n}+U_{j-1}^{n}}{2\Delta x^2}= 0. $$
+$$ \frac{U_j^{n+1}-U_{j}^{n}}{\Delta t} + A \frac{U_{j+1}^{n}-U_{j-1}^{n}}{2\Delta x} - A^2\Delta t \frac{U_{j+1}^{n}-2U_{j}^{n}+U_{j-1}^{n}}{2\Delta x^2}= 0. $$
