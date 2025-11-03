@@ -19,6 +19,9 @@
 ([corrigé](td3/td3-corr.pdf))
 
 [TD 4 - Stabilité (2/2)](td4/td4.pdf)
+([corrigé](td3/td3-corr.pdf))
+
+[TD 5 - Ondes](td5/td5.pdf)
 
 [TP 1 - Advection](tp1/tp1.md)
 
