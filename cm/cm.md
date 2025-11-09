@@ -46,6 +46,6 @@
 - équation $-\Delta u + \alpha u = f$ avec CL de Neumann, ellipticité
 - déf. espace $H^1(\Omega)$
 - A. toute solution forte est solution faible
-- Th. de Lax-Milgram
+- Th. de Lax-Milgram et interprétation variationnelle
 - B. existence et unicité de solution faible
 - D. toute solution faible *assez régulière (C.)* est solution forte
