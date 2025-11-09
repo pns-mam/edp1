@@ -24,6 +24,8 @@
 [TD 5 - Ondes](td5/td5.pdf)
 ([corrigé](td5/td5-corr.pdf))
 
+[TD 6 - Ondes](td6/td6.pdf)
+
 [TP 1 - Advection](tp1/tp1.md)
 
 [TP 2 - Chaleur](tp2/tp2.md)
