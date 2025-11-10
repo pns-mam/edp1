@@ -7,7 +7,7 @@
 
 [Discussions](https://github.com/pns-mam/edp1/discussions/1)
 
-[Plan du cours](cm/cm.md)
+[Plan du cours](cm/cm.md) ([notes du cours 10/11/2025](cm/cm-10112025.pdf))
 
 [TD 1 - Propriétés qualitatives de quelques EDP](td1/td1.pdf)
 ([corrigé](td1/td1-corr.pdf))
