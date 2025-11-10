@@ -24,7 +24,7 @@
 [TD 5 - Ondes](td5/td5.pdf)
 ([corrigé](td5/td5-corr.pdf))
 
-[TD 6 - Ondes](td6/td6.pdf)
+[TD 6 - Formulations variationnelles](td6/td6.pdf)
 
 [TP 1 - Advection](tp1/tp1.md)
 
