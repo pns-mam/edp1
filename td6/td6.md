@@ -37,8 +37,7 @@ Montrer que toute solution faible dans $\mathscr{C}^2(\overline{\Omega})$ est so
 
 ## Exercice 2
 
-On cherche $u$ dans $\mathscr{C}^2(\overline{\Omega})$ (où $\Omega$ est un ouvert borné de $\mathbf{R}^n$ à bord régulier - de classe $\mathscr{C}^1$)
-telle que (problème de Poisson)
+On cherche $u$ dans $\mathscr{C}^2(\overline{\Omega})$ (où $\Omega$ est un ouvert borné de $\mathbf{R}^n$ à bord régulier - de classe $\mathscr{C}^1$) telle que (problème de Poisson)
 
 $$ -\Delta u(x)= f(x),\quad x \in \Omega, $$
 
