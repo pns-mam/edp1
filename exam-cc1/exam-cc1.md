@@ -29,6 +29,26 @@ $$ E(t) := \frac{1}{2} \int_0^1 \left( \frac{\partial u}{\partial t}(t,x) \right
 
 En supposant $u$ solution aussi régulière que nécessaire, montrer que l'énergie est constante.
 
+*Correction.* 
+
+$$ 
+\frac{dE}{dt}=\int_0^1\frac{\partial^2 u}{\partial t^2}\frac{\partial u}{\partial t} dx +\int_0^1\frac{\partial^2 u}{\partial t \partial x}\frac{\partial u}{\partial x} dx.
+$$
+
+En intégrant par partie: 
+
+$$ 
+\int_0^1\frac{\partial^2 u}{\partial t \partial x}\frac{\partial u}{\partial x} dx= \left[\frac{\partial u}{\partial t}\frac{\partial u}{\partial x}\right]_0^1-
+\int_0^1\frac{\partial u}{\partial t}\frac{\partial^2 u}{\partial x^2}.
+$$
+
+Or $\partial_x u(t,0)=\partial_x u(t,1)$ et $u(t,0)=u(t,1)$ pour tout $t\geq 0$. En particulier on a alors en dérivatn par rapport à $t$: $\partial_t u(t,0)=\partial_t u(t,1)$.
+Comme de plus $\partial^2_t u(t, x) = \partial^2_x u(t, x)$, on en déduit 
+
+$$ 
+\frac{dE}{dt}=\int_0^1\frac{\partial^2 u}{\partial t^2}\frac{\partial u}{\partial t} dx -\int_0^1\frac{\partial^2 u}{ \partial t}\frac{\partial^2 u}{\partial t^2} dx=0.
+$$
+
 ### 1.2
 
 En déduire qu'on a unicité de solution pour l'EDP considérée. 
