@@ -53,7 +53,7 @@ $$
 
 En déduire qu'on a unicité de solution pour l'EDP considérée. 
 
-*Correction.* Si $u$ et $v$ sont deux solutions, alors $w=u-v$ est slution de l'équation des ondes (sur domaine périodique) avec conditions initiales nulles. En particulier, on en déduit que l'énergie associée à $w$ est constamment nulle. De plus, on en déduit (E étant l'intégrale d'une somme de carrés) que $\partial_t w(t,x)=0$ et $\partial_x w(t,x)=0$ pour tout $x\in[0,1]$, $t\geq 0$. De cela on conclut que $w$ est la constante nulle.
+*Correction.* Si $u$ et $v$ sont deux solutions, alors $w=u-v$ est slution de l'équation des ondes (sur domaine périodique) avec conditions initiales nulles. En particulier, on en déduit que l'énergie associée à $w$ est constamment nulle ($u(0,x)=0$ implique $\partial_x u(0,x)=0$. De plus, on en déduit (E étant l'intégrale d'une somme de carrés) que $\partial_t w(t,x)=0$ et $\partial_x w(t,x)=0$ pour tout $x\in[0,1]$, $t\geq 0$. De cela on conclut que $w$ est la constante nulle.
 
 ## Exercice 2 (6 points)
 
