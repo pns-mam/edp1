@@ -41,9 +41,9 @@ V = 0.1
 J = 1600                                           
 x = range(0, 1, length=J+1)                        
 Δx = x[2] - x[1]                                   
-σ = 0.8                                            
+σ = 0.9                                            
 Δt = σ * Δx / V                                    
-N = 400                                                
+N = 2400                                                
 tf = N * Δt                                        
 
 function u0(x; a=0.2, b=0.3)
@@ -86,7 +86,7 @@ Augmenter progressivement le paramètre $\sigma$ et observer le résultat. Quell
 u = u0.(x)
 
 for n ∈ 1:N
-    u[2:end-1] = u[2:end-1] # TBC 
+    u[2:end-1] = u[2:end-1] - σ / 2 * (u[3:end] - u[1:end-2]) + σ^2 / 2 * (u[3:end] - 2 * u[2:end-1] + u[1:end-2])
     u[1] = u0(x[1] - V * n * Δt)
     u[end] = u[1]
 end
