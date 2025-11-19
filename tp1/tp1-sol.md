@@ -8,7 +8,7 @@ On résout numériquement l'équation d'advection sur $\Omega := ]0,1[$ avec con
 
 $$ \left\lbrace \begin{align}
 & \frac{\partial u}{\partial t}(t,x) + V\frac{\partial u}{\partial x}(t,x) = 0,\quad x \in \Omega,\quad t > 0,\\
-& u(t,x) = u(t,x+1),\quad t \ge 0,\\
+& u(t,0) = u(t,1),\quad t \ge 0,\\
 & u(0,x) = u_0(x),\quad x \in \Omega.
 \end{align} \right. $$
 
