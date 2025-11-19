@@ -112,8 +112,6 @@ En introduisant $W^n := (u_j^n - (\sigma/2)(u_{j+1}^n - u_{j-1}^n))_j$ et $U^n :
 
 Augmenter progressivement le paramètre $\sigma$ et observer le résultat. Quelle est la valeur critique ? 
 
-**Réponse.** Au prix d'un coût de calcul accru de chaque itération (coût qu'on limite en exploitant la structure creuse du système linéaire et en faisant la factorisation une seule fois, en amont de la boucle), le schéma devient inconditionnellement stable : plus de valeur critique pour $\sigma$.
-
 ```julia
 # Implicit Lax-Wendroff scheme
 
