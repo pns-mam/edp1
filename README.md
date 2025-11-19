@@ -27,6 +27,7 @@
 [TD 6 - Formulations variationnelles](td6/td6.pdf)
 
 [TP 1 - Advection](tp1/tp1.md)
+([solution](tp1/tp1-sol.md))
 
 TP 2 - Chaleur
 
