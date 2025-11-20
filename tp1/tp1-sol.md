@@ -69,6 +69,10 @@ display(plot(u_plot, err_plot, layout=(2, 1), size=(700, 700)))
 println("Δx: ", Δx, "\t Δt:", Δt, "\t max error: ", maximum(abs.(err)))
 ```
 
+Exemple d'évolution :
+
+![](transport_ex1.gif)
+
 ## Exercice 2. Schéma de Lax-Wendroff
 En suivant le modèle précédent, implémenter le schéma suivant :
 
@@ -99,6 +103,10 @@ err_plot = plot(x, err, xlabel="x", ylabel="Error", legend=false)
 display(plot(u_plot, err_plot, layout=(2, 1), size=(700, 700)))
 println("Δx: ", Δx, "\t Δt:", Δt, "\t max error: ", maximum(abs.(err)))
 ```
+
+Exemple d'évolution avec deux conditions initialles différentes (une lisse et une discontinue) :
+
+![](transport_ex2.gif)
 
 ## Exercice 3. Schéma de Lax-Wendroff implicite
 On va changer le schéma comme suit :
