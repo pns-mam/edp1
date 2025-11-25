@@ -29,7 +29,7 @@ $$ E(t) := \frac{1}{2} \int_0^1 \left( \frac{\partial u}{\partial t}(t,x) \right
 
 En supposant $u$ solution aussi régulière que nécessaire, montrer que l'énergie est constante.
 
-*Correction.* 
+**Réponse.** 
 
 $$ 
 \frac{dE}{dt}=\int_0^1\frac{\partial^2 u}{\partial t^2}\frac{\partial u}{\partial t} dx +\int_0^1\frac{\partial^2 u}{\partial t \partial x}\frac{\partial u}{\partial x} dx.
@@ -53,7 +53,7 @@ $$
 
 En déduire qu'on a unicité de solution pour l'EDP considérée. 
 
-*Correction.* Si $u$ et $v$ sont deux solutions, alors $w=u-v$ est slution de l'équation des ondes (sur domaine périodique) avec conditions initiales nulles. En particulier, on en déduit que l'énergie associée à $w$ est constamment nulle ($u(0,x)=0$ implique $\partial_x u(0,x)=0$. De plus, on en déduit (E étant l'intégrale d'une somme de carrés) que $\partial_t w(t,x)=0$ et $\partial_x w(t,x)=0$ pour tout $x\in[0,1]$, $t\geq 0$. De cela on conclut que $w$ est la constante nulle.
+**Réponse.** Si $u$ et $v$ sont deux solutions, alors $w=u-v$ est slution de l'équation des ondes (sur domaine périodique) avec conditions initiales nulles. En particulier, on en déduit que l'énergie associée à $w$ est constamment nulle ($u(0,x)=0$ implique $\partial_x u(0,x)=0$. De plus, on en déduit (E étant l'intégrale d'une somme de carrés) que $\partial_t w(t,x)=0$ et $\partial_x w(t,x)=0$ pour tout $x\in[0,1]$, $t\geq 0$. De cela on conclut que $w$ est la constante nulle.
 
 ## Exercice 2 (6 points)
 
@@ -72,9 +72,13 @@ En supposant $u$ solution aussi régulière que nécessaire, montrer que
 
 $$ \frac{\partial^2 u}{\partial t^2}(t, x) = \frac{\partial^2 u}{\partial x^2}(t, x). $$
 
+**Réponse.** 
+
 ### 2.2
 
 En déduire que le schéma proposé est consistant d'ordre $2$ en temps et en espace. (On pourra utiliser des développements à l'ordre $4$ en temps et en espace.)
+
+**Réponse.** 
 
 ## Exercice 3 (8 points)
 
@@ -86,10 +90,18 @@ $$ \frac{u_j^{n+1}-2u_j^n+u_j^{n-1}}{\Delta t^2} - \frac{u_{j+1}^n-2u_j^n+u_{j-1
 
 pour l'équation des ondes (voir Exercice 1) est consistant d'ordre $2$ en temps et en espace. (On pourra utiliser des développements à l'ordre $4$ en temps et en espace.)
 
+**Réponse.** 
+
 ### 3.2
 
 Montrer que ce schéma est stable au sens de Von Neumann sous une condition que l'on précisera.
 
+**Réponse.** 
+
 ### 3.3
 
 Comment pourrait-on améliorer la stabilité ?
+
+**Réponse.** En implicitant le schéma, par exemple selon
+
+$$ \frac{u_j^{n+1}-2u_j^n+u_j^{n-1}}{\Delta t^2} - \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2} = 0. $$
