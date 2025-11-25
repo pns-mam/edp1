@@ -25,6 +25,7 @@
 ([corrigé](td5/td5-corr.pdf))
 
 [TD 6 - Formulations variationnelles](td6/td6.pdf)
+([corrigé](td6/td6-corr.pdf))
 
 [TP 1 - Advection](tp1/tp1.md)
 ([solution](tp1/tp1-sol.md))
