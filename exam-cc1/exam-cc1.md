@@ -74,11 +74,36 @@ $$ \frac{\partial^2 u}{\partial t^2}(t, x) = \frac{\partial^2 u}{\partial x^2}(t
 
 **Réponse.** 
 
+$$ \frac{\partial^2 u}{\partial t^2}=-\frac{\partial }{\partial t}\frac{\partial u}{\partial x}=-\frac{\partial }{\partial x}\frac{\partial u}{\partial t}=\frac{\partial^2 u}{\partial x^2}. $$
+
 ### 2.2
 
 En déduire que le schéma proposé est consistant d'ordre $2$ en temps et en espace. (On pourra utiliser des développements à l'ordre $4$ en temps et en espace.)
 
-**Réponse.** 
+**Réponse.** Taylor à l'ordre 4 :
+
+$$ u_j^{n+1} = u + \Delta t \ u_t + \frac{\Delta t^2}{2} u_{tt} + \frac{\Delta t^3}{6} u_{ttt} + \frac{\Delta t^4}{24} u_{tttt} + O(\Delta t^5),$$
+
+$$u_{j\pm 1}^n = u \pm \Delta x\ u_x + \frac{\Delta x^2}{2} u_{xx} \pm \frac{\Delta x^3}{6} u_{xxx} + \frac{\Delta x^4}{24} u_{xxxx} + O(\Delta x^5).$$
+
+En remplaçant par les développements de Taylor et en utilisant $u_{tt} = u_{xx}$ :
+
+$$ \frac{u_j^{n+1}-u_j^n}{\Delta t} = u_t + \frac{\Delta t}{2} u_{xx} + \frac{\Delta t^2}{6} u_{ttt} + O(\Delta t^3),$$
+
+$$ \frac{u_{j+1}^n-u_{j-1}^n}{2\Delta x} = u_x + \frac{\Delta x^2}{6} u_{xxx} + O(\Delta x^4), $$
+
+$$ \Delta t \frac{u_{j+1}^n-2u_j^n+u_{j-1}^n}{2\Delta x^2} = \frac{\Delta t}{2} u_{xx} + \frac{\Delta t \Delta x^2}{24} u_{xxxx} + O(\Delta t \Delta x^4). $$
+
+Le résidu du schéma, i.e. l’erreur de consistance $E_j^n$, est donc
+
+$$ E_j^n = \frac{u_j^{n+1}-u_j^n}{\Delta t} + \frac{u_{j+1}^n-u_{j-1}^n}{2\Delta x} - \Delta t \frac{u_{j+1}^n-2u_j^n+u_{j-1}^n}{2\Delta x^2}
+= \frac{1}{6}(\Delta x^2 - \Delta t^2) u_{xxx} - \frac{\Delta t \Delta x^2}{24} u_{xxxx} + O(\Delta t^3) + O(\Delta x^3) + O(\Delta t \Delta x^4).
+$$
+
+Le schéma est donc consistant d'ordre 2 en temps et en espace.
+
+
+
 
 ## Exercice 3 (8 points)
 
