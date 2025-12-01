@@ -102,9 +102,6 @@ $$
 
 Le schéma est donc consistant d'ordre 2 en temps et en espace.
 
-
-
-
 ## Exercice 3 (8 points)
 
 ### 3.1
@@ -115,13 +112,29 @@ $$ \frac{u_j^{n+1}-2u_j^n+u_j^{n-1}}{\Delta t^2} - \frac{u_{j+1}^n-2u_j^n+u_{j-1
 
 pour l'équation des ondes (voir Exercice 1) est consistant d'ordre $2$ en temps et en espace. (On pourra utiliser des développements à l'ordre $4$ en temps et en espace.)
 
-**Réponse.** 
+**Réponse.** Un développement à l'ordre $4$ en espace au point $(t_n,x_j)$ indique que
+
+$$ \frac{u(t_n,x_{j+1}) -2u(t_n,x_j) + u(t_n,x_{j-1})}{\Delta x^2} = u_{xx} + (1/12)u_{xxxx} \Delta x^2 + O(\Delta x^3)_{|(t_n,x_j)}. $$
+
+On le développement analogue en temps, d'où l'erreur de consistance : 
+
+$$ E^n_j = \underbrace{u_{tt} - u_{xx}}_{= 0} + (1/12)u_{tttt} - (1/12)u_{xxxx} + O(\Delta t^3) + O(\Delta x^3)_{|(t_n,x_j)}.$$
+
 
 ### 3.2
 
 Montrer que ce schéma est stable au sens de Von Neumann sous une condition que l'on précisera.
 
-**Réponse.** 
+**Réponse.** En posant $\sigma : = \Delta t/\Delta x$ et $\alpha := \sigma^2\sin^2(\pi\xi\Delta x)$, on arrive à
+
+$$ a^2(\xi) + 2(2\alpha-1)a(\xi) + 1 = 0. $$
+
+Notant $a_{1,2}(\xi)$ les deux racines (éventuellement complexes ou identiques), on a : 
+- si $\alpha < 1$, $|a_{1,2}(\xi)|^2 = 1$
+- si $\alpha > 1$, $a_1(\xi) a_2(\xi) = 1$ (les racines étant distinctes, l'une des deux est de module $>1$)
+- si $\alpha = 1$, terme linéaire en $n$ dans la suite définie par la récurrence double qui empêche donc la stabilité
+
+En conclusion, on a stabilité au sens de Von Neumann si et seulement si $\alpha < 1$ quel que soit $\xi$, *i.e.* ssi $\Delta t/\Delta x < 1$.
 
 ### 3.3
 
