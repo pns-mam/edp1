@@ -104,7 +104,7 @@ display(plot(u_plot, err_plot, layout=(2, 1), size=(700, 700)))
 println("Δx: ", Δx, "\t Δt:", Δt, "\t max error: ", maximum(abs.(err)))
 ```
 
-Exemple d'évolution avec deux conditions initialles différentes (une lisse et une discontinue) :
+Exemple d'évolution avec deux conditions initiales différentes (une lisse et une discontinue) :
 
 ![](transport_ex2.gif)
 
