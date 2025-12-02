@@ -1,6 +1,6 @@
 ![PNS](http://caillau.perso.math.cnrs.fr/logo-pns.png)
 ## MAM4 - EDP1
-# TP 2 - Équation d'advection
+# TP 1 - Équation d'advection
 
 ## Exercice 1. Schéma explicite
 
