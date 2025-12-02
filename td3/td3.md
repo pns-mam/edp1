@@ -25,7 +25,7 @@ $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V \frac{u_{j+1}^{n}-u_{j-1}^{n}}{4\Delta x
 
 Étudier la stabilité au sens de Von Neumann du schéma Leapfrog (avec $\nu > 0$) :
 
-$$ \frac{u_j^{n+1}-u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^{n}-+u_{j-1}^{n}}{\Delta x^2}=0. $$
+$$ \frac{u_j^{n+1}-u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n}-2u_j^{n}+u_{j-1}^{n}}{\Delta x^2}=0. $$
 
 ### 3.2
 
