@@ -22,9 +22,29 @@ $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V\frac{u_j^n-u_{j-1}^n}{\Delta x} = 0. $$
 
 Montrer que, sous une condition CFL que l'on précisera, ce schéma est stable au sens $L^\infty$.
 
+**Correction.** En posant $\lambda=\frac{V \Delta t}{\Delta x} $, on a $u_j^{n+1} = (1-\lambda)u_j^{n} +\lambda u_{j-1}^{n}$.
+
+En prenant $\lambda \leq 1$, on a alors 
+
+$$\|u^{n+1}\|_ {\infty}\leq (1-\lambda) \| u^{n} \|_\infty + \lambda  \| u^{n} \| _\infty = \| u^{n} \| _\infty.$$
+
+La condition CFL est donc $\frac{V \Delta t}{\Delta x}\leq 1$.
+
 ### 1.2
 
 Montrer que ce schéma est consistant d'ordre $1$ en temps et en espace.
+
+**Correction.** On a
+
+$$ \frac{u_j^{n+1}- u_j^n}{\Delta t}  =  u_t(x_j,t_n) + \frac{\Delta t}{2} u_{tt} + O(\Delta t^2),$$
+
+$$ \frac{u_j^n - u_{j-1}^n}{\Delta x} =   u_x(x_j,t_n) - \frac{\Delta x}{2} u_{xx} + O(\Delta x^2).$$
+
+En substituant dans le schéma, comme $ u_t(x_j,t_n) + V u_x(x_j,t_n) = 0$, on a l'erreur de troncature :
+
+$$E_j^n=\frac{u_j^{n+1}- u_j^n}{\Delta t} +V \frac{u_j^n - u_{j-1}^n}{\Delta x} = \frac{1}{2} \left(\Delta t \ u_{tt} - V \Delta x \  u_{xx}\right)+O(\Delta t^2)+ O(\Delta x^2) $$
+
+Le schéma est donc consistant d'ordre 1 en temps et en espace.
 
 ### 1.3
 
@@ -33,6 +53,16 @@ Montrer que l'équation équivalente de ce schéma est
 $$ u_t + V u_x - \nu u_{xx} = 0 $$
 
 avec $\nu$ une constante (dépendant de $\Delta t$ et $\Delta x$) que l'on précisera. Sous la condition CFL précédente, quel comportement numérique de la méthode observe-t-on quand $n$ croît ?
+
+**Correction.** En remarquant que $u_{t}= -Vu_x$ implique $u_{tt} = V^2 u_{xx}$, on obtient 
+
+$$ \frac{1}{2} \left(\Delta t\  u_{tt} - V \Delta x u_{xx}\right) = \frac{V}{2} \left(V \Delta t - \Delta x \right)u_{xx} =   \frac{V\Delta x}{2} \left(\lambda - 1 \right)u_{xx}$$
+
+Sous la condition CFL $\lambda \leq 1$ et en posant $\nu = \frac{V\Delta x}{2} \left(1-\lambda \right)\geq 0$, on obtient donc l'équation équivalente du schéma 
+
+$$ u_t + V u_x - \nu u_{xx} = 0. $$
+
+L'équation équivalente du schéma est une équation de convection-diffusion, on s'attend donc à observer de la diffusion numérique.
 
 ## Exercice 2 (5 points)
 
