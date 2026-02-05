@@ -70,6 +70,35 @@ L'équation équivalente du schéma est une équation de convection-diffusion, o
 
 $$ \frac{3u_j^{n+1}-4u_j^n+u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2}=0. $$
 
+**Correction.** On pose $u_j^n = \hat{u}^n(\xi) e^{2i\pi \xi j\Delta x}$. En substituant dans le schéma et en simplifiant par $e^{2i\pi\xi j\Delta x}$, on obtient
+
+$$\frac{3\hat{u}^{n+1}(\xi)-4\hat{u}^n(\xi)+\hat{u}^{n-1}(\xi)}{2\Delta t}-\nu \hat{u}^{n+1}(\xi) \frac{e^{2i\pi\xi\Delta x}-2+e^{-2i\pi\xi\Delta x}}{\Delta x^2}=0$$
+
+On pose $\mu = \frac{\nu \Delta t}{\Delta x^2}$ et on utilise $e^{2i\pi\xi\Delta x}+e^{-2i\pi\xi\Delta x}-2 = 2\cos(2\pi\xi\Delta x)-2 = -4 \sin^2(\pi\xi\Delta x)$ :
+
+$$(3+4\mu \sin^2(\pi\xi\Delta x))\hat{u}^{n+1}(\xi)-4\hat{u}^n(\xi)+\hat{u}^{n-1}(\xi)=0$$
+
+En posant $\theta = \sin^2(\pi\xi\Delta x) \in [0,1]$ et en cherchant un facteur d'accroissmeent $a(\xi)$, on torouve qu'il vérifie l'équation :
+
+$$(3+4\mu\theta)a^2(\xi)-4a(\xi)+1=0$$
+
+Le discriminant vaut : $\Delta = 16 - 4 (3+4\mu\theta) = 4(1- 4\mu \theta)$.
+
+Cas 1 : si $4\mu\theta \leq 1$, les racines sont réelles, $a_\pm(\xi) = \frac{2 \pm \sqrt{1-4\mu\theta}}{3+4\mu\theta}$
+
+On a $a_+(\xi) a_-(\xi) = \frac{1}{3+4\mu\theta} \in [0,1/3]$. Comme $a_+(\xi)>0$, on en déduit $0<a_-(\xi)\leq a_+(\xi)$.
+
+Pour $a_+(\xi)$ : On a $2 + \sqrt{1-4\mu\theta} \leq 3 < 3+4\mu\theta$, donc $0<a_-(\xi)\leq a_+(\xi) < 1$.
+
+
+Cas 2 : Si $4\mu\theta > 1$, les racines sont complexes conjuguées $a_\pm(\xi) = \frac{2 \pm i \sqrt{4\mu\theta-1}}{3+4\mu\theta}$. On a :
+$$|a_\pm(\xi)|^2 = \frac{4+(4\mu \theta-1)}{(3+4\mu\theta)^2} = \frac{1}{3+4\mu\theta} < 1$$
+
+donc $|a_\pm(\xi)| < 1$.
+
+Conclusion : Le schéma est inconditionnellement stable pour tout $\mu > 0$.
+
+
 ## Exercice 3 (5 points)
 
 ### 3.1
