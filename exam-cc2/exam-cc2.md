@@ -24,7 +24,7 @@ Montrer que, sous une condition CFL que l'on précisera, ce schéma est stable a
 
 **Correction.** En posant $\lambda=\frac{V \Delta t}{\Delta x} $, on a $u_j^{n+1} = (1-\lambda)u_j^{n} +\lambda u_{j-1}^{n}$.
 
-En prenant $\lambda \leq 1$, on a alors 
+Lorsque $0\leq \lambda \leq 1$, $u_j^{n+1}$ est une combinaison convexe de $(u_j^{n},u_{j-1}^{n})$. En particulier
 
 $$\|u^{n+1}\|_ {\infty}\leq (1-\lambda) \| u^{n} \|_\infty + \lambda  \| u^{n} \| _\infty = \| u^{n} \| _\infty.$$
 
@@ -40,7 +40,7 @@ $$ \frac{u_j^{n+1}- u_j^n}{\Delta t}  =  u_t(x_j,t_n) + \frac{\Delta t}{2} u_{tt
 
 $$ \frac{u_j^n - u_{j-1}^n}{\Delta x} =   u_x(x_j,t_n) - \frac{\Delta x}{2} u_{xx} + O(\Delta x^2).$$
 
-En substituant dans le schéma, comme $ u_t(x_j,t_n) + V u_x(x_j,t_n) = 0$, on a l'erreur de troncature :
+En substituant dans le schéma, comme $u_t(x_j,t_n) + V u_x(x_j,t_n) = 0$, on a l'erreur de troncature :
 
 $$E_j^n=\frac{u_j^{n+1}- u_j^n}{\Delta t} +V \frac{u_j^n - u_{j-1}^n}{\Delta x} = \frac{1}{2} \left(\Delta t \ u_{tt} - V \Delta x \  u_{xx}\right)+O(\Delta t^2)+ O(\Delta x^2) $$
 
