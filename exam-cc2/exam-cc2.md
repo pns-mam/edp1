@@ -74,7 +74,7 @@ $$ \frac{3u_j^{n+1}-4u_j^n+u_j^{n-1}}{2\Delta t}-\nu \frac{u_{j+1}^{n+1}-2u_j^{n
 
 $$\frac{3\hat{u}^{n+1}(\xi)-4\hat{u}^n(\xi)+\hat{u}^{n-1}(\xi)}{2\Delta t}-\nu \hat{u}^{n+1}(\xi) \frac{e^{2i\pi\xi\Delta x}-2+e^{-2i\pi\xi\Delta x}}{\Delta x^2}=0$$
 
-On pose $\mu = \frac{\nu \Delta t}{\Delta x^2}$ et on utilise $e^{2i\pi\xi\Delta x}+e^{-2i\pi\xi\Delta x}-2 = 2\cos(2\pi\xi\Delta x)-2 = -4 \sin^2(\pi\xi\Delta x)$ :
+On pose $\mu = \frac{2\nu \Delta t}{\Delta x^2}$ et on utilise $e^{2i\pi\xi\Delta x}+e^{-2i\pi\xi\Delta x}-2 = 2\cos(2\pi\xi\Delta x)-2 = -4 \sin^2(\pi\xi\Delta x)$ :
 
 $$(3+4\mu \sin^2(\pi\xi\Delta x))\hat{u}^{n+1}(\xi)-4\hat{u}^n(\xi)+\hat{u}^{n-1}(\xi)=0$$
 
