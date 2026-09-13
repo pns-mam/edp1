@@ -11,13 +11,13 @@
 
 [TD 1 - Propriétés qualitatives de quelques EDP](td1/td1.pdf)
 
-[TD 2 - Étude de consistance](td2/td2.pdf)
+[TD 2 - Étude de consistance](td2/td2.md)
 
-[TD 3 - Stabilité (1/2)](td3/td3.pdf)
+[TD 3 - Stabilité (1/2)](td3/td3.md)
 
-[TD 4 - Stabilité (2/2)](td4/td4.pdf)
+[TD 4 - Stabilité (2/2)](td4/td4.md)
 
-[TD 5 - Ondes](td5/td5.pdf)
+[TD 5 - Ondes](td5/td5.md)
 
 [TP 1 - Advection](tp1/tp1.md)
 
