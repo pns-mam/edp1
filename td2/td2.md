@@ -3,7 +3,7 @@
 ## MAM4
 
 # EDP1
-# 2025-26
+# 2026-27
 # TD 2 - Études de consistance
 
 
