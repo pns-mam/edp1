@@ -10,9 +10,9 @@ Le but de cette série d'exercices est de montrer quelques propriétés qualitat
 
 ## Exercice 1
 
-On considère le problème de la chaleur en une dimension d'espace posé dans le domaine Ω=(0,1) :
+On considère le problème de la chaleur en une dimension d'espace posé dans le domaine $\Omega = (0,1)$ :
 
-$$\left\{\begin{array}{rcl}
+$$\left\{ \begin{array}{rcl}
 \frac{\partial u}{\partial t} -  \frac{\partial^2 u}{\partial x^2}&=
 &0,\quad t > 0,\quad x \in (0,1),\\
 u(t,x)&=&0,\quad t > 0,\quad x \in \{0,1\},\\
