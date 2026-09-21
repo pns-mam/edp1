@@ -79,10 +79,10 @@ L'équation de Schrödinger décrit l'évolution de la fonction d'onde $u:\mathb
 On se propose de montrer les principes de conservation de l'énergie pour une solution régulière de l'équation de Schrödinger uni-dimensionnelle:
 
 $$\left\{\begin{array}{rcl}
-i\frac{\partial u}{\partial t}+\frac{\partial^2 u}{\partial x^2} -V u &=&0,\quad t > 0, \quad x \in\mathbf{R},\\
-\lim_{|x|\rightarrow\infty}u(t,x)  &=& 0,\, t > 0,\\
+i\frac{\partial u}{\partial t}+\frac{\partial^2 u}{\partial x^2} -V u &=&0,\quad t > 0,\ x \in\mathbf{R},\\
+\lim_{|x|\rightarrow\infty}u(t,x)  &=& 0,\quad t > 0,\\
 \lim_{|x|\rightarrow\infty}\frac{\partial u}{\partial x}(t,x) &=& 0,\quad t > 0,\\
-u(0,x) & = & u_0(x),\,x\in \mathbf{R}.
+u(0,x) & = & u_0(x),\quad x\in \mathbf{R}.
 \end{array}\right.$$
 
 ### 3.1
