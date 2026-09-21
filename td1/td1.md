@@ -63,7 +63,7 @@ où $u_0$ et $u_1$ sont des fonctions régulières.
 
 Supposons maintenant que $\Omega = (0,1)$. Montrer que l'énergie
 
-$$ E(t) := \int_0^1 \left(\frac{\partial u}{\partial t}(t,x)\right)^2 + \left(\frac{\partial u}{\partial x}(t,x)\right)^2 \mathrm{d}x $$
+$$ E(t) := \int_0^1 \left(\ \left| \frac{\partial u}{\partial t}(t,x) \right|^2 + \left| \frac{\partial u}{\partial x}(t,x) \right| \right)^2 \mathrm{d}x $$
 
 est constante.
 
@@ -75,7 +75,7 @@ En utilisant la linéarité de l'équation, en déduire l'unicité de solution.
 
 Vérifier que la fonction suivante est solution du problème des ondes si $\Omega=\mathbf{R}$ (et où $U_1$ une primitive de $u_1$) :
 
-$$u(t,x) = \frac{1}{2}(u_0(x+t)+u_0(x-t))+\frac{1}{2}(U_1(x+t)-U_1(x-t)).$$
+$$ u(t,x) = \frac{1}{2}(u_0(x+t)+u_0(x-t))+\frac{1}{2}(U_1(x+t)-U_1(x-t)).$$
 
 Cette dernière relation porte le nom de *formule de d'Alembert*.
 
@@ -85,12 +85,12 @@ L'équation de Schrödinger décrit l'évolution de la fonction d'onde $u:\mathb
 
 On se propose de montrer les principes de conservation de l'énergie pour une solution régulière de l'équation de Schrödinger uni-dimensionnelle:
 
-$$\left\{\begin{array}{rcl}
+$$ \left\{\begin{array}{rcl}
 i\frac{\partial u}{\partial t}+\frac{\partial^2 u}{\partial x^2} -V u &=&0,\quad t > 0,\ x \in\mathbf{R},\\
 \lim_{|x|\rightarrow\infty}u(t,x)  &=& 0,\quad t > 0,\\
 \lim_{|x|\rightarrow\infty}\frac{\partial u}{\partial x}(t,x) &=& 0,\quad t > 0,\\
 u(0,x) & = & u_0(x),\quad x\in \mathbf{R}.
-\end{array}\right.$$
+\end{array}\right. $$
 
 ### 3.1
 
@@ -104,7 +104,7 @@ où $\mathrm{Re}(v)$ désigne la partie réelle de la fonction $v$, et $\bar v$ 
 
 Montrer que l'énergie
 
-$$ E(t) := \int_{\mathbf{R}}|u(t,x)|^2 \mathrm{d}x = \int_{\mathbf{R}}|u_0(x)|^2 \mathrm{d}x $$
+$$ E(t) := \int_{\mathbf{R}}|u(t,x)|^2 \mathrm{d}x $$
 
 est conservée.
 
@@ -112,6 +112,6 @@ est conservée.
 
 Montrer que la quantité
 
-$$ \int_{\mathbf{R}}\left(\left|\frac{\partial u}{\partial x}(x)\right|^2 +V(x) |u(x,t)|^2\right) \mathrm{d}x = \int_{\mathbf{R}}\left(\left|\frac{\partial u_0}{\partial x}(x)\right|^2 +V(x) |u_0(x)|^2\right) \mathrm{d}x $$
+$$ \int_{\mathbf{R}}\left(\left|\frac{\partial u}{\partial x}(t,x)\right|^2 +V(x) |u(t,x)|^2\right) \mathrm{d}x $$
 
 est également conservée au cours du temps.
