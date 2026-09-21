@@ -35,7 +35,7 @@ $$ E(t) := \int_0^1 u^2(t,x) \mathrm{d}x$$
 
 l'énergie à l'instant $t$. Montrer que
 
-$$ \frac{1}{2}\frac{\mathrm{d}E(t)}{\mathrm{d}t} =-\int_0^1\left(\frac{\partial u}{\partial x}\right)^2 \mathrm{d}x. $$
+$$ \frac{1}{2}\frac{\mathrm{d}E(t)}{\mathrm{d}t} =-\int_0^1\left| \frac{\partial u}{\partial x}(t,x) \right|^2 \mathrm{d}x. $$
 
 ### 1.3
 
