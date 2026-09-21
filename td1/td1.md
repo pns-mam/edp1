@@ -6,7 +6,7 @@
 # 2026-27
 # TD 1 - Propriétés qualitatives de quelques EDP
 
-Le but de cette série d'exercices est de montrer quelques propriétés qualitatives des solutions régulières de certaines équations aux dérivées partielles de nature différente (chaleur, équation des ondes, Schrödinger) qui font notamment intervenir la notion d'*énergie*.
+Le but de cette série d'exercices est de montrer quelques propriétés qualitatives des solutions régulières (on pourra supposer la régularité aussi grande que nécessaire) de certaines équations aux dérivées partielles de nature différente (chaleur, équation des ondes, Schrödinger) qui font notamment intervenir la notion d'*énergie*.
 
 ## Exercice 1
 
