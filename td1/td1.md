@@ -31,7 +31,7 @@ $$\int_0^1 v^2(x) \mathrm{d}x \le \int_0^1 |v'(x)|^2 \mathrm{d}x.$$
 
 On notera dans ce qui suit par 
 
-$$ E(t) := \int_0^1 u^2(t,x) \mathrm{d}x$$
+$$ E(t) := \int_0^1 |u(t,x)|^2 \mathrm{d}x$$
 
 l'énergie à l'instant $t$. Montrer que
 
