@@ -63,7 +63,7 @@ où $u_0$ et $u_1$ sont des fonctions régulières.
 
 Supposons maintenant que $\Omega = (0,1)$. Montrer que l'énergie
 
-$$ E(t) := \int_0^1 \left(\ \left| \frac{\partial u}{\partial t}(t,x) \right|^2 + \left| \frac{\partial u}{\partial x}(t,x) \right| \right)^2 \mathrm{d}x $$
+$$ E(t) := \frac{1}{2} \int_0^1 \left(\ \left| \frac{\partial u}{\partial t}(t,x) \right|^2 + \left| \frac{\partial u}{\partial x}(t,x) \right| \right)^2 \mathrm{d}x $$
 
 est constante.
 
@@ -104,9 +104,9 @@ où $\mathrm{Re}(v)$ désigne la partie réelle de la fonction $v$, et $\bar v$ 
 
 Montrer que l'énergie
 
-$$ E(t) := \int_{\mathbf{R}}|u(t,x)|^2 \mathrm{d}x $$
+$$ E(t) := \frac{1}{2} \int_{\mathbf{R}}|u(t,x)|^2 \mathrm{d}x $$
 
-est conservée.
+est constante.
 
 ### 3.3
 
