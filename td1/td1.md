@@ -25,7 +25,7 @@ Montrer d'abord que toute fonction $v(x)$ continûment dérivable sur $[0,1]$ t.
 
 $$\int_0^1 v^2(x) \mathrm{d}x \le \int_0^1\left(\frac{\mathrm{d}v}{\mathrm{d}x}\right)^2 \mathrm{d}x.$$
 
-(On écrira d'abord $v(x)$ comme intégrale de sa dérivée sur l'intervalle $(0,x)$ et ensuite on appliquera l'inégalité de Cauchy-Schwarz).
+(On écrira d'abord $v(x)$ comme intégrale de sa dérivée sur l'intervalle $(0,x)$ et ensuite on appliquera l'inégalité de Cauchy-Schwarz.)
 
 ### 1.2
 
