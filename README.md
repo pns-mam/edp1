@@ -10,6 +10,7 @@
 [Plan du cours](cm/cm.md)
 
 [TD 1 - Propriétés qualitatives de quelques EDP](td1/td1.pdf)
+([corrigé](td1/td1-corr.pdf))
 
 [TD 2 - Étude de consistance](td2/td2.md)
 
