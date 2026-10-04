@@ -20,7 +20,7 @@
 - exemples de schémas : explicite, implicite, $\theta$-schéma
 - déf. schéma numérique (et support / stencil associé)
 - déf. erreur de troncature, consistance et ordre (en temps et en espace) d'un schéma
-- équation équivalente (interprétation : Cattaneo / diffusion numérique, discussion CFL = 1/6)
+- équation équivalente (interprétation : Cattaneo / diffusion numérique, discussion CFL $= 1/6$)
 
 ## 3. Stabilité
 
