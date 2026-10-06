@@ -20,11 +20,11 @@
 - exemples de schémas : explicite, implicite, $\theta$-schéma
 - déf. schéma numérique (et support / stencil associé)
 - déf. erreur de troncature, consistance et ordre (en temps et en espace) d'un schéma
-- équation équivalente (interprétation : Cattaneo / diffusion numérique, discussion CFL $= 1/6$)
+- équation équivalente
 
 ## 3. Stabilité
 
-- schéma semi-discret, stabilité au sens de Von Neuman
+- schéma semi-discret, stabilité $L^2$, théorème de Von Neumann
 - exemple Euler explicite / implicite pour la chaleur
 - condition CFL (Courant-Friedrichs-Lewy)
 - stabilité au sens $L^\infty$
@@ -33,7 +33,7 @@
 
 ## 4. Équation des ondes
 
-- équations des ondes 1D sur un domaine borné, CL périodiques, hyperbolicité
+- équation des ondes 1D sur un domaine borné, CL périodiques, hyperbolicité
 - condition de moyenne nulle (solutions bornées)
 - motivation (corde, son, lumière / électromagnétisme)
 - autres CL (Dirichlet, Neumann...)
