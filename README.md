@@ -13,6 +13,7 @@
 ([corrigé](td1/td1-corr.pdf))
 
 [TD 2 - Étude de consistance](td2/td2.md)
+([corrigé](td2/td2-corr.pdf))
 
 [TD 3 - Stabilité (1/2)](td3/td3.md)
 
