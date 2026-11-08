@@ -16,8 +16,10 @@
 ([corrigé](td2/td2-corr.pdf))
 
 [TD 3 - Stabilité (1/2)](td3/td3.md)
+([corrigé](td3/td3-corr.pdf))
 
 [TD 4 - Stabilité (2/2)](td4/td4.md)
+([corrigé](td4/td4-corr.pdf))
 
 [TD 5 - Ondes](td5/td5.md)
 
