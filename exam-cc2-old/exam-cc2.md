@@ -22,7 +22,7 @@ $$ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V\frac{u_j^n-u_{j-1}^n}{\Delta x} = 0. $$
 
 Montrer que, sous une condition CFL que l'on précisera, ce schéma est stable au sens $L^\infty$.
 
-**Correction.** En posant $\lambda=\frac{V \Delta t}{\Delta x} $, on a $u_j^{n+1} = (1-\lambda)u_j^{n} +\lambda u_{j-1}^{n}$.
+**Correction.** En posant $\lambda=\frac{V \Delta t}{\Delta x}$, on a $u_j^{n+1} = (1-\lambda)u_j^{n} +\lambda u_{j-1}^{n}$.
 
 Lorsque $0\leq \lambda \leq 1$, $u_j^{n+1}$ est une combinaison convexe de $(u_j^{n},u_{j-1}^{n})$. En particulier
 
