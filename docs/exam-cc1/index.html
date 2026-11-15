@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDP1 – 2026-27 – Exam CC no. 1 (corrigé)</title>
+<link rel="stylesheet" href="../style.css">
+<script
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+type="text/javascript"></script>
+</head>
+<body>
+<nav><a href="../index.html">← Accueil</a></nav>
+<main>
+<p><img src="../logo-pns.png" alt="PNS" /></p>
+<h2 id="mam4">MAM4</h2>
+<h1 id="edp1">EDP1</h1>
+<h1 id="2026-27">2026-27</h1>
+<h1 id="exam-cc-no-1-corrigé">Exam CC no. 1 (corrigé)</h1>
+<p><strong>Durée 2H00. Documents et objets connectés non autorisés. Tous
+les exercices sont indépendants. Le barème prévisionnel est indiqué pour
+chaque exercice. Rendre sur deux copies séparées les exercices 1 et 2
+d'une part, 3 d'autre part.</strong></p>
+<h2 id="exercice-1-6-points">Exercice 1 (6 points)</h2>
+<p>On considère l'équation de convection-diffusion sur le domaine <span
+class="math inline">\(\Omega = ]0,1[\)</span> avec conditions aux
+limites de Dirichlet homogènes :</p>
+<p><span class="math display">\[ \begin{aligned}
+&amp; u_t(t, x) + V u_x(t, x) - \nu u_{xx}(t, x) = 0,\quad t&gt;0,\quad
+x \in \Omega,\\
+&amp; u(t, 0) = u(t, 1) = 0,\quad t &gt; 0,\\
+&amp; u(0, x) = u_0(x), \quad x \in \Omega,
+\end{aligned} \]</span></p>
+<p>où <span class="math inline">\(V \in \mathbf{R}\)</span> (vitesse
+d'advection) et <span class="math inline">\(\nu &gt; 0\)</span>
+(coefficient de diffusion) sont des constantes. On suppose <span
+class="math inline">\(u\)</span> solution aussi régulière que
+nécessaire.</p>
+<h3 id="11">1.1</h3>
+<p>On définit l'énergie</p>
+<p><span class="math display">\[ E(t) := \frac{1}{2} \int_0^1
+u^2(t,x)\,\mathrm{d}x. \]</span></p>
+<p>Montrer que</p>
+<p><span class="math display">\[ E&#39;(t) = -\nu \int_0^1
+u_x^2(t,x)\,\mathrm{d}x. \]</span></p>
+<p><strong>Réponse.</strong> En dérivant sous le signe intégral et en
+utilisant l'équation :</p>
+<p><span class="math display">\[ E&#39;(t) = \int_0^1
+u\,u_t\,\mathrm{d}x = -V \int_0^1 u\,u_x\,\mathrm{d}x + \nu \int_0^1
+u\,u_{xx}\,\mathrm{d}x. \]</span></p>
+<p>Le terme de convection est nul :</p>
+<p><span class="math display">\[ \int_0^1 u\,u_x\,\mathrm{d}x = \left[
+\frac{u^2}{2} \right]_0^1 = 0 \]</span></p>
+<p>grâce aux conditions de Dirichlet. Pour le terme de diffusion, une
+intégration par parties donne</p>
+<p><span class="math display">\[ \int_0^1 u\,u_{xx}\,\mathrm{d}x =
+\left[ u\,u_x \right]_0^1 - \int_0^1 u_x^2\,\mathrm{d}x = - \int_0^1
+u_x^2\,\mathrm{d}x, \]</span></p>
+<p>d'où le résultat. La convection transporte l'énergie sans la
+modifier ; seule la diffusion la dissipe.</p>
+<h3 id="12">1.2</h3>
+<p>En déduire qu'il y a unicité de solution.</p>
+<p><strong>Réponse.</strong> Si <span class="math inline">\(u\)</span>
+et <span class="math inline">\(v\)</span> sont deux solutions, <span
+class="math inline">\(w := u - v\)</span> est solution du même problème
+(linéarité) avec donnée initiale nulle. L'énergie <span
+class="math inline">\(E_w\)</span> associée à <span
+class="math inline">\(w\)</span> vérifie <span
+class="math inline">\(E_w&#39; \le 0\)</span> d'après 1.1, et <span
+class="math inline">\(E_w(0) = 0\)</span>, donc <span
+class="math inline">\(0 \le E_w(t) \le E_w(0) = 0\)</span> pour tout
+<span class="math inline">\(t \ge 0\)</span>. Ainsi <span
+class="math inline">\(\int_0^1 w^2(t,x)\,\mathrm{d}x = 0\)</span> et,
+<span class="math inline">\(w\)</span> étant continue, <span
+class="math inline">\(w(t, \cdot) = 0\)</span> pour tout <span
+class="math inline">\(t\)</span>, <em>i.e.</em> <span
+class="math inline">\(u = v\)</span>.</p>
+<h3 id="13">1.3</h3>
+<p>On admet l'inégalité de Poincaré : pour toute fonction <span
+class="math inline">\(v\)</span> continûment dérivable sur <span
+class="math inline">\([0,1]\)</span> telle que <span
+class="math inline">\(v(0) = 0\)</span>,</p>
+<p><span class="math display">\[ \int_0^1 v^2(x)\,\mathrm{d}x \le
+\int_0^1 |v&#39;(x)|^2\,\mathrm{d}x. \]</span></p>
+<p>Montrer que <span class="math inline">\(E(t) \le E(0)\,e^{-2\nu
+t}\)</span> pour tout <span class="math inline">\(t \ge 0\)</span>.</p>
+<p><strong>Réponse.</strong> Pour <span class="math inline">\(t &gt;
+0\)</span> fixé, <span class="math inline">\(v := u(t,\cdot)\)</span>
+vérifie <span class="math inline">\(v(0) = 0\)</span>, donc d'après
+Poincaré</p>
+<p><span class="math display">\[ E&#39;(t) = -\nu \int_0^1
+u_x^2\,\mathrm{d}x \le -\nu \int_0^1 u^2\,\mathrm{d}x = -2\nu E(t).
+\]</span></p>
+<p>Alors <span class="math inline">\(\left( e^{2\nu t} E(t) \right)&#39;
+= e^{2\nu t}\left( E&#39;(t) + 2\nu E(t) \right) \le 0\)</span>, donc
+<span class="math inline">\(e^{2\nu t}E(t) \le E(0)\)</span>.</p>
+<h2 id="exercice-2-6-points">Exercice 2 (6 points)</h2>
+<p>On considère l'équation de convection-diffusion de l'exercice 1
+(constantes <span class="math inline">\(V \in \mathbf{R}\)</span>, <span
+class="math inline">\(\nu &gt; 0\)</span>), sans se préoccuper des
+conditions aux limites, et le schéma explicite centré</p>
+<p><span class="math display">\[ \frac{u_j^{n+1}-u_j^n}{\Delta t} + V
+\frac{u_{j+1}^n-u_{j-1}^n}{2\Delta x} -
+\nu \frac{u_{j+1}^n-2u_j^n+u_{j-1}^n}{\Delta x^2} = 0. \]</span></p>
+<p>On note <span class="math inline">\(\lambda := V\Delta t/\Delta
+x\)</span> et <span class="math inline">\(\sigma := \nu\Delta t/\Delta
+x^2\)</span>.</p>
+<h3 id="21">2.1</h3>
+<p>Montrer que le schéma est consistant, d'ordre <span
+class="math inline">\(1\)</span> en temps et <span
+class="math inline">\(2\)</span> en espace.</p>
+<p><strong>Réponse.</strong> Développements de Taylor au point <span
+class="math inline">\((t_n, x_j)\)</span> :</p>
+<p><span class="math display">\[ \frac{u(t_{n+1},x_j)-u(t_n,x_j)}{\Delta
+t} = u_t + \frac{\Delta t}{2} u_{tt} + O(\Delta t^2), \]</span></p>
+<p><span class="math display">\[
+\frac{u(t_n,x_{j+1})-u(t_n,x_{j-1})}{2\Delta x} = u_x + \frac{\Delta
+x^2}{6} u_{xxx} + O(\Delta x^4), \]</span></p>
+<p><span class="math display">\[
+\frac{u(t_n,x_{j+1})-2u(t_n,x_j)+u(t_n,x_{j-1})}{\Delta x^2} = u_{xx} +
+\frac{\Delta x^2}{12} u_{xxxx} + O(\Delta x^4). \]</span></p>
+<p>Comme <span class="math inline">\(u_t + Vu_x - \nu u_{xx} =
+0\)</span>, l'erreur de consistance vaut</p>
+<p><span class="math display">\[ \varepsilon_j^n = \frac{\Delta t}{2}
+u_{tt} + \Delta x^2 \left( \frac{V}{6} u_{xxx} - \frac{\nu}{12} u_{xxxx}
+\right) + O(\Delta t^2) + O(\Delta x^4). \]</span></p>
+<p>Le schéma est donc consistant d'ordre <span
+class="math inline">\(1\)</span> en temps et <span
+class="math inline">\(2\)</span> en espace, le coefficient <span
+class="math inline">\(\frac{1}{2}u_{tt}\)</span> de <span
+class="math inline">\(\Delta t\)</span> n'étant pas nul en général. (On
+peut l'exprimer en espace : <span class="math inline">\(u_{tt} = V^2
+u_{xx} - 2V\nu\, u_{xxx} + \nu^2 u_{xxxx}\)</span>, mais ce n'est pas
+nécessaire.)</p>
+<h3 id="22">2.2</h3>
+<p>Étudier la stabilité au sens <span class="math inline">\(L^2\)</span>
+du schéma.</p>
+<p><strong>Réponse.</strong> On injecte le mode de Fourier <span
+class="math inline">\(u_j^n = a^n(\xi)\,e^{2i\pi\xi j\Delta x}\)</span>
+et on pose <span class="math inline">\(\varphi := 2\pi\xi\Delta
+x\)</span>. En divisant par <span
+class="math inline">\(a^n(\xi)e^{2i\pi\xi j\Delta x}\)</span> :</p>
+<p><span class="math display">\[ a(\xi) = 1 - \frac{\lambda}{2}\left(
+e^{i\varphi} - e^{-i\varphi} \right) + \sigma\left( e^{i\varphi} - 2 +
+e^{-i\varphi} \right) = 1 - 4\sigma\sin^2(\varphi/2) -
+i\lambda\sin\varphi, \]</span></p>
+<p>car <span class="math inline">\(1 - \cos\varphi =
+2\sin^2(\varphi/2)\)</span>. En notant <span class="math inline">\(s :=
+\sin^2(\varphi/2) \in [0,1]\)</span>, avec <span
+class="math inline">\(\sin^2\varphi = 4s(1-s)\)</span> :</p>
+<p><span class="math display">\[ |a(\xi)|^2 = (1 - 4\sigma s)^2 +
+4\lambda^2 s(1-s) = 1 + 4s\left[ (\lambda^2 - 2\sigma) + s\,(4\sigma^2 -
+\lambda^2) \right]. \]</span></p>
+<p>Ainsi <span class="math inline">\(|a(\xi)| \le 1\)</span> pour tout
+<span class="math inline">\(\xi\)</span> ssi la fonction affine <span
+class="math inline">\(g(s) := (\lambda^2 - 2\sigma) + s\,(4\sigma^2 -
+\lambda^2)\)</span> est <span class="math inline">\(\le 0\)</span> sur
+<span class="math inline">\([0,1]\)</span>, <em>i.e.</em> ssi <span
+class="math inline">\(g(0) \le 0\)</span> et <span
+class="math inline">\(g(1) \le 0\)</span> :</p>
+<ul>
+<li><span class="math inline">\(g(0) = \lambda^2 - 2\sigma \le
+0\)</span>, <em>i.e.</em> <span class="math inline">\(V^2\Delta t \le
+2\nu\)</span> ;</li>
+<li><span class="math inline">\(g(1) = 4\sigma^2 - 2\sigma =
+2\sigma(2\sigma - 1) \le 0\)</span>, <em>i.e.</em> <span
+class="math inline">\(\sigma \le 1/2\)</span>.</li>
+</ul>
+<p>Sous la condition <span class="math inline">\(\lambda^2 \le 2\sigma
+\le 1\)</span>, le schéma est donc stable au sens <span
+class="math inline">\(L^2\)</span>. La première condition porte sur
+<span class="math inline">\(\Delta t\)</span> seul : elle est
+contraignante quand la convection domine la diffusion. En particulier,
+pour <span class="math inline">\(\nu = 0\)</span> (advection pure),
+<span class="math inline">\(|a(\xi)|^2 = 1 + \lambda^2\sin^2\varphi &gt;
+1\)</span> pour <span class="math inline">\(\lambda \neq 0\)</span> et
+<span class="math inline">\(\sin\varphi \neq 0\)</span> : c'est la
+diffusion qui stabilise le schéma.</p>
+<h2 id="exercice-3-8-points">Exercice 3 (8 points)</h2>
+<p>On considère l'équation d'advection</p>
+<p><span class="math display">\[ u_t(t, x) + V u_x(t, x) = 0,
+\]</span></p>
+<p>avec <span class="math inline">\(V \in \mathbf{R}\)</span>, <span
+class="math inline">\(V \neq 0\)</span>, et le schéma
+<em>saute-mouton</em> (Leapfrog), centré en temps et en espace :</p>
+<p><span class="math display">\[ \frac{u_j^{n+1}-u_j^{n-1}}{2\Delta t} +
+V \frac{u_{j+1}^n-u_{j-1}^n}{2\Delta x} = 0. \]</span></p>
+<p>On note <span class="math inline">\(\lambda := V\Delta t/\Delta
+x\)</span>.</p>
+<h3 id="31">3.1</h3>
+<p>Montrer que le schéma est consistant d'ordre <span
+class="math inline">\(2\)</span> en temps et en espace.</p>
+<p><strong>Réponse.</strong> Développements de Taylor au point <span
+class="math inline">\((t_n, x_j)\)</span> (les termes pairs se
+compensent par symétrie) :</p>
+<p><span class="math display">\[
+\frac{u(t_{n+1},x_j)-u(t_{n-1},x_j)}{2\Delta t} = u_t + \frac{\Delta
+t^2}{6} u_{ttt} + O(\Delta t^4), \]</span></p>
+<p><span class="math display">\[
+\frac{u(t_n,x_{j+1})-u(t_n,x_{j-1})}{2\Delta x} = u_x + \frac{\Delta
+x^2}{6} u_{xxx} + O(\Delta x^4). \]</span></p>
+<p>Comme <span class="math inline">\(u_t + Vu_x = 0\)</span>, l'erreur
+de consistance vaut</p>
+<p><span class="math display">\[ \varepsilon_j^n = \frac{\Delta t^2}{6}
+u_{ttt} + \frac{V\Delta x^2}{6} u_{xxx} + O(\Delta t^4) + O(\Delta x^4).
+\]</span></p>
+<p>Le schéma est consistant d'ordre <span
+class="math inline">\(2\)</span> en temps et en espace, les coefficients
+de <span class="math inline">\(\Delta t^2\)</span> et <span
+class="math inline">\(\Delta x^2\)</span> n'étant pas nuls en général.
+(Comme <span class="math inline">\(u_t = -V u_x\)</span> avec <span
+class="math inline">\(V\)</span> constant, on a <span
+class="math inline">\(u_{tt} = -V u_{xt} = V^2 u_{xx}\)</span> puis
+<span class="math inline">\(u_{ttt} = -V^3 u_{xxx}\)</span>, et <span
+class="math inline">\(\varepsilon_j^n = \frac{V}{6}\left( \Delta x^2 -
+V^2\Delta t^2 \right) u_{xxx} + O(\Delta t^4) + O(\Delta
+x^4)\)</span>.)</p>
+<h3 id="32">3.2</h3>
+<p>Montrer que le facteur d'amplification est solution d'une équation de
+degré deux que l'on précisera.</p>
+<p><strong>Réponse.</strong> En injectant le mode de Fourier <span
+class="math inline">\(u_j^n = a^n(\xi)\,e^{2i\pi\xi j\Delta x}\)</span>
+et en divisant par <span class="math inline">\(a^{n-1}(\xi)e^{2i\pi\xi
+j\Delta x}\)</span> :</p>
+<p><span class="math display">\[ \frac{a^2 - 1}{2\Delta t} + V\, a\,
+\frac{e^{i\varphi} - e^{-i\varphi}}{2\Delta x} = 0 \iff a^2 +
+2ia\lambda\sin\varphi - 1 = 0, \quad \varphi := 2\pi\xi\Delta x.
+\]</span></p>
+<h3 id="33">3.3</h3>
+<p>Discuter la stabilité au sens <span
+class="math inline">\(L^2\)</span> en fonction de <span
+class="math inline">\(|\lambda|\)</span>.</p>
+<p><strong>Réponse.</strong> Le discriminant réduit vaut <span
+class="math inline">\(\delta := 1 - \lambda^2\sin^2\varphi\)</span> et
+les racines sont <span class="math inline">\(a_{1,2}(\xi) =
+-i\lambda\sin\varphi \pm \sqrt{\delta}\)</span> ; leur produit vaut
+<span class="math inline">\(a_1 a_2 = -1\)</span>.</p>
+<ul>
+<li>Si <span class="math inline">\(|\lambda| &lt; 1\)</span> : <span
+class="math inline">\(\delta &gt; 0\)</span> pour tout <span
+class="math inline">\(\xi\)</span>, les racines sont distinctes et <span
+class="math inline">\(|a_{1,2}|^2 = \lambda^2\sin^2\varphi + \delta =
+1\)</span>. La condition <span class="math inline">\(|a_{1,2}(\xi)| \le
+1\)</span> est satisfaite pour tout <span
+class="math inline">\(\xi\)</span> : le schéma est stable au sens <span
+class="math inline">\(L^2\)</span>.</li>
+<li>Si <span class="math inline">\(|\lambda| = 1\)</span> : pour <span
+class="math inline">\(\varphi = \pi/2\)</span> (<em>i.e.</em> <span
+class="math inline">\(\xi = 1/(4\Delta x)\)</span>), <span
+class="math inline">\(\delta = 0\)</span> et <span
+class="math inline">\(a_1 = a_2 = -i\lambda\)</span> est racine double
+de module <span class="math inline">\(1\)</span>. La suite associée
+contient alors un terme de la forme <span
+class="math inline">\(n(-i\lambda)^n\)</span>, de module <span
+class="math inline">\(n\)</span>, qui croît linéairement : la condition
+(racine double de module <span class="math inline">\(&lt; 1\)</span>)
+n'est pas satisfaite.</li>
+<li>Si <span class="math inline">\(|\lambda| &gt; 1\)</span> : il existe
+<span class="math inline">\(\xi\)</span> tel que <span
+class="math inline">\(\lambda^2\sin^2\varphi &gt; 1\)</span> ; les
+racines <span class="math inline">\(a_{1,2} = -i\left(
+\lambda\sin\varphi \mp \sqrt{\lambda^2\sin^2\varphi - 1}
+\right)\)</span> sont distinctes, imaginaires pures, de modules
+différents et de produit de module <span
+class="math inline">\(1\)</span> : l'une est de module <span
+class="math inline">\(&gt; 1\)</span>.</li>
+</ul>
+<p>La condition de Von Neumann est donc satisfaite pour tout <span
+class="math inline">\(\xi\)</span> ssi <span
+class="math inline">\(|\lambda| &lt; 1\)</span>, <em>i.e.</em> <span
+class="math inline">\(|V|\Delta t &lt; \Delta x\)</span>.</p>
+</main>
+<footer>Page générée automatiquement à partir des fichiers Markdown du dépôt (pandoc, MathJax).</footer>
+</body>
+</html>

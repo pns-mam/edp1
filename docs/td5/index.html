@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDP1 – 2026-27 – TD 5 - Ondes</title>
+<link rel="stylesheet" href="../style.css">
+<script
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+type="text/javascript"></script>
+</head>
+<body>
+<nav><a href="../index.html">← Accueil</a></nav>
+<main>
+<p><img src="../logo-pns.png" alt="PNS" /></p>
+<h2 id="mam4">MAM4</h2>
+<h1 id="edp1">EDP1</h1>
+<h1 id="2026-27">2026-27</h1>
+<h1 id="td-5---ondes">TD 5 - Ondes</h1>
+<h2 id="exercice-1">Exercice 1</h2>
+<p>Étudier la stabilité au sens de Von Neumann du <span
+class="math inline">\(\theta\)</span>-schéma ci-dessous, <span
+class="math inline">\(\theta \in [0,1/2]\)</span> :</p>
+<p><span class="math display">\[
+\frac{u_j^{n+1}-2u_j^n+u^{n-1}_j}{\Delta t^2} - \theta
+\frac{u_{j+1}^{n+1}-2u_j^{n+1}+u_{j-1}^{n+1}}{\Delta x^2} - (1-2\theta)
+\frac{u_{j+1}^{n}-2u_j^{n}+u_{j-1}^{n}}{\Delta x^2} - \theta
+\frac{u_{j+1}^{n-1}-2u_j^{n-1}+u_{j-1}^{n-1}}{\Delta x^2}= 0.
+\]</span></p>
+<h2 id="exercice-2">Exercice 2</h2>
+<p>Étudier la stabilité au sens de Von Neumann du schéma vectoriel de
+Lax-Friedrichs ci-dessous, où <span class="math inline">\(A\)</span> est
+une matrice que l'on précisera :</p>
+<p><span class="math display">\[
+\frac{2U_j^{n+1}-U_{j+1}^{n}-U_{j-1}^n}{2\Delta t} + A
+\frac{U_{j+1}^{n}-U_{j-1}^{n}}{2\Delta x} = 0. \]</span></p>
+<h2 id="exercice-3">Exercice 3</h2>
+<p>Étudier la stabilité au sens de Von Neumann du schéma vectoriel de
+Lax-Wendroff ci-dessous :</p>
+<p><span class="math display">\[ \frac{U_j^{n+1}-U_{j}^{n}}{\Delta t} +
+A \frac{U_{j+1}^{n}-U_{j-1}^{n}}{2\Delta x} - A^2\Delta t
+\frac{U_{j+1}^{n}-2U_{j}^{n}+U_{j-1}^{n}}{2\Delta x^2}= 0. \]</span></p>
+</main>
+<footer>Page générée automatiquement à partir des fichiers Markdown du dépôt (pandoc, MathJax).</footer>
+</body>
+</html>
