@@ -25,7 +25,9 @@
 
 [TP 1 - Advection](tp1/tp1.md)
 
-[TP 2 - Chaleur](tp2/tp2.md)
+TP 2 - Chaleur
+
+[Exam CC 1](exam-cc1/exam-cc1.md)
 
 [Exam CC 1 (2025-26)](exam-cc1-old/exam-cc1.pdf)
 
