@@ -110,6 +110,22 @@ $$ u_j^{n+1} = u_j^n - \frac{\sigma}{2}(u_{j+1}^n - u_{j-1}^n)
 
 On note $U^n := (u_j^n)_j$, montrer que ce schéma s'écrit $AU^{n+1} = W^n$ avec $A$ une matrice et $W$ un vecteur que l'on précisera. Montrer que cette matrice est inversible.
 
+**Correction.** Grâce à la périodicité ($u_{-1} = u_{J-1}$, $u_J = u_0$), on a $J$ inconnues $U^n := (u_j^n)_{0 \le j \le J-1}$ ($J \ge 3$). En passant les termes en $n+1$ à gauche, le schéma s'écrit pour tout $j$
+
+$$ -\frac{\sigma^2}{2} u_{j-1}^{n+1} + (1+\sigma^2)\, u_j^{n+1} - \frac{\sigma^2}{2} u_{j+1}^{n+1} = u_j^n - \frac{\sigma}{2}(u_{j+1}^n - u_{j-1}^n), $$
+
+c'est-à-dire $AU^{n+1} = W^n$ avec
+
+$$ A = \begin{pmatrix} 1+\sigma^2 & -\sigma^2/2 & & & -\sigma^2/2 \\ -\sigma^2/2 & 1+\sigma^2 & -\sigma^2/2 & & \\ & \ddots & \ddots & \ddots & \\ & & -\sigma^2/2 & 1+\sigma^2 & -\sigma^2/2 \\ -\sigma^2/2 & & & -\sigma^2/2 & 1+\sigma^2 \end{pmatrix}, \qquad W^n = \left( u_j^n - \frac{\sigma}{2}(u_{j+1}^n - u_{j-1}^n) \right)_{j}. $$
+
+La matrice $A$ est tridiagonale, avec en plus les deux coins $A_{0,J-1} = A_{J-1,0} = -\sigma^2/2$ dus à la périodicité.
+
+*Inversibilité.* Soit $U$ tel que $AU = 0$ et $j_0$ un indice tel que $|u_{j_0}| = \max_j |u_j|$. La ligne $j_0$ donne $(1+\sigma^2)\, u_{j_0} = \frac{\sigma^2}{2}(u_{j_0+1} + u_{j_0-1})$, donc
+
+$$ (1+\sigma^2)\,|u_{j_0}| \le \frac{\sigma^2}{2}\left( |u_{j_0+1}| + |u_{j_0-1}| \right) \le \sigma^2 |u_{j_0}|, $$
+
+d'où $|u_{j_0}| \le 0$ et $U = 0$. La matrice carrée $A$ est donc injective, donc inversible, pour tout $\sigma$. (On peut aussi remarquer que $A$ est symétrique à diagonale strictement dominante, donc définie positive, ses valeurs propres étant $1 + \sigma^2(1 - \cos\varphi) \ge 1$.)
+
 ### 3.2
 
 Dans la portion de code associé ci-dessous, quel est le rôle de l'expression `u = F \ w` et que représente `F` ?
@@ -120,6 +136,8 @@ for n ∈ 1:N
     u = F \ w
 end
 ```
+
+**Correction.** `F` est la factorisation de Cholesky de la matrice $A$ (symétrique définie positive), calculée une seule fois avant la boucle en temps. Dans la boucle, `w` représente $W^n$ et l'expression `u = F \ w` résout le système linéaire $AU^{n+1} = W^n$ à l'aide de la factorisation (deux résolutions triangulaires, peu coûteuses grâce à la structure creuse) : `u` contient ensuite $U^{n+1}$. On évite ainsi d'inverser $A$ et de la refactoriser à chaque pas de temps.
 
 ### 3.3
 
@@ -148,6 +166,14 @@ function laplacian(G; Δx = 1.0, Δy = 1.0)
 end
 ```
 
+**Correction.** La commande `spzeros(K, K)` crée une matrice creuse (*sparse*) $K \times K$ nulle : seuls les coefficients non nuls affectés ensuite (au plus $5$ par ligne pour le laplacien discret) sont stockés, ce qui représente une mémoire en $O(K)$ au lieu de $O(K^2)$ et permet d'utiliser des algorithmes d'algèbre linéaire creuse.
+
+La ligne 11 concerne le voisin de gauche (ouest), dans la direction $x$ comme le voisin de droite (est) de la ligne 15 : on complète par
+
+```julia
+if kW ≠ 0 Δ[k, kW] = 1 / Δx^2 end
+```
+
 ## Exercice 4 (5 points)
 
 On cherche $u$ dans $\mathscr{C}^2(\overline{\Omega})$ (où $\Omega$ est un ouvert borné de $\mathbf{R}^n$ à bord $\Gamma := \partial\Omega$ régulier) telle que
@@ -168,10 +194,55 @@ $$ (\forall v \in H^1(\Omega)) : a(u, v) = \varphi \cdot v, $$
 
 avec $a$ bilinéaire et $\varphi$ linéaire que l'on précisera.
 
+**Correction.** Soit $u \in \mathscr{C}^2(\overline{\Omega})$ solution forte et $v \in H^1(\Omega)$. On multiplie l'équation par $v$ et on intègre sur $\Omega$ :
+
+$$ -\int_\Omega \Delta u\, v\,\mathrm{d}x + \int_\Omega u\, v\,\mathrm{d}x = \int_\Omega f v\,\mathrm{d}x. $$
+
+La formule de Green
+
+$$ \int_\Omega \Delta u\, v\,\mathrm{d}x = -\int_\Omega \nabla u \cdot \nabla v\,\mathrm{d}x + \int_\Gamma \frac{\partial u}{\partial n}\, v\,\mathrm{d}\sigma, $$
+
+valable pour $u \in \mathscr{C}^2(\overline{\Omega})$ et $v \in \mathscr{C}^1(\overline{\Omega})$ (le bord est régulier), s'étend à $v \in H^1(\Omega)$ par densité de $\mathscr{C}^1(\overline{\Omega})$ dans $H^1(\Omega)$ et continuité de l'application trace $H^1(\Omega) \to L^2(\Gamma)$. Avec la condition de Neumann $\partial u/\partial n = g$ sur $\Gamma$, on obtient
+
+$$ \int_\Omega \nabla u \cdot \nabla v\,\mathrm{d}x + \int_\Omega u\, v\,\mathrm{d}x = \int_\Omega f v\,\mathrm{d}x + \int_\Gamma g\, v\,\mathrm{d}\sigma. $$
+
+Ainsi $u \in H^1(\Omega)$ (car $u \in \mathscr{C}^2(\overline{\Omega})$ et $\Omega$ est borné) est solution du problème faible $a(u,v) = \varphi \cdot v$ pour tout $v \in H^1(\Omega)$, avec
+
+$$ a(u,v) = \int_\Omega \left( \nabla u \cdot \nabla v + u\, v \right) \mathrm{d}x, \qquad \varphi \cdot v = \int_\Omega f v\,\mathrm{d}x + \int_\Gamma g\, v\,\mathrm{d}\sigma. $$
+
+La condition de Neumann, non imposée dans l'espace, apparaît dans la forme linéaire (condition *naturelle*).
+
 ### 4.2
 
 Montrer qu'on a existence et unicité de solution faible.
 
+**Correction.** On applique le théorème de Lax-Milgram dans l'espace de Hilbert $H^1(\Omega)$, muni de la norme $\|v\|_{H^1}^2 = \int_\Omega (|\nabla v|^2 + v^2)\,\mathrm{d}x$.
+
+- *Continuité de $a$.* Par l'inégalité de Cauchy-Schwarz, $|a(u,v)| \le \|\nabla u\|_{L^2}\|\nabla v\|_{L^2} + \|u\|_{L^2}\|v\|_{L^2} \le \|u\|_{H^1}\|v\|_{H^1}$.
+- *Coercivité de $a$.* $a(v,v) = \|v\|_{H^1}^2$ pour tout $v \in H^1(\Omega)$, avec constante $1$.
+- *Continuité de $\varphi$.* Comme $\Omega$ est borné et $f$ continue sur $\overline{\Omega}$, $f \in L^2(\Omega)$ ; comme $\Gamma$ est compact et $g$ continue, $g \in L^2(\Gamma)$. Par le théorème de trace, il existe $C > 0$ tel que $\|v\|_{L^2(\Gamma)} \le C \|v\|_{H^1}$, donc
+$$ |\varphi \cdot v| \le \|f\|_{L^2(\Omega)} \|v\|_{L^2(\Omega)} + \|g\|_{L^2(\Gamma)} \|v\|_{L^2(\Gamma)} \le \left( \|f\|_{L^2(\Omega)} + C \|g\|_{L^2(\Gamma)} \right) \|v\|_{H^1}. $$
+
+Le théorème de Lax-Milgram donne l'existence et l'unicité de $u \in H^1(\Omega)$ solution faible. (La forme $a$ étant le produit scalaire de $H^1(\Omega)$, c'est aussi une conséquence du théorème de représentation de Riesz.)
+
 ### 4.3
 
 Montrer que toute solution faible dans $\mathscr{C}^2(\overline{\Omega})$ est solution forte.
+
+**Correction.** Soit $u \in \mathscr{C}^2(\overline{\Omega})$ solution faible.
+
+*Équation dans $\Omega$.* Pour $v \in \mathscr{C}_c^\infty(\Omega) \subset H^1(\Omega)$ (nulle au bord), la formule de Green donne $\int_\Omega \nabla u \cdot \nabla v\,\mathrm{d}x = -\int_\Omega \Delta u\, v\,\mathrm{d}x$, et la formulation faible devient
+
+$$ \int_\Omega \left( -\Delta u + u - f \right) v\,\mathrm{d}x = 0 \quad \text{pour tout } v \in \mathscr{C}_c^\infty(\Omega). $$
+
+La fonction $-\Delta u + u - f$ étant continue, on en déduit $-\Delta u + u = f$ en tout point de $\Omega$ (lemme fondamental du calcul des variations), puis sur $\overline{\Omega}$ par continuité.
+
+*Condition au bord.* Soit maintenant $v \in H^1(\Omega)$ quelconque. La formule de Green et l'équation précédente donnent
+
+$$ a(u,v) = \int_\Omega \left( -\Delta u + u \right) v\,\mathrm{d}x + \int_\Gamma \frac{\partial u}{\partial n}\, v\,\mathrm{d}\sigma = \int_\Omega f v\,\mathrm{d}x + \int_\Gamma \frac{\partial u}{\partial n}\, v\,\mathrm{d}\sigma. $$
+
+Comme $u$ est solution faible, $a(u,v) = \int_\Omega f v + \int_\Gamma g\, v$, d'où, avec $h := \partial u/\partial n - g$,
+
+$$ \int_\Gamma h\, v\,\mathrm{d}\sigma = 0 \quad \text{pour tout } v \in H^1(\Omega). $$
+
+La fonction $h$ est continue sur $\Gamma$ (car $u \in \mathscr{C}^2(\overline{\Omega})$, $g$ est continue et le bord est régulier). En prenant pour $v$ des polynômes, dont les restrictions à $\Gamma$ (compact) sont denses dans $\mathscr{C}(\Gamma)$ pour la norme uniforme (Stone-Weierstrass), on obtient $\int_\Gamma h\,\psi\,\mathrm{d}\sigma = 0$ pour tout $\psi \in \mathscr{C}(\Gamma)$, et $\psi = h$ donne $\int_\Gamma h^2\,\mathrm{d}\sigma = 0$, soit $h = 0$ : $\partial u/\partial n = g$ sur $\Gamma$. La fonction $u$ est donc solution forte.

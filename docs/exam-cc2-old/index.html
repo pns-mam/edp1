@@ -5,6 +5,71 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EDP1 – 2025-26 – Exam CC no. 2</title>
 <link rel="stylesheet" href="../style.css">
+<style>
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 <script
 src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
 type="text/javascript"></script>
@@ -152,6 +217,47 @@ montrer que ce schéma s'écrit <span class="math inline">\(AU^{n+1} =
 W^n\)</span> avec <span class="math inline">\(A\)</span> une matrice et
 <span class="math inline">\(W\)</span> un vecteur que l'on précisera.
 Montrer que cette matrice est inversible.</p>
+<p><strong>Correction.</strong> Grâce à la périodicité (<span
+class="math inline">\(u_{-1} = u_{J-1}\)</span>, <span
+class="math inline">\(u_J = u_0\)</span>), on a <span
+class="math inline">\(J\)</span> inconnues <span
+class="math inline">\(U^n := (u_j^n)_{0 \le j \le J-1}\)</span> (<span
+class="math inline">\(J \ge 3\)</span>). En passant les termes en <span
+class="math inline">\(n+1\)</span> à gauche, le schéma s'écrit pour tout
+<span class="math inline">\(j\)</span></p>
+<p><span class="math display">\[ -\frac{\sigma^2}{2} u_{j-1}^{n+1} +
+(1+\sigma^2)\, u_j^{n+1} - \frac{\sigma^2}{2} u_{j+1}^{n+1} = u_j^n -
+\frac{\sigma}{2}(u_{j+1}^n - u_{j-1}^n), \]</span></p>
+<p>c'est-à-dire <span class="math inline">\(AU^{n+1} = W^n\)</span>
+avec</p>
+<p><span class="math display">\[ A = \begin{pmatrix} 1+\sigma^2 &amp;
+-\sigma^2/2 &amp; &amp; &amp; -\sigma^2/2 \\ -\sigma^2/2 &amp;
+1+\sigma^2 &amp; -\sigma^2/2 &amp; &amp; \\ &amp; \ddots &amp; \ddots
+&amp; \ddots &amp; \\ &amp; &amp; -\sigma^2/2 &amp; 1+\sigma^2 &amp;
+-\sigma^2/2 \\ -\sigma^2/2 &amp; &amp; &amp; -\sigma^2/2 &amp;
+1+\sigma^2 \end{pmatrix}, \qquad W^n = \left( u_j^n -
+\frac{\sigma}{2}(u_{j+1}^n - u_{j-1}^n) \right)_{j}. \]</span></p>
+<p>La matrice <span class="math inline">\(A\)</span> est tridiagonale,
+avec en plus les deux coins <span class="math inline">\(A_{0,J-1} =
+A_{J-1,0} = -\sigma^2/2\)</span> dus à la périodicité.</p>
+<p><em>Inversibilité.</em> Soit <span class="math inline">\(U\)</span>
+tel que <span class="math inline">\(AU = 0\)</span> et <span
+class="math inline">\(j_0\)</span> un indice tel que <span
+class="math inline">\(|u_{j_0}| = \max_j |u_j|\)</span>. La ligne <span
+class="math inline">\(j_0\)</span> donne <span
+class="math inline">\((1+\sigma^2)\, u_{j_0} =
+\frac{\sigma^2}{2}(u_{j_0+1} + u_{j_0-1})\)</span>, donc</p>
+<p><span class="math display">\[ (1+\sigma^2)\,|u_{j_0}| \le
+\frac{\sigma^2}{2}\left( |u_{j_0+1}| + |u_{j_0-1}| \right) \le \sigma^2
+|u_{j_0}|, \]</span></p>
+<p>d'où <span class="math inline">\(|u_{j_0}| \le 0\)</span> et <span
+class="math inline">\(U = 0\)</span>. La matrice carrée <span
+class="math inline">\(A\)</span> est donc injective, donc inversible,
+pour tout <span class="math inline">\(\sigma\)</span>. (On peut aussi
+remarquer que <span class="math inline">\(A\)</span> est symétrique à
+diagonale strictement dominante, donc définie positive, ses valeurs
+propres étant <span class="math inline">\(1 + \sigma^2(1 - \cos\varphi)
+\ge 1\)</span>.)</p>
 <h3 id="32">3.2</h3>
 <p>Dans la portion de code associé ci-dessous, quel est le rôle de
 l'expression <code>u = F \ w</code> et que représente <code>F</code>
@@ -160,6 +266,18 @@ l'expression <code>u = F \ w</code> et que représente <code>F</code>
     w = u - ...
     u = F \ w
 end</code></pre>
+<p><strong>Correction.</strong> <code>F</code> est la factorisation de
+Cholesky de la matrice <span class="math inline">\(A\)</span>
+(symétrique définie positive), calculée une seule fois avant la boucle
+en temps. Dans la boucle, <code>w</code> représente <span
+class="math inline">\(W^n\)</span> et l'expression
+<code>u = F \ w</code> résout le système linéaire <span
+class="math inline">\(AU^{n+1} = W^n\)</span> à l'aide de la
+factorisation (deux résolutions triangulaires, peu coûteuses grâce à la
+structure creuse) : <code>u</code> contient ensuite <span
+class="math inline">\(U^{n+1}\)</span>. On évite ainsi d'inverser <span
+class="math inline">\(A\)</span> et de la refactoriser à chaque pas de
+temps.</p>
 <h3 id="33">3.3</h3>
 <p>Dans le code ci-dessous, à quoi sert la commande <code>spzeros</code>
 ? Compléter la ligne 11.</p>
@@ -183,6 +301,19 @@ end</code></pre>
     end
     return Δ
 end</code></pre>
+<p><strong>Correction.</strong> La commande <code>spzeros(K, K)</code>
+crée une matrice creuse (<em>sparse</em>) <span class="math inline">\(K
+\times K\)</span> nulle : seuls les coefficients non nuls affectés
+ensuite (au plus <span class="math inline">\(5\)</span> par ligne pour
+le laplacien discret) sont stockés, ce qui représente une mémoire en
+<span class="math inline">\(O(K)\)</span> au lieu de <span
+class="math inline">\(O(K^2)\)</span> et permet d'utiliser des
+algorithmes d'algèbre linéaire creuse.</p>
+<p>La ligne 11 concerne le voisin de gauche (ouest), dans la direction
+<span class="math inline">\(x\)</span> comme le voisin de droite (est)
+de la ligne 15 : on complète par</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> kW <span class="op">≠</span> <span class="fl">0</span> Δ[k, kW] <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> Δx<span class="op">^</span><span class="fl">2</span> <span class="cf">end</span></span></code></pre></div>
 <h2 id="exercice-4-5-points">Exercice 4 (5 points)</h2>
 <p>On cherche <span class="math inline">\(u\)</span> dans <span
 class="math inline">\(\mathscr{C}^2(\overline{\Omega})\)</span> (où
@@ -206,12 +337,131 @@ d'un nouveau problème de la forme</p>
 \varphi \cdot v, \]</span></p>
 <p>avec <span class="math inline">\(a\)</span> bilinéaire et <span
 class="math inline">\(\varphi\)</span> linéaire que l'on précisera.</p>
+<p><strong>Correction.</strong> Soit <span class="math inline">\(u \in
+\mathscr{C}^2(\overline{\Omega})\)</span> solution forte et <span
+class="math inline">\(v \in H^1(\Omega)\)</span>. On multiplie
+l'équation par <span class="math inline">\(v\)</span> et on intègre sur
+<span class="math inline">\(\Omega\)</span> :</p>
+<p><span class="math display">\[ -\int_\Omega \Delta u\, v\,\mathrm{d}x
++ \int_\Omega u\, v\,\mathrm{d}x = \int_\Omega f v\,\mathrm{d}x.
+\]</span></p>
+<p>La formule de Green</p>
+<p><span class="math display">\[ \int_\Omega \Delta u\, v\,\mathrm{d}x =
+-\int_\Omega \nabla u \cdot \nabla v\,\mathrm{d}x + \int_\Gamma
+\frac{\partial u}{\partial n}\, v\,\mathrm{d}\sigma, \]</span></p>
+<p>valable pour <span class="math inline">\(u \in
+\mathscr{C}^2(\overline{\Omega})\)</span> et <span
+class="math inline">\(v \in \mathscr{C}^1(\overline{\Omega})\)</span>
+(le bord est régulier), s'étend à <span class="math inline">\(v \in
+H^1(\Omega)\)</span> par densité de <span
+class="math inline">\(\mathscr{C}^1(\overline{\Omega})\)</span> dans
+<span class="math inline">\(H^1(\Omega)\)</span> et continuité de
+l'application trace <span class="math inline">\(H^1(\Omega) \to
+L^2(\Gamma)\)</span>. Avec la condition de Neumann <span
+class="math inline">\(\partial u/\partial n = g\)</span> sur <span
+class="math inline">\(\Gamma\)</span>, on obtient</p>
+<p><span class="math display">\[ \int_\Omega \nabla u \cdot \nabla
+v\,\mathrm{d}x + \int_\Omega u\, v\,\mathrm{d}x = \int_\Omega f
+v\,\mathrm{d}x + \int_\Gamma g\, v\,\mathrm{d}\sigma. \]</span></p>
+<p>Ainsi <span class="math inline">\(u \in H^1(\Omega)\)</span> (car
+<span class="math inline">\(u \in
+\mathscr{C}^2(\overline{\Omega})\)</span> et <span
+class="math inline">\(\Omega\)</span> est borné) est solution du
+problème faible <span class="math inline">\(a(u,v) = \varphi \cdot
+v\)</span> pour tout <span class="math inline">\(v \in
+H^1(\Omega)\)</span>, avec</p>
+<p><span class="math display">\[ a(u,v) = \int_\Omega \left( \nabla u
+\cdot \nabla v + u\, v \right) \mathrm{d}x, \qquad \varphi \cdot v =
+\int_\Omega f v\,\mathrm{d}x + \int_\Gamma g\, v\,\mathrm{d}\sigma.
+\]</span></p>
+<p>La condition de Neumann, non imposée dans l'espace, apparaît dans la
+forme linéaire (condition <em>naturelle</em>).</p>
 <h3 id="42">4.2</h3>
 <p>Montrer qu'on a existence et unicité de solution faible.</p>
+<p><strong>Correction.</strong> On applique le théorème de Lax-Milgram
+dans l'espace de Hilbert <span
+class="math inline">\(H^1(\Omega)\)</span>, muni de la norme <span
+class="math inline">\(\|v\|_{H^1}^2 = \int_\Omega (|\nabla v|^2 +
+v^2)\,\mathrm{d}x\)</span>.</p>
+<ul>
+<li><em>Continuité de <span class="math inline">\(a\)</span>.</em> Par
+l'inégalité de Cauchy-Schwarz, <span class="math inline">\(|a(u,v)| \le
+\|\nabla u\|_{L^2}\|\nabla v\|_{L^2} + \|u\|_{L^2}\|v\|_{L^2} \le
+\|u\|_{H^1}\|v\|_{H^1}\)</span>.</li>
+<li><em>Coercivité de <span class="math inline">\(a\)</span>.</em> <span
+class="math inline">\(a(v,v) = \|v\|_{H^1}^2\)</span> pour tout <span
+class="math inline">\(v \in H^1(\Omega)\)</span>, avec constante <span
+class="math inline">\(1\)</span>.</li>
+<li><em>Continuité de <span class="math inline">\(\varphi\)</span>.</em>
+Comme <span class="math inline">\(\Omega\)</span> est borné et <span
+class="math inline">\(f\)</span> continue sur <span
+class="math inline">\(\overline{\Omega}\)</span>, <span
+class="math inline">\(f \in L^2(\Omega)\)</span> ; comme <span
+class="math inline">\(\Gamma\)</span> est compact et <span
+class="math inline">\(g\)</span> continue, <span class="math inline">\(g
+\in L^2(\Gamma)\)</span>. Par le théorème de trace, il existe <span
+class="math inline">\(C &gt; 0\)</span> tel que <span
+class="math inline">\(\|v\|_{L^2(\Gamma)} \le C \|v\|_{H^1}\)</span>,
+donc <span class="math display">\[ |\varphi \cdot v| \le
+\|f\|_{L^2(\Omega)} \|v\|_{L^2(\Omega)} + \|g\|_{L^2(\Gamma)}
+\|v\|_{L^2(\Gamma)} \le \left( \|f\|_{L^2(\Omega)} + C
+\|g\|_{L^2(\Gamma)} \right) \|v\|_{H^1}. \]</span></li>
+</ul>
+<p>Le théorème de Lax-Milgram donne l'existence et l'unicité de <span
+class="math inline">\(u \in H^1(\Omega)\)</span> solution faible. (La
+forme <span class="math inline">\(a\)</span> étant le produit scalaire
+de <span class="math inline">\(H^1(\Omega)\)</span>, c'est aussi une
+conséquence du théorème de représentation de Riesz.)</p>
 <h3 id="43">4.3</h3>
 <p>Montrer que toute solution faible dans <span
 class="math inline">\(\mathscr{C}^2(\overline{\Omega})\)</span> est
 solution forte.</p>
+<p><strong>Correction.</strong> Soit <span class="math inline">\(u \in
+\mathscr{C}^2(\overline{\Omega})\)</span> solution faible.</p>
+<p><em>Équation dans <span class="math inline">\(\Omega\)</span>.</em>
+Pour <span class="math inline">\(v \in \mathscr{C}_c^\infty(\Omega)
+\subset H^1(\Omega)\)</span> (nulle au bord), la formule de Green donne
+<span class="math inline">\(\int_\Omega \nabla u \cdot \nabla
+v\,\mathrm{d}x = -\int_\Omega \Delta u\, v\,\mathrm{d}x\)</span>, et la
+formulation faible devient</p>
+<p><span class="math display">\[ \int_\Omega \left( -\Delta u + u - f
+\right) v\,\mathrm{d}x = 0 \quad \text{pour tout } v \in
+\mathscr{C}_c^\infty(\Omega). \]</span></p>
+<p>La fonction <span class="math inline">\(-\Delta u + u - f\)</span>
+étant continue, on en déduit <span class="math inline">\(-\Delta u + u =
+f\)</span> en tout point de <span class="math inline">\(\Omega\)</span>
+(lemme fondamental du calcul des variations), puis sur <span
+class="math inline">\(\overline{\Omega}\)</span> par continuité.</p>
+<p><em>Condition au bord.</em> Soit maintenant <span
+class="math inline">\(v \in H^1(\Omega)\)</span> quelconque. La formule
+de Green et l'équation précédente donnent</p>
+<p><span class="math display">\[ a(u,v) = \int_\Omega \left( -\Delta u +
+u \right) v\,\mathrm{d}x + \int_\Gamma \frac{\partial u}{\partial n}\,
+v\,\mathrm{d}\sigma = \int_\Omega f v\,\mathrm{d}x + \int_\Gamma
+\frac{\partial u}{\partial n}\, v\,\mathrm{d}\sigma. \]</span></p>
+<p>Comme <span class="math inline">\(u\)</span> est solution faible,
+<span class="math inline">\(a(u,v) = \int_\Omega f v + \int_\Gamma g\,
+v\)</span>, d'où, avec <span class="math inline">\(h := \partial
+u/\partial n - g\)</span>,</p>
+<p><span class="math display">\[ \int_\Gamma h\, v\,\mathrm{d}\sigma = 0
+\quad \text{pour tout } v \in H^1(\Omega). \]</span></p>
+<p>La fonction <span class="math inline">\(h\)</span> est continue sur
+<span class="math inline">\(\Gamma\)</span> (car <span
+class="math inline">\(u \in \mathscr{C}^2(\overline{\Omega})\)</span>,
+<span class="math inline">\(g\)</span> est continue et le bord est
+régulier). En prenant pour <span class="math inline">\(v\)</span> des
+polynômes, dont les restrictions à <span
+class="math inline">\(\Gamma\)</span> (compact) sont denses dans <span
+class="math inline">\(\mathscr{C}(\Gamma)\)</span> pour la norme
+uniforme (Stone-Weierstrass), on obtient <span
+class="math inline">\(\int_\Gamma h\,\psi\,\mathrm{d}\sigma = 0\)</span>
+pour tout <span class="math inline">\(\psi \in
+\mathscr{C}(\Gamma)\)</span>, et <span class="math inline">\(\psi =
+h\)</span> donne <span class="math inline">\(\int_\Gamma
+h^2\,\mathrm{d}\sigma = 0\)</span>, soit <span class="math inline">\(h =
+0\)</span> : <span class="math inline">\(\partial u/\partial n =
+g\)</span> sur <span class="math inline">\(\Gamma\)</span>. La fonction
+<span class="math inline">\(u\)</span> est donc solution forte.</p>
 </main>
 <script>
 // "Copier" button on every code block
