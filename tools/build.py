@@ -70,7 +70,7 @@ def rewrite(text, rel, mds):
     here = rel.parent
     def sub(m):
         pre, url, post = m.groups()
-        if url in LOGOS:
+        if url in LOGOS or url.endswith("/logo-pns.png") and url.startswith("http"):
             return pre + relurl("logo-pns.png", here) + post
         if re.match(r"^([a-z]+:|#)", url):
             return m.group(0)
