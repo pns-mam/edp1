@@ -140,8 +140,8 @@ En introduisant $W^n := (u_j^n - (\sigma/2)(u_{j+1}^n - u_{j-1}^n))_j$ et $U^n :
 
 function lax_wendroff_implicit(J, σ)
     A = sparse(1.0I, J, J)                  # TBC: sparse periodic matrix A (tridiagonal + corners)
-    F = cholesky(A)                         # factorisation, computed once, outside of the time loop
-    return u -> zero(u)                     # TBC: solve A U^{n+1} = W^n with F (compute W^n first)
+    F = cholesky(A)                         # factorised ONCE here (scheme(J, σ) is called before the time loop)
+    return u -> zero(u)                     # TBC: W^n, then solve A U^{n+1} = W^n with F (no factorisation in here)
 end
 
 J = 400

@@ -284,8 +284,8 @@ class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lax_wendroff_implicit</span>(J, σ)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="fu">sparse</span>(<span class="fl">1.0</span>I, J, J)                  <span class="co"># TBC: sparse periodic matrix A (tridiagonal + corners)</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">cholesky</span>(A)                         <span class="co"># factorisation, computed once, outside of the time loop</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u <span class="op">-&gt;</span> <span class="fu">zero</span>(u)                     <span class="co"># TBC: solve A U^{n+1} = W^n with F (compute W^n first)</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">cholesky</span>(A)                         <span class="co"># factorised ONCE here (scheme(J, σ) is called before the time loop)</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u <span class="op">-&gt;</span> <span class="fu">zero</span>(u)                     <span class="co"># TBC: W^n, then solve A U^{n+1} = W^n with F (no factorisation in here)</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>J <span class="op">=</span> <span class="fl">400</span></span>
