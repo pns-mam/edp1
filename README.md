@@ -42,10 +42,15 @@ TP 2 - Chaleur
 2 exams CC (tous coeff. 1)
 
 # Organisation
-- 9 séances de CM
-- 9 séances de TD
+
+9 séances de CM
+
+9 séances de TD
 
 # Intervenants
-- [J.-B. Caillau](mailto:jean-baptiste.caillau@univ-cotedazur.fr) (CM et TD)
-- [L. Sacchelli](mailto:ludovic.sacchelli@univ-cotedazur.fr) (TD)
-- Remerciements à [V. Dolean](https://www.tue.nl/en/research/researchers/victorita-dolean-maini) pour certains textes de TD / TP
+
+[J.-B. Caillau](mailto:jean-baptiste.caillau@univ-cotedazur.fr) (CM et TD)
+
+[L. Sacchelli](mailto:ludovic.sacchelli@univ-cotedazur.fr) (TD)
+
+Remerciements à [V. Dolean](https://www.tue.nl/en/research/researchers/victorita-dolean-maini) pour certains textes de TD / TP
