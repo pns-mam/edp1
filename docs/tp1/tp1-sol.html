@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>2026-27 – TP 1 - Équation d'advection</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+type="text/javascript"></script>
+</head>
+<body>
+<nav><a href="../index.html">← Accueil</a> · <span>Dans ce dossier :</span> <a href="index.html">tp1</a></nav>
+<main>
+<p><img src="../logo-pns.png" alt="PNS" /></p>
+<h2 id="mam4---edp1">MAM4 - EDP1</h2>
+<h1 id="2026-27">2026-27</h1>
+<h1 id="tp-1---équation-dadvection"><strong>TP 1 - Équation
+d'advection</strong></h1>
+<p>On résout numériquement l'équation d'advection sur <span
+class="math inline">\(\Omega := ]0,1[\)</span> avec conditions aux
+limites périodiques (<span class="math inline">\(V &gt;
+0\)</span>) :</p>
+<p><span class="math display">\[ \left\lbrace \begin{aligned}
+&amp; \frac{\partial u}{\partial t}(t,x) + V\frac{\partial u}{\partial
+x}(t,x) = 0,\quad x \in \Omega,\quad t &gt; 0,\\
+&amp; u(t, 0) = u(t, 1),\quad t \ge 0,\\
+&amp; u(0, x) = u_0(x),\quad x \in \Omega.
+\end{aligned} \right. \]</span></p>
+<p>On suppose la donnée initiale <span
+class="math inline">\(u_0\)</span> <span
+class="math inline">\(1\)</span>-périodique. On vérifie aisément que la
+solution exacte est donnée par <span class="math inline">\(u(t,x) =
+u_0(x-Vt)\)</span>. On pose <span class="math inline">\(t_n = n\Delta
+t\)</span> et <span class="math inline">\(x_j = j\Delta x\)</span>, et
+on note <span class="math inline">\(u_j^n \simeq
+u(t_n,x_j)\)</span>.</p>
+<p><strong>Conventions numériques.</strong></p>
+<ul>
+<li><em>Maillage périodique.</em> On utilise <span
+class="math inline">\(J\)</span> points <span class="math inline">\(x_j
+= j\Delta x\)</span>, <span class="math inline">\(j =
+0,\dots,J-1\)</span>, avec <span class="math inline">\(\Delta x =
+1/J\)</span> (le point <span class="math inline">\(x = 1\)</span> n'est
+pas stocké : il est identifié à <span class="math inline">\(x =
+0\)</span>). La périodicité s'écrit <span class="math inline">\(u_{-1}
+:= u_{J-1}\)</span> et <span class="math inline">\(u_J := u_0\)</span> ;
+en Julia, <code>circshift(u, 1)</code> donne <span
+class="math inline">\((u_{j-1})_j\)</span> et
+<code>circshift(u, -1)</code> donne <span
+class="math inline">\((u_{j+1})_j\)</span>.</li>
+<li><em>Temps final fixé.</em> On fixe le temps final <span
+class="math inline">\(t_f\)</span> et le nombre de pas de temps <span
+class="math inline">\(N\)</span> est déduit du nombre de Courant <span
+class="math inline">\(\sigma = V\Delta t/\Delta x\)</span> : on prend
+<span class="math inline">\(\Delta t = t_f/N\)</span> avec <span
+class="math inline">\(N\)</span> le plus petit entier tel que <span
+class="math inline">\(\sigma\)</span> effectif <span
+class="math inline">\(\le \sigma\)</span> demandé. Ainsi, <strong>faire
+varier <span class="math inline">\(\sigma\)</span> ne change pas <span
+class="math inline">\(t_f\)</span></strong> et les résultats sont
+comparables. Avec <span class="math inline">\(V = 1\)</span> et <span
+class="math inline">\(t_f = 1\)</span>, la solution exacte à l'instant
+final est <span class="math inline">\(u_0\)</span> (une
+révolution).</li>
+<li><em>Erreur.</em> On mesure l'erreur dans la norme <span
+class="math inline">\(L^2\)</span> discrète <span
+class="math inline">\(\|u\|_2 = \big(\frac{1}{J}\sum_j
+u_j^2\big)^{1/2}\)</span>.</li>
+<li><em>Deux données initiales</em> : une donnée lisse
+<code>u0_smooth</code> et une donnée discontinue <code>u0_disc</code>
+(créneau).</li>
+</ul>
+<p>Le code ci-dessous (utilisé dans tous les exercices) est fourni ; il
+est à exécuter une fois en début de session. Les fonctions
+<code>solve</code>, <code>exact</code>, <code>err_L2</code> et
+<code>plot_result</code> n'ont pas à être modifiées. Dans les exercices,
+les parties marquées <code># TBC</code> (<em>to be completed</em>) sont
+à compléter.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">LinearAlgebra</span>, <span class="bu">SparseArrays</span>, <span class="bu">Plots</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Problem data</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>V  <span class="op">=</span> <span class="fl">1.0</span>                                   <span class="co"># advection speed</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>tf <span class="op">=</span> <span class="fl">1.0</span>                                   <span class="co"># final time (one revolution, so u(tf, ·) = u0)</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">u0_smooth</span>(x) <span class="op">=</span> <span class="fu">exp</span>(<span class="op">-</span><span class="fl">10</span> <span class="op">*</span> (<span class="fl">1</span> <span class="op">-</span> <span class="fu">cos</span>(<span class="fl">2</span>π <span class="op">*</span> (x <span class="op">-</span> <span class="fl">0.25</span>))))   <span class="co"># smooth, 1-periodic</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">u0_disc</span>(x)   <span class="op">=</span> <span class="fu">Float64</span>(<span class="fl">0.2</span> <span class="op">&lt;</span> <span class="fu">mod</span>(x, <span class="fl">1</span>) <span class="op">&lt;</span> <span class="fl">0.3</span>)          <span class="co"># discontinuous, 1-periodic</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>datasets <span class="op">=</span> [(u0_smooth, <span class="st">&quot;smooth data&quot;</span>), (u0_disc, <span class="st">&quot;discontinuous data&quot;</span>)]</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Periodic grid: J points x_j = jΔx, j = 0, …, J-1, with Δx = 1/J</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">grid</span>(J) <span class="op">=</span> (<span class="fl">0</span><span class="op">:</span>J<span class="op">-</span><span class="fl">1</span>) <span class="op">/</span> J</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of time steps N for a Courant number ≤ σ (tf is fixed, Δt = tf / N)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="fu">nsteps</span>(J, σ) <span class="op">=</span> <span class="fu">ceil</span>(<span class="dt">Int</span>, V <span class="op">*</span> tf <span class="op">*</span> J <span class="op">/</span> σ <span class="op">-</span> <span class="fl">1e-9</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># A scheme is a function (J, σ) -&gt; (u -&gt; next u).</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># `solve` returns the numerical solution at tf, N and the effective Courant number</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">solve</span>(scheme, u0, J, σ)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fu">nsteps</span>(J, σ)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    σe <span class="op">=</span> V <span class="op">*</span> (tf <span class="op">/</span> N) <span class="op">*</span> J</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    step <span class="op">=</span> <span class="fu">scheme</span>(J, σe)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> <span class="fu">u0</span>.(<span class="fu">grid</span>(J))</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span>N</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>        u <span class="op">=</span> <span class="fu">step</span>(u)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u, N, σe</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">exact</span>(u0, J) <span class="op">=</span> <span class="fu">u0</span>.(<span class="fu">grid</span>(J) <span class="op">.-</span> V <span class="op">*</span> tf)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="fu">err_L2</span>(u, uex) <span class="op">=</span> <span class="fu">norm</span>(u <span class="op">-</span> uex) <span class="op">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(u))       <span class="co"># discrete L² norm on [0, 1)</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">plot_result</span>(x, u, uex; title <span class="op">=</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>    p1 <span class="op">=</span> <span class="fu">plot</span>(x, u; color <span class="op">=</span> <span class="op">:</span>red, lw <span class="op">=</span> <span class="fl">4</span>, label <span class="op">=</span> <span class="st">&quot;numerical&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;u&quot;</span>, title <span class="op">=</span> title)</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot!</span>(p1, x, uex; color <span class="op">=</span> <span class="op">:</span>black, lw <span class="op">=</span> <span class="fl">2</span>, label <span class="op">=</span> <span class="st">&quot;exact&quot;</span>)</span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>    p2 <span class="op">=</span> <span class="fu">plot</span>(x, u <span class="op">-</span> uex; legend <span class="op">=</span> <span class="cn">false</span>, xlabel <span class="op">=</span> <span class="st">&quot;x&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;error&quot;</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">plot</span>(p1, p2; layout <span class="op">=</span> (<span class="fl">2</span>, <span class="fl">1</span>), size <span class="op">=</span> (<span class="fl">700</span>, <span class="fl">600</span>))</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true" tabindex="-1"></a><span class="co"># Run one case: plot the result and print the L² error</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">run_case</span>(scheme, u0, J, σ; name <span class="op">=</span> <span class="st">&quot;&quot;</span>)</span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a>    u, N, σe <span class="op">=</span> <span class="fu">solve</span>(scheme, u0, J, σ)</span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(<span class="fu">plot_result</span>(<span class="fu">grid</span>(J), u, <span class="fu">exact</span>(u0, J); title <span class="op">=</span> <span class="st">&quot;</span><span class="sc">$</span>name<span class="st">, σ = </span><span class="sc">$</span>(<span class="fu">round</span>(σe, digits <span class="op">=</span> <span class="fl">3</span>))<span class="st">, N = </span><span class="sc">$</span>N<span class="st">&quot;</span>))</span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">&quot;</span><span class="sc">$</span>name<span class="st">: J = </span><span class="sc">$</span>J<span class="st">, N = </span><span class="sc">$</span>N<span class="st">, σ = </span><span class="sc">$</span><span class="st">σ</span>e<span class="st">, L² error = &quot;</span>, <span class="fu">err_L2</span>(u, <span class="fu">exact</span>(u0, J)))</span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<h2 id="exercice-1-schéma-décentré-amont">Exercice 1. Schéma décentré
+amont</h2>
+<p>On cherche à approcher la solution par le schéma <em>décentré
+amont</em> (<em>cf.</em> <span
+class="math inline">\(V&gt;0\)</span>) :</p>
+<p><span class="math display">\[ \frac{u_j^{n+1}-u_j^n}{\Delta t} +
+V\frac{u_j^n-u_{j-1}^n}{\Delta x} = 0,\quad j = 0,\dots,J-1,\quad n \geq
+0, \]</span></p>
+<p>soit, en réarrangeant les termes,</p>
+<p><span class="math display">\[ u_j^{n+1} = u_j^n -
+\sigma(u_j^n-u_{j-1}^n), \]</span></p>
+<p>où <span class="math inline">\(\sigma = V\Delta t/\Delta x\)</span>
+est le <a
+href="https://fr.wikipedia.org/wiki/Nombre_de_Courant"><em>nombre de
+Courant</em></a>, avec <span class="math inline">\(u_j^0 =
+u_0(x_j)\)</span>.</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Upwind scheme (periodic): u_j^{n+1} = u_j^n - σ (u_j^n - u_{j-1}^n)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">upwind</span>(J, σ) <span class="op">=</span> u <span class="op">-&gt;</span> u <span class="op">-</span> σ <span class="op">*</span> (u <span class="op">-</span> <span class="fu">circshift</span>(u, <span class="fl">1</span>))      <span class="co"># circshift(u, 1)[j] = u[j-1]</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (u0, data) <span class="kw">in</span> datasets</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">run_case</span>(upwind, u0, <span class="fl">200</span>, <span class="fl">0.8</span>; name <span class="op">=</span> <span class="st">&quot;upwind, </span><span class="sc">$</span>data<span class="st">&quot;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>1.1</strong> Exécuter le code, qui teste les deux données
+initiales (<code>u0_smooth</code> et <code>u0_disc</code>). Comparer les
+deux solutions numériques à la solution exacte.</p>
+<p><strong>Réponse.</strong> Pour <span class="math inline">\(J =
+200\)</span> et <span class="math inline">\(\sigma = 0.8\)</span>,
+l'erreur <span class="math inline">\(L^2\)</span> vaut <span
+class="math inline">\(4.1\cdot 10^{-2}\)</span> pour la donnée lisse et
+<span class="math inline">\(1.2\cdot 10^{-1}\)</span> pour le créneau.
+Le schéma amont ne produit pas d'oscillations : la solution numérique
+reste entre <span class="math inline">\(0\)</span> et <span
+class="math inline">\(1\)</span>, mais le créneau est étalé (maximum
+<span class="math inline">\(0.87\)</span> au lieu de <span
+class="math inline">\(1\)</span>) et la donnée lisse est atténuée.</p>
+<p><img src="transport_ex1.gif" /></p>
+<p><strong>1.2</strong> Augmenter progressivement <span
+class="math inline">\(\sigma\)</span> (par exemple <span
+class="math inline">\(\sigma \in \{0.5, 0.9, 1, 1.05, 1.1\}\)</span>) et
+observer le résultat. Quelle est la valeur critique ? Que se passe-t-il
+pour <span class="math inline">\(\sigma = 1\)</span> ? Retrouver cette
+valeur par l'analyse de stabilité de Von Neumann (facteur
+d'amplification du schéma) et par un argument de domaine de dépendance
+(condition CFL).</p>
+<p><strong>Réponse.</strong> Le schéma est stable pour <span
+class="math inline">\(\sigma \le 1\)</span> et instable pour <span
+class="math inline">\(\sigma &gt; 1\)</span> : le maximum de <span
+class="math inline">\(|u|\)</span> atteint <span
+class="math inline">\(2.7\)</span> pour <span
+class="math inline">\(\sigma = 1.005\)</span> (effectif), <span
+class="math inline">\(2\cdot 10^{6}\)</span> pour <span
+class="math inline">\(\sigma \simeq 1.05\)</span> et <span
+class="math inline">\(10^{13}\)</span> pour <span
+class="math inline">\(\sigma \simeq 1.1\)</span>. Pour <span
+class="math inline">\(\sigma = 1\)</span>, le schéma s'écrit <span
+class="math inline">\(u_j^{n+1} = u_{j-1}^n\)</span> : la solution est
+translée d'une maille par pas de temps, ce qui est exact (erreur nulle
+ici, car <span class="math inline">\(Vt_f = 1\)</span> correspond à
+<span class="math inline">\(J\)</span> mailles).</p>
+<p><em>Von Neumann.</em> Le facteur d'amplification est <span
+class="math inline">\(a(\xi) = 1 - \sigma + \sigma
+e^{-i\varphi}\)</span>, avec <span class="math inline">\(\varphi =
+2\pi\xi\Delta x\)</span>, et <span class="math display">\[ |a(\xi)|^2 =
+1 - 4\sigma(1-\sigma)\sin^2(\varphi/2), \]</span> qui est <span
+class="math inline">\(\le 1\)</span> pour tout <span
+class="math inline">\(\varphi\)</span> si et seulement si <span
+class="math inline">\(0 \le \sigma \le 1\)</span>.</p>
+<p><em>CFL.</em> Le pied de la caractéristique, <span
+class="math inline">\(x_j - V\Delta t\)</span>, doit appartenir au
+support de la formule, <span class="math inline">\([x_{j-1},
+x_j]\)</span>, ce qui équivaut à <span class="math inline">\(\sigma \le
+1\)</span>.</p>
+<p><strong>1.3</strong> À <span class="math inline">\(\sigma\)</span>
+fixé, diminuer <span class="math inline">\(J\)</span> (par exemple <span
+class="math inline">\(J \in \{50, 100, 200, 400\}\)</span>) et constater
+que la solution numérique est amortie au fil des itérations en temps
+(phénomène de <em>diffusion numérique</em>). Comment cet amortissement
+dépend-il de <span class="math inline">\(J\)</span> et de <span
+class="math inline">\(\sigma\)</span> ?</p>
+<p><strong>Réponse.</strong> Pour <span class="math inline">\(\sigma =
+0.8\)</span>, le maximum du créneau vaut <span
+class="math inline">\(0.47\)</span>, <span
+class="math inline">\(0.69\)</span>, <span
+class="math inline">\(0.87\)</span>, <span
+class="math inline">\(0.97\)</span> pour <span class="math inline">\(J =
+50, 100, 200, 400\)</span> : l'amortissement diminue quand <span
+class="math inline">\(J\)</span> augmente. À <span
+class="math inline">\(J = 200\)</span> fixé, il vaut <span
+class="math inline">\(0.55\)</span>, <span
+class="math inline">\(0.66\)</span>, <span
+class="math inline">\(0.87\)</span>, <span
+class="math inline">\(0.997\)</span> pour <span
+class="math inline">\(\sigma = 0.2, 0.5, 0.8, 0.95\)</span>, et il n'y
+en a plus pour <span class="math inline">\(\sigma = 1\)</span>. Ce
+comportement est celui d'une équation de diffusion de coefficient <span
+class="math inline">\(\nu_{\mathrm{num}} = V\Delta
+x(1-\sigma)/2\)</span> (équation équivalente, voir 5.2) : l'étalement
+est de l'ordre de <span
+class="math inline">\(\sqrt{2\nu_{\mathrm{num}}t_f}\)</span>, d'autant
+plus faible que <span class="math inline">\(\Delta x\)</span> est petit
+et <span class="math inline">\(\sigma\)</span> proche de <span
+class="math inline">\(1\)</span>.</p>
+<h2 id="exercice-2-schéma-de-lax-wendroff">Exercice 2. Schéma de
+Lax-Wendroff</h2>
+<p>En suivant le modèle précédent, implémenter le schéma</p>
+<p><span class="math display">\[ u_j^{n+1} = u_j^n -
+\frac{\sigma}{2}(u_{j+1}^n - u_{j-1}^n) + \frac{\sigma^2}{2}(u_{j+1}^n -
+2u_j^n + u_{j-1}^n),\quad j = 0,\dots,J-1,\quad n \geq 0. \]</span></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explicit Lax-Wendroff scheme</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lax_wendroff</span>(J, σ) <span class="op">=</span> u <span class="op">-&gt;</span> u <span class="op">-</span> σ <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> (<span class="fu">circshift</span>(u, <span class="op">-</span><span class="fl">1</span>) <span class="op">-</span> <span class="fu">circshift</span>(u, <span class="fl">1</span>)) <span class="op">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>                       σ<span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> (<span class="fu">circshift</span>(u, <span class="op">-</span><span class="fl">1</span>) <span class="op">-</span> <span class="fl">2</span>u <span class="op">+</span> <span class="fu">circshift</span>(u, <span class="fl">1</span>))</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (u0, data) <span class="kw">in</span> datasets</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">run_case</span>(lax_wendroff, u0, <span class="fl">200</span>, <span class="fl">0.8</span>; name <span class="op">=</span> <span class="st">&quot;Lax-Wendroff, </span><span class="sc">$</span>data<span class="st">&quot;</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>2.1</strong> Tester le schéma pour les deux données
+initiales, avec <span class="math inline">\(\sigma = 0.8\)</span>.
+Quelles différences qualitatives observe-t-on avec le schéma décentré
+amont ? Quelle donnée initiale met le mieux en évidence ces différences
+?</p>
+<p><strong>Réponse.</strong> Pour la donnée lisse, Lax-Wendroff est
+nettement plus précis : <span class="math inline">\(4.7\cdot
+10^{-3}\)</span> contre <span class="math inline">\(4.1\cdot
+10^{-2}\)</span> pour le schéma amont à <span class="math inline">\(J =
+200\)</span>. Pour le créneau, le front est plus raide mais des
+oscillations apparaissent derrière lui : la solution dépasse <span
+class="math inline">\(1\)</span> (maximum <span
+class="math inline">\(1.19\)</span>) et devient négative (minimum <span
+class="math inline">\(-0.19\)</span>), ce que le schéma amont ne fait
+pas. C'est la donnée discontinue qui met le mieux ces différences en
+évidence.</p>
+<p><img src="transport_ex2.gif" /></p>
+<p><strong>2.2</strong> Augmenter progressivement <span
+class="math inline">\(\sigma\)</span> et observer. Quelle est la valeur
+critique ?</p>
+<p><strong>Réponse.</strong> La valeur critique est encore <span
+class="math inline">\(\sigma = 1\)</span> : le maximum de <span
+class="math inline">\(|u|\)</span> est <span
+class="math inline">\(6.6\)</span> pour <span
+class="math inline">\(\sigma \simeq 1.005\)</span> et <span
+class="math inline">\(1.6\cdot 10^{13}\)</span> pour <span
+class="math inline">\(\sigma \simeq 1.05\)</span> ; pour <span
+class="math inline">\(\sigma = 1\)</span>, le schéma est exact (il se
+réduit à <span class="math inline">\(u_j^{n+1} = u_{j-1}^n\)</span>).
+Par Von Neumann, <span class="math inline">\(|a(\xi)|^2 = 1 -
+4\sigma^2(1-\sigma^2)\sin^4(\varphi/2)\)</span>, qui est <span
+class="math inline">\(\le 1\)</span> si et seulement si <span
+class="math inline">\(\sigma \le 1\)</span>.</p>
+<p><strong>2.3</strong> Que peut-on dire de la diffusion numérique
+observée dans le cas du schéma décentré amont ? Le schéma de
+Lax-Wendroff est-il diffusif ? Quelle est la nature de l'erreur
+dominante ?</p>
+<p><strong>Réponse.</strong> La diffusion d'ordre <span
+class="math inline">\(2\)</span> (terme en <span
+class="math inline">\(\Delta x\)</span>) du schéma amont est absente :
+le schéma est d'ordre <span class="math inline">\(2\)</span> et la
+donnée lisse n'est pas atténuée de façon visible. Il n'est pas pour
+autant sans dissipation : <span class="math inline">\(|a(\xi)| &lt;
+1\)</span> pour <span class="math inline">\(0 &lt; \sigma &lt;
+1\)</span> et <span class="math inline">\(\varphi \neq 0\)</span>, mais
+l'amortissement est d'ordre <span class="math inline">\(4\)</span> en
+<span class="math inline">\(\Delta x\)</span> (voir 5.3), donc
+négligeable pour les modes bien résolus. L'erreur dominante est de
+nature <em>dispersive</em> : les différentes fréquences ne sont pas
+transportées à la même vitesse, ce qui produit les oscillations derrière
+les discontinuités.</p>
+<h2 id="exercice-3-schéma-de-lax-wendroff-implicite">Exercice 3. Schéma
+de Lax-Wendroff implicite</h2>
+<p>On modifie le schéma précédent en évaluant le terme de diffusion au
+temps <span class="math inline">\(n+1\)</span> :</p>
+<p><span class="math display">\[ u_j^{n+1} = u_j^n -
+\frac{\sigma}{2}(u_{j+1}^n - u_{j-1}^n) +
+\frac{\sigma^2}{2}(u_{j+1}^{n+1} - 2u_j^{n+1} + u_{j-1}^{n+1}),\quad j =
+0,\dots,J-1,\quad n \geq 0. \]</span></p>
+<p>En introduisant <span class="math inline">\(W^n := (u_j^n -
+(\sigma/2)(u_{j+1}^n - u_{j-1}^n))_j\)</span> et <span
+class="math inline">\(U^n := (u_j^n)_j\)</span>, le schéma s'écrit <span
+class="math inline">\(AU^{n+1} = W^n\)</span>. La détermination de <span
+class="math inline">\(U^{n+1}\)</span> à partir de <span
+class="math inline">\(U^n\)</span> nécessite la résolution d'un système
+linéaire : on exploitera la structure creuse de <span
+class="math inline">\(A\)</span> et on la factorisera une seule fois, en
+dehors de la boucle en temps.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Implicit Lax-Wendroff scheme: A U^{n+1} = W^n</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lax_wendroff_implicit</span>(J, σ)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> <span class="fu">spdiagm</span>(<span class="op">-</span><span class="fl">1</span> <span class="op">=&gt;</span> <span class="fu">fill</span>(<span class="op">-</span>σ<span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="fl">2</span>, J <span class="op">-</span> <span class="fl">1</span>), <span class="fl">0</span> <span class="op">=&gt;</span> <span class="fu">fill</span>(<span class="fl">1</span> <span class="op">+</span> σ<span class="op">^</span><span class="fl">2</span>, J), <span class="fl">1</span> <span class="op">=&gt;</span> <span class="fu">fill</span>(<span class="op">-</span>σ<span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="fl">2</span>, J <span class="op">-</span> <span class="fl">1</span>))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    A[<span class="fl">1</span>, J] <span class="op">=</span> <span class="op">-</span>σ<span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="fl">2</span>                                  <span class="co"># periodicity: corners</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    A[J, <span class="fl">1</span>] <span class="op">=</span> <span class="op">-</span>σ<span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="fl">2</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">cholesky</span>(A)                                     <span class="co"># SPD: factorised ONCE here (scheme(J, σ) is called before the time loop)</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u <span class="op">-&gt;</span> F <span class="op">\</span> (u <span class="op">-</span> σ <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> (<span class="fu">circshift</span>(u, <span class="op">-</span><span class="fl">1</span>) <span class="op">-</span> <span class="fu">circshift</span>(u, <span class="fl">1</span>)))   <span class="co"># time loop: only W^n and a back-substitution, no factorisation</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>J <span class="op">=</span> <span class="fl">400</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (u0, data) <span class="kw">in</span> datasets, σ <span class="kw">in</span> [<span class="fl">0.5</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">5</span>, <span class="fl">10</span>, <span class="fl">20</span>]</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    u, N, σe <span class="op">=</span> <span class="fu">solve</span>(lax_wendroff_implicit, u0, J, σ)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">&quot;</span><span class="sc">$</span>data<span class="st">, σ = </span><span class="sc">$</span><span class="st">σ, </span>N<span class="st"> = </span><span class="sc">$</span>N<span class="st">, L² error: &quot;</span>, <span class="fu">err_L2</span>(u, <span class="fu">exact</span>(u0, J)))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (u0, data) <span class="kw">in</span> datasets</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">run_case</span>(lax_wendroff_implicit, u0, J, <span class="fl">5.0</span>; name <span class="op">=</span> <span class="st">&quot;implicit Lax-Wendroff, </span><span class="sc">$</span>data<span class="st">&quot;</span>)</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>3.1</strong> Écrire la matrice <span
+class="math inline">\(A\)</span> ; justifier qu'elle est symétrique
+définie positive et préciser ses coins (périodicité). Compléter le
+code.</p>
+<p><strong>Réponse.</strong> Avec <span class="math inline">\(S\)</span>
+la matrice de décalage circulaire (<span class="math inline">\((SU)_j =
+U_{j-1}\)</span>), <span class="math display">\[ A = (1+\sigma^2) I -
+\frac{\sigma^2}{2}\left( S + S^\top \right), \]</span> c'est-à-dire une
+matrice tridiagonale de diagonale <span
+class="math inline">\(1+\sigma^2\)</span> et de sous- et sur-diagonales
+<span class="math inline">\(-\sigma^2/2\)</span>, avec en plus les coins
+<span class="math inline">\(A_{1,J} = A_{J,1} = -\sigma^2/2\)</span> qui
+traduisent la périodicité. Elle est symétrique et à diagonale
+strictement dominante (<span class="math inline">\(1 + \sigma^2 &gt;
+\sigma^2\)</span>), donc définie positive (ses valeurs propres sont
+<span class="math inline">\(\ge 1\)</span>) : la factorisation de
+Cholesky creuse s'applique, et elle est calculée une seule fois dans
+<code>lax_wendroff_implicit</code>.</p>
+<p><strong>3.2</strong> Que constate-t-on lorsque <span
+class="math inline">\(\sigma\)</span> dépasse <span
+class="math inline">\(1\)</span> ? Calculer le facteur d'amplification
+du schéma et conclure sur sa stabilité.</p>
+<p><strong>Réponse.</strong> Le schéma ne se dégrade pas brutalement
+pour <span class="math inline">\(\sigma &gt; 1\)</span> : il n'y a pas
+d'explosion, même pour <span class="math inline">\(\sigma = 20\)</span>.
+Le facteur d'amplification est <span class="math display">\[ a(\xi) =
+\frac{1 - i\sigma\sin\varphi}{1 + 2\sigma^2\sin^2(\varphi/2)}, \qquad
+|a(\xi)|^2 = \frac{1 + 4\sigma^2 s(1-s)}{(1 + 2\sigma^2 s)^2} = \frac{1
++ 4\sigma^2 s - 4\sigma^2 s^2}{1 + 4\sigma^2 s + 4\sigma^4 s^2},
+\]</span> avec <span class="math inline">\(s = \sin^2(\varphi/2) \in
+[0,1]\)</span>, donc <span class="math inline">\(|a(\xi)| \le 1\)</span>
+pour tout <span class="math inline">\(\xi\)</span> et tout <span
+class="math inline">\(\sigma &gt; 0\)</span> : le schéma est
+inconditionnellement stable au sens <span
+class="math inline">\(L^2\)</span>. La valeur critique n'existe
+plus.</p>
+<p><strong>3.3</strong> Comment évolue l'erreur lorsque <span
+class="math inline">\(\sigma\)</span> augmente ? Pourquoi peut-on avoir
+à la fois stabilité et mauvaise précision ?</p>
+<p><strong>Réponse.</strong> L'erreur augmente fortement avec <span
+class="math inline">\(\sigma\)</span> : pour <span
+class="math inline">\(J = 400\)</span> et la donnée lisse, elle vaut
+<span class="math inline">\(5.0\cdot 10^{-3}\)</span>, <span
+class="math inline">\(9.8\cdot 10^{-3}\)</span>, <span
+class="math inline">\(2.8\cdot 10^{-2}\)</span>, <span
+class="math inline">\(0.11\)</span>, <span
+class="math inline">\(0.19\)</span>, <span
+class="math inline">\(0.24\)</span> pour <span
+class="math inline">\(\sigma = 0.5, 1, 2, 5, 10, 20\)</span> (le maximum
+de la solution est à <span class="math inline">\(0.48\)</span> au lieu
+de <span class="math inline">\(1\)</span> pour <span
+class="math inline">\(\sigma = 20\)</span>). Stabilité ne signifie pas
+précision : la stabilité borne la propagation des erreurs, mais
+n'améliore pas l'erreur de consistance, qui est ici de l'ordre de <span
+class="math inline">\(\sigma^2\Delta x^2\)</span> (par rapport au schéma
+explicite, le terme de diffusion est évalué en <span
+class="math inline">\(t_{n+1}\)</span> au lieu de <span
+class="math inline">\(t_n\)</span>, ce qui introduit un terme en <span
+class="math inline">\(\Delta t^2 u_{xxt}\)</span>). Pour <span
+class="math inline">\(\sigma \gg 1\)</span>, <span
+class="math inline">\(|a(\xi)|^2 \simeq 1/(\sigma^2 s)\)</span> : tous
+les modes sauf les plus basses fréquences sont fortement amortis. Pour
+le créneau, l'erreur vaut <span class="math inline">\(0.11\)</span>,
+<span class="math inline">\(0.13\)</span>, <span
+class="math inline">\(0.13\)</span>, <span
+class="math inline">\(0.22\)</span>, <span
+class="math inline">\(0.27\)</span>, <span
+class="math inline">\(0.29\)</span> ; le schéma oscille comme
+Lax-Wendroff explicite (maximum <span
+class="math inline">\(1.25\)</span> et minimum <span
+class="math inline">\(-0.23\)</span> pour <span
+class="math inline">\(\sigma = 0.5\)</span>), puis la solution est
+écrasée pour <span class="math inline">\(\sigma\)</span> grand (maximum
+<span class="math inline">\(0.39\)</span> pour <span
+class="math inline">\(\sigma = 20\)</span>).</p>
+<p><img src="transport_ex3.gif" /></p>
+<h2 id="exercice-4-convergence-et-coût">Exercice 4. Convergence et
+coût</h2>
+<p><strong>4.1 Ordre de convergence.</strong> Compléter le code
+ci-dessous pour calculer l'erreur <span
+class="math inline">\(L^2\)</span> des trois schémas sur les maillages
+<span class="math inline">\(J = 50, 100,\dots, 1600\)</span> à <span
+class="math inline">\(\sigma = 0.8\)</span>, et l'ordre observé (pente
+de la droite de régression de <span
+class="math inline">\(\log(\text{erreur})\)</span> en fonction de <span
+class="math inline">\(\log \Delta x\)</span>). Commenter les ordres
+obtenus pour la donnée lisse puis pour la donnée discontinue.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Js <span class="op">=</span> [<span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">200</span>, <span class="fl">400</span>, <span class="fl">800</span>, <span class="fl">1600</span>]</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>schemes <span class="op">=</span> [(<span class="st">&quot;upwind&quot;</span>, upwind), (<span class="st">&quot;Lax-Wendroff&quot;</span>, lax_wendroff), (<span class="st">&quot;implicit LW&quot;</span>, lax_wendroff_implicit)]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># L² errors on the successive grids (Courant number σ fixed)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">errors</span>(scheme, u0; σ <span class="op">=</span> <span class="fl">0.8</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    errs <span class="op">=</span> <span class="dt">Float64</span>[]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> J <span class="kw">in</span> Js</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        u, <span class="op">=</span> <span class="fu">solve</span>(scheme, u0, J, σ)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(errs, <span class="fu">err_L2</span>(u, <span class="fu">exact</span>(u0, J)))</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> errs</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Observed order: slope of the least squares line through the points (log Δx, log error)</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">order</span>(errs)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    A <span class="op">=</span> [<span class="fu">ones</span>(<span class="fu">length</span>(Js)) <span class="fu">log</span>.(<span class="fl">1</span> <span class="op">./</span> Js)]</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (A <span class="op">\</span> <span class="fu">log</span>.(errs))[<span class="fl">2</span>]</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (u0, name) <span class="kw">in</span> datasets</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    p <span class="op">=</span> <span class="fu">plot</span>(; xscale <span class="op">=</span> <span class="op">:</span>log10, yscale <span class="op">=</span> <span class="op">:</span>log10, xlabel <span class="op">=</span> <span class="st">&quot;Δx&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;L² error&quot;</span>, title <span class="op">=</span> name, legend <span class="op">=</span> <span class="op">:</span>bottomright)</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (label, scheme) <span class="kw">in</span> schemes</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        errs <span class="op">=</span> <span class="fu">errors</span>(scheme, u0)</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">plot!</span>(p, <span class="fl">1</span> <span class="op">./</span> Js, errs; marker <span class="op">=</span> <span class="op">:</span>o, label <span class="op">=</span> <span class="st">&quot;</span><span class="sc">$</span>label<span class="st"> (order </span><span class="sc">$</span>(<span class="fu">round</span>(<span class="fu">order</span>(errs), digits <span class="op">=</span> <span class="fl">2</span>))<span class="st">)&quot;</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        <span class="fu">println</span>(name, <span class="st">&quot;, &quot;</span>, label, <span class="st">&quot;: observed order &quot;</span>, <span class="fu">round</span>(<span class="fu">order</span>(errs), digits <span class="op">=</span> <span class="fl">2</span>))</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">display</span>(p)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> Les ordres observés (régression sur <span
+class="math inline">\(J = 50,\dots,1600\)</span>) sont, pour la donnée
+lisse, <span class="math inline">\(0.83\)</span> (amont), <span
+class="math inline">\(1.94\)</span> (Lax-Wendroff) et <span
+class="math inline">\(1.74\)</span> (Lax-Wendroff implicite) : on
+retrouve les ordres <span class="math inline">\(1\)</span>, <span
+class="math inline">\(2\)</span> et <span
+class="math inline">\(2\)</span> (le schéma implicite, à <span
+class="math inline">\(\sigma\)</span> fixé, est d'ordre <span
+class="math inline">\(2\)</span> ; l'écart avec <span
+class="math inline">\(2\)</span> vient du régime pré-asymptotique). Pour
+la donnée discontinue, les ordres chutent à <span
+class="math inline">\(0.28\)</span>, <span
+class="math inline">\(0.32\)</span> et <span
+class="math inline">\(0.35\)</span> : la consistance suppose une
+solution régulière, et l'erreur est concentrée dans une couche de
+largeur <span class="math inline">\(\Delta x^{1/2}\)</span> (amont) ou
+<span class="math inline">\(\Delta x^{2/3}\)</span> (Lax-Wendroff)
+autour du front, ce qui donne en norme <span
+class="math inline">\(L^2\)</span> des ordres <span
+class="math inline">\(1/4\)</span> et <span
+class="math inline">\(1/3\)</span> respectivement. Dans ce cas la
+précision d'ordre <span class="math inline">\(2\)</span> ne sert presque
+à rien.</p>
+<p><strong>4.2 Coût.</strong> Le code suivant mesure, à <span
+class="math inline">\(J = 400\)</span> et pour la donnée lisse, le temps
+de calcul, le nombre de pas de temps et l'erreur. Discuter les
+performances relatives des schémas explicite et implicite. Pour
+atteindre une erreur <span class="math inline">\(L^2\)</span> donnée
+(par exemple <span class="math inline">\(10^{-2}\)</span>), quel schéma
+est le moins coûteux ? On pourra adapter le code en faisant varier <span
+class="math inline">\(J\)</span>.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Computing time, number of steps and error</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">timing</span>(scheme, u0, J, σ)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">solve</span>(scheme, u0, J, σ)                                        <span class="co"># compilation</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    t <span class="op">=</span> <span class="fu">minimum</span>(<span class="pp">@elapsed</span>(<span class="fu">solve</span>(scheme, u0, J, σ)) <span class="cf">for</span> _ <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    u, N, σe <span class="op">=</span> <span class="fu">solve</span>(scheme, u0, J, σ)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> t, N, <span class="fu">err_L2</span>(u, <span class="fu">exact</span>(u0, J))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>J <span class="op">=</span> <span class="fl">400</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (label, scheme, σ) <span class="kw">in</span> [(<span class="st">&quot;LW&quot;</span>, lax_wendroff, <span class="fl">0.9</span>), (<span class="st">&quot;implicit LW&quot;</span>, lax_wendroff_implicit, <span class="fl">0.5</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                           (<span class="st">&quot;implicit LW&quot;</span>, lax_wendroff_implicit, <span class="fl">1.0</span>), (<span class="st">&quot;implicit LW&quot;</span>, lax_wendroff_implicit, <span class="fl">2.0</span>),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                           (<span class="st">&quot;implicit LW&quot;</span>, lax_wendroff_implicit, <span class="fl">5.0</span>)]</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    t, N, <span class="cn">e</span> <span class="op">=</span> <span class="fu">timing</span>(scheme, u0_smooth, J, σ)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="fu">rpad</span>(label, <span class="fl">12</span>), <span class="st">&quot;σ = </span><span class="sc">$</span><span class="st">σ, </span>N<span class="st"> = </span><span class="sc">$</span>N<span class="st">, time = </span><span class="sc">$</span>(<span class="fu">round</span>(<span class="fl">1e3</span> <span class="op">*</span> t, digits <span class="op">=</span> <span class="fl">2</span>))<span class="st"> ms, L² error = </span><span class="sc">$</span>e<span class="st">&quot;</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> À <span class="math inline">\(J =
+400\)</span>, le schéma de Lax-Wendroff explicite (<span
+class="math inline">\(\sigma = 0.9\)</span>) atteint une erreur de <span
+class="math inline">\(6.4\cdot 10^{-4}\)</span> en environ <span
+class="math inline">\(3\)</span> ms (<span
+class="math inline">\(445\)</span> pas). Le schéma implicite à <span
+class="math inline">\(\sigma = 0.5, 1, 2, 5\)</span> donne <span
+class="math inline">\(5.0\cdot 10^{-3}\)</span>, <span
+class="math inline">\(9.8\cdot 10^{-3}\)</span>, <span
+class="math inline">\(2.8\cdot 10^{-2}\)</span>, <span
+class="math inline">\(0.11\)</span> avec <span
+class="math inline">\(800\)</span>, <span
+class="math inline">\(400\)</span>, <span
+class="math inline">\(200\)</span>, <span
+class="math inline">\(80\)</span> pas : un pas est plus coûteux
+(résolution d'un système) et grand <span
+class="math inline">\(\sigma\)</span> dégrade la précision (3.3). Pour
+une erreur de <span class="math inline">\(10^{-2}\)</span>, on a besoin
+de <span class="math inline">\(J = 200\)</span> pour Lax-Wendroff
+explicite (environ <span class="math inline">\(1\)</span> ms), <span
+class="math inline">\(J = 800\)</span> pour le schéma amont (environ
+<span class="math inline">\(4\)</span> ms) et <span
+class="math inline">\(J = 400\)</span> pour le schéma implicite à <span
+class="math inline">\(\sigma = 1\)</span> (environ <span
+class="math inline">\(6\)</span> ms). Le schéma implicite n'est donc pas
+avantageux ici : l'explicite n'est limité que par <span
+class="math inline">\(\sigma \le 1\)</span>, régime où il est le plus
+précis. L'implicite sert quand la stabilité impose un pas de temps
+beaucoup plus petit que ce que la précision demande (équations raides,
+par exemple la chaleur). Les temps dépendent de la machine et ne sont
+que des ordres de grandeur.</p>
+<h2 id="exercice-5-bonus-équation-équivalente">Exercice 5 (bonus).
+Équation équivalente</h2>
+<p><strong>5.1</strong> Implémenter le schéma explicite centré <span
+class="math inline">\(u_j^{n+1} = u_j^n - \frac{\sigma}{2}(u_{j+1}^n -
+u_{j-1}^n)\)</span> et le tester avec les deux données initiales pour
+plusieurs valeurs de <span class="math inline">\(\sigma\)</span>. Que
+constate-t-on ? Expliquer par l'analyse de Von Neumann.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explicit centered scheme</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">centered</span>(J, σ) <span class="op">=</span> u <span class="op">-&gt;</span> u <span class="op">-</span> σ <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> (<span class="fu">circshift</span>(u, <span class="op">-</span><span class="fl">1</span>) <span class="op">-</span> <span class="fu">circshift</span>(u, <span class="fl">1</span>))</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>J <span class="op">=</span> <span class="fl">200</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (u0, data) <span class="kw">in</span> datasets, σ <span class="kw">in</span> [<span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.9</span>]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    u, N, σe <span class="op">=</span> <span class="fu">solve</span>(centered, u0, J, σ)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">&quot;</span><span class="sc">$</span>data<span class="st">, σ = </span><span class="sc">$</span><span class="st">σ, </span>N<span class="st"> = </span><span class="sc">$</span>N<span class="st">, max |u| = &quot;</span>, <span class="fu">maximum</span>(<span class="fu">abs</span>.(u)))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> Le schéma est instable pour tout <span
+class="math inline">\(\sigma &gt; 0\)</span> : après <span
+class="math inline">\(t_f = 1\)</span> et <span class="math inline">\(J
+= 200\)</span>, pour la donnée lisse <span
+class="math inline">\(\max|u|\)</span> vaut <span
+class="math inline">\(1.1\)</span> pour <span
+class="math inline">\(\sigma = 0.1\)</span>, <span
+class="math inline">\(2.4\cdot 10^{3}\)</span> pour <span
+class="math inline">\(\sigma = 0.5\)</span> et <span
+class="math inline">\(3.7\cdot 10^{12}\)</span> pour <span
+class="math inline">\(\sigma = 0.9\)</span> ; pour le créneau, qui
+contient des hautes fréquences, l'instabilité est déjà forte pour <span
+class="math inline">\(\sigma = 0.1\)</span> (<span
+class="math inline">\(1.6\cdot 10^{3}\)</span>), et vaut <span
+class="math inline">\(1.6\cdot 10^{18}\)</span> et <span
+class="math inline">\(2.4\cdot 10^{27}\)</span> pour <span
+class="math inline">\(\sigma = 0.5\)</span> et <span
+class="math inline">\(0.9\)</span>. Par Von Neumann, <span
+class="math inline">\(a(\xi) = 1 - i\sigma\sin\varphi\)</span> et <span
+class="math inline">\(|a(\xi)|^2 = 1 + \sigma^2\sin^2\varphi &gt;
+1\)</span> pour <span class="math inline">\(\sin\varphi \neq
+0\)</span> : la croissance est lente pour <span
+class="math inline">\(\sigma\)</span> petit (la donnée lisse n'a presque
+pas de composante haute fréquence au départ), mais elle est
+inévitable.</p>
+<p><strong>5.2</strong> Par développement de Taylor, déterminer
+l'équation équivalente du schéma décentré amont, sous la forme <span
+class="math inline">\(u_t + Vu_x = \nu\, u_{xx} + \dots\)</span> Pour
+<span class="math inline">\(u_0(x) = \sin(2\pi x)\)</span>, la solution
+de <span class="math inline">\(u_t = \nu u_{xx}\)</span> est amortie
+d'un facteur <span class="math inline">\(e^{-\nu(2\pi)^2 t}\)</span>.
+Compléter le code pour comparer l'amortissement observé à
+l'amortissement prédit.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Damping of u0(x) = sin(2πx) by the upwind scheme</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">u0_sin</span>(x) <span class="op">=</span> <span class="fu">sin</span>(<span class="fl">2</span>π <span class="op">*</span> x)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> J <span class="kw">in</span> [<span class="fl">50</span>, <span class="fl">100</span>, <span class="fl">200</span>], σ <span class="kw">in</span> [<span class="fl">0.5</span>, <span class="fl">0.9</span>]</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    u, N, σe <span class="op">=</span> <span class="fu">solve</span>(upwind, u0_sin, J, σ)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    ν <span class="op">=</span> V <span class="op">/</span> J <span class="op">*</span> (<span class="fl">1</span> <span class="op">-</span> σe) <span class="op">/</span> <span class="fl">2</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">&quot;J = </span><span class="sc">$</span>J<span class="st">, σ = </span><span class="sc">$</span><span class="st">σ: </span>max<span class="st"> u = &quot;</span>, <span class="fu">maximum</span>(u), <span class="st">&quot;, predicted: &quot;</span>, <span class="fu">exp</span>(<span class="op">-</span>ν <span class="op">*</span> (<span class="fl">2</span>π)<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> tf))</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> Avec <span
+class="math inline">\(\frac{u(t+\Delta t) - u(t)}{\Delta t} = u_t +
+\frac{\Delta t}{2}u_{tt} + \dots\)</span>, <span
+class="math inline">\(\frac{u(x) - u(x-\Delta x)}{\Delta x} = u_x -
+\frac{\Delta x}{2}u_{xx} + \dots\)</span> et <span
+class="math inline">\(u_{tt} = V^2 u_{xx} + \dots\)</span>, on obtient
+<span class="math display">\[ u_t + Vu_x = \frac{V\Delta x}{2}(1 -
+\sigma)\, u_{xx} + O(\Delta x^2), \qquad \nu = \frac{V\Delta
+x}{2}(1-\sigma), \]</span> c'est le coefficient de diffusion numérique
+de 1.3, positif si et seulement si <span class="math inline">\(\sigma
+&lt; 1\)</span> (c'est la condition de stabilité). Le maximum observé et
+le maximum prédit coïncident à <span
+class="math inline">\(10^{-4}\)</span> près pour <span
+class="math inline">\(J \ge 100\)</span> (par exemple <span
+class="math inline">\(0.9060\)</span> et <span
+class="math inline">\(0.9060\)</span> pour <span class="math inline">\(J
+= 100\)</span>, <span class="math inline">\(\sigma = 0.5\)</span>) et à
+<span class="math inline">\(2\cdot 10^{-3}\)</span> près pour <span
+class="math inline">\(J = 50\)</span> (où le mode <span
+class="math inline">\(\sin(2\pi x)\)</span> n'est résolu que par <span
+class="math inline">\(50\)</span> points).</p>
+<p><strong>5.3</strong> Écrire l'équation équivalente du schéma de
+Lax-Wendroff. Quel terme domine ? Interpréter les oscillations observées
+à l'exercice 2.</p>
+<p><strong>Réponse.</strong> On trouve <span class="math display">\[ u_t
++ Vu_x = -\frac{V\Delta x^2}{6}(1 - \sigma^2)\, u_{xxx} - \frac{V\Delta
+x^3}{8}\sigma(1-\sigma^2)\, u_{xxxx} + O(\Delta x^4). \]</span> Le terme
+dominant est le terme dispersif en <span
+class="math inline">\(u_{xxx}\)</span> : la vitesse de phase d'un mode
+de nombre d'onde <span class="math inline">\(\kappa\)</span> est <span
+class="math inline">\(V - \frac{V\Delta x^2}{6}(1-\sigma^2)\kappa^2 &lt;
+V\)</span>, donc les hautes fréquences sont en retard et forment les
+oscillations derrière le front. Le terme en <span
+class="math inline">\(u_{xxxx}\)</span> est dissipatif (signe négatif du
+second membre) mais d'ordre <span class="math inline">\(\Delta
+x^3\)</span> ; il n'amortit que les très hautes fréquences, d'où la
+persistance des oscillations.</p>
+<h2 id="annexe-animations">Annexe. Animations</h2>
+<p>La fonction suivante produit un GIF de l'évolution de la solution
+numérique (en rouge) et de la solution exacte (en noir), un panneau par
+schéma. Elle peut servir à visualiser les phénomènes observés.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation: `cases` is a vector of (name, scheme, initial data), one panel per case</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">animate</span>(cases, J, σ; file <span class="op">=</span> <span class="st">&quot;evolution.gif&quot;</span>, every <span class="op">=</span> <span class="fl">4</span>, fps <span class="op">=</span> <span class="fl">15</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> <span class="fu">grid</span>(J)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    N <span class="op">=</span> <span class="fu">nsteps</span>(J, σ)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    σe <span class="op">=</span> V <span class="op">*</span> (tf <span class="op">/</span> N) <span class="op">*</span> J</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    steps <span class="op">=</span> [<span class="fu">scheme</span>(J, σe) for (_, scheme, _) <span class="kw">in</span> cases]</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    us <span class="op">=</span> [<span class="fu">u0</span>.(x) for (_, _, u0) <span class="kw">in</span> cases]</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    anim <span class="op">=</span> <span class="fu">Animation</span>()</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span>N</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> n <span class="op">%</span> every <span class="op">==</span> <span class="fl">0</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>            panels <span class="op">=</span> <span class="fu">map</span>(<span class="fu">enumerate</span>(cases)) <span class="cf">do</span> (k, (name, _, u0))</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                p <span class="op">=</span> <span class="fu">plot</span>(x, us[k]; color <span class="op">=</span> <span class="op">:</span>red, lw <span class="op">=</span> <span class="fl">4</span>, label <span class="op">=</span> <span class="st">&quot;numerical&quot;</span>, ylims <span class="op">=</span> (<span class="op">-</span><span class="fl">0.4</span>, <span class="fl">1.4</span>), title <span class="op">=</span> <span class="st">&quot;</span><span class="sc">$</span>name<span class="st">, σ = </span><span class="sc">$</span>(<span class="fu">round</span>(σe, digits <span class="op">=</span> <span class="fl">2</span>))<span class="st">&quot;</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                <span class="fu">plot!</span>(p, x, <span class="fu">u0</span>.(x <span class="op">.-</span> V <span class="op">*</span> n <span class="op">*</span> tf <span class="op">/</span> N); color <span class="op">=</span> <span class="op">:</span>black, lw <span class="op">=</span> <span class="fl">2</span>, label <span class="op">=</span> <span class="st">&quot;exact&quot;</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">frame</span>(anim, <span class="fu">plot</span>(panels<span class="op">...</span>; layout <span class="op">=</span> (<span class="fu">length</span>(cases), <span class="fl">1</span>), size <span class="op">=</span> (<span class="fl">700</span>, <span class="fl">300</span> <span class="op">*</span> <span class="fu">length</span>(cases))))</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        us <span class="op">=</span> [steps[k](us[k]) for k <span class="kw">in</span> <span class="fu">eachindex</span>(cases)]</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">gif</span>(anim, file; fps <span class="op">=</span> fps)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>Les GIF des exercices 1 à 3 sont générés par le code ci-dessous.</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>([(<span class="st">&quot;upwind, smooth data&quot;</span>, upwind, u0_smooth), (<span class="st">&quot;upwind, discontinuous data&quot;</span>, upwind, u0_disc)], <span class="fl">200</span>, <span class="fl">0.8</span>; file <span class="op">=</span> <span class="st">&quot;transport_ex1.gif&quot;</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>([(<span class="st">&quot;Lax-Wendroff, smooth data&quot;</span>, lax_wendroff, u0_smooth), (<span class="st">&quot;Lax-Wendroff, discontinuous data&quot;</span>, lax_wendroff, u0_disc)], <span class="fl">200</span>, <span class="fl">0.8</span>; file <span class="op">=</span> <span class="st">&quot;transport_ex2.gif&quot;</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">animate</span>([(<span class="st">&quot;implicit Lax-Wendroff, smooth data&quot;</span>, lax_wendroff_implicit, u0_smooth), (<span class="st">&quot;implicit Lax-Wendroff, discontinuous data&quot;</span>, lax_wendroff_implicit, u0_disc)], <span class="fl">200</span>, <span class="fl">5.0</span>; file <span class="op">=</span> <span class="st">&quot;transport_ex3.gif&quot;</span>, every <span class="op">=</span> <span class="fl">1</span>)</span></code></pre></div>
+</main>
+<script>
+// "Copier" button on every code block
+document.querySelectorAll("pre").forEach(function (pre) {
+  var box = pre.parentElement;
+  if (!box.classList.contains("sourceCode")) {
+    box = document.createElement("div");
+    box.className = "codewrap";
+    pre.parentNode.insertBefore(box, pre);
+    box.appendChild(pre);
+  }
+  var btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "copy-btn";
+  btn.textContent = "Copier";
+  btn.addEventListener("click", function () {
+    var text = (pre.querySelector("code") || pre).textContent;
+    var done = function () { btn.textContent = "Copié !"; setTimeout(function () { btn.textContent = "Copier"; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { btn.textContent = "Erreur"; });
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Erreur"; }
+      document.body.removeChild(ta);
+    }
+  });
+  box.appendChild(btn);
+});
+</script>
+<footer>Page générée automatiquement à partir des fichiers Markdown du dépôt (pandoc, MathJax).</footer>
+</body>
+</html>
