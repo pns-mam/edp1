@@ -1,0 +1,29 @@
+# Figures of TP 1: run the Julia code of tp1/tp1-sol.md (see julia-figures.yml)
+name: Figures TP 1
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tp1/tp1-sol.md"
+      - ".github/workflows/julia-figures.yml"
+      - ".github/workflows/figures-tp1.yml"
+  pull_request:
+    paths:
+      - "tp1/tp1-sol.md"
+      - ".github/workflows/julia-figures.yml"
+      - ".github/workflows/figures-tp1.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  figures:
+    uses: ./.github/workflows/julia-figures.yml
+    with:
+      dir: tp1
+      md: tp1-sol.md
+      packages: Plots
+      xvfb: false
