@@ -27,6 +27,7 @@
 ([solution](tp1/tp1-sol.md))
 
 [TP 2 - Chaleur](tp2/tp2.md)
+([prés](tp2/cm.md))
 
 [Exam CC 1](exam-cc1/exam-cc1.md)
 
