@@ -22,6 +22,8 @@ avec des conditions aux limites appropriées sur le bord du domaine.
 $$ \frac{\partial u}{\partial n} = 0, $$
 à l'exception de la fenêtre $\{(x,0)\,;\ \tfrac14 \le x \le \tfrac34\}$ sur le mur du bas, où la température est imposée (Dirichlet inhomogène) : $u = u_w = -1$. À l'instant initial, la pièce est à la température de la fenêtre : $u_0 \equiv u_w$.
 
+![](chaleur_piece.png)
+
 **Conventions numériques.**
 
 - *Maillage en cellules.* On découpe le carré $]0,1[^2$ en $N \times N$ cellules carrées de côté $h = 1/N$, et l'on garde les cellules contenues dans $\Omega$ ; $N$ est un multiple de $20$ (pour que le coin retiré, le chauffage et la fenêtre soient formés de cellules entières). L'inconnue $u_k$ approche la température au centre de la cellule $k$. En Julia, la cellule $(j,i)$ est repérée par sa ligne $j$ (en $y$) et sa colonne $i$ (en $x$).

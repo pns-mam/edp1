@@ -24,6 +24,7 @@
 [TD 5 - Ondes](td5/td5.md)
 
 [TP 1 - Advection](tp1/tp1.md)
+([solution](tp1/tp1-sol.md))
 
 [TP 2 - Chaleur](tp2/tp2.md)
 
