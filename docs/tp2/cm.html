@@ -470,7 +470,155 @@ class="math inline">\(t_f\)</span> est fixé.</li>
 le comportement pour de grands pas de temps. Pour le schéma explicite,
 observez ce qui se passe quand <span
 class="math inline">\(\sigma\)</span> augmente.</p>
-<h2 id="6-organisation-du-tp">6. Organisation du TP</h2>
+<h2 id="6-stabilité--analyse-exacte-sur-la-matrice">6. Stabilité :
+analyse exacte sur la matrice</h2>
+<p><em>Question.</em> À <span class="math inline">\(\Delta t\)</span>
+fixé, une petite perturbation des données (arrondis, erreur sur <span
+class="math inline">\(u^0\)</span>) est-elle amplifiée au cours des pas
+de temps ? Cela dépend de <span class="math inline">\(\theta\)</span> et
+de <span class="math inline">\(\sigma\)</span>.</p>
+<p><strong>Les conditions aux limites sont dans la matrice.</strong> Si
+<span class="math inline">\(u^n\)</span> et <span
+class="math inline">\(\tilde u^n\)</span> sont deux solutions du schéma
+issues de deux données initiales proches, la différence <span
+class="math inline">\(e^n := \tilde u^n - u^n\)</span> vérifie, par
+linéarité (les mêmes <span class="math inline">\(A\)</span> et <span
+class="math inline">\(b\)</span> sont utilisés et <span
+class="math inline">\(b\)</span> disparaît dans la différence), <span
+class="math display">\[ e^{n+1} = G\,e^n, \qquad G := (I + \theta\Delta
+t\,A)^{-1}\big(I - (1-\theta)\Delta t\,A\big). \]</span> La stabilité
+est donc celle de la matrice <span class="math inline">\(G\)</span>, qui
+contient les conditions aux limites (Neumann dans la structure de <span
+class="math inline">\(A\)</span>, Dirichlet dans sa diagonale) et la
+géométrie de la pièce.</p>
+<p><strong>Décomposition sur les vecteurs propres.</strong> <span
+class="math inline">\(A\)</span> est symétrique définie positive : il
+existe une base orthonormée de vecteurs propres <span
+class="math inline">\(v_1,\dots,v_K\)</span>, avec <span
+class="math inline">\(Av_j = \lambda_j v_j\)</span> et <span
+class="math inline">\(0 &lt; \lambda_1 \le \dots \le \lambda_K\)</span>.
+On décompose la perturbation initiale <span class="math inline">\(e^0 =
+\sum_j c_j v_j\)</span>. Chaque <span class="math inline">\(v_j\)</span>
+est un vecteur propre de <span class="math inline">\(G\)</span> : <span
+class="math display">\[ G v_j = a(\lambda_j)\,v_j, \qquad a(\lambda) :=
+\frac{1 - (1-\theta)\Delta t\,\lambda}{1 + \theta\Delta t\,\lambda},
+\]</span> donc, composante par composante (chaque direction propre
+évolue indépendamment des autres), <span class="math display">\[ e^n =
+\sum_{j=1}^K c_j\,a(\lambda_j)^n\,v_j, \qquad \|e^n\|^2 = \sum_{j=1}^K
+c_j^2\,a(\lambda_j)^{2n}\quad\Big(\text{norme } \|e\|^2 =
+h^2\textstyle\sum_k e_k^2\Big). \]</span> Le schéma est donc stable pour
+la norme <span class="math inline">\(\ell^2\)</span> (c'est-à-dire <span
+class="math inline">\(\|e^n\| \le \|e^0\|\)</span> pour toute
+perturbation) <strong>si et seulement si</strong> <span
+class="math display">\[ |a(\lambda_j)| \le 1 \quad \text{pour tout } j =
+1,\dots,K. \]</span> Il n'y a pas de constante : comme <span
+class="math inline">\(A\)</span> est symétrique (donc normale), <span
+class="math inline">\(\|G\|_2 = \max_j |a(\lambda_j)|\)</span>
+exactement. La condition est nécessaire et suffisante, pour ce problème
+précis (ce domaine, ces conditions aux limites, ce maillage).</p>
+<p><strong>Les trois schémas.</strong> Avec <span
+class="math inline">\(\lambda = \lambda_j &gt; 0\)</span> :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">schéma</th>
+<th style="text-align: center;"><span
+class="math inline">\(a(\lambda)\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\lvert
+a\rvert \le 1\)</span> pour tout <span class="math inline">\(j\)</span>
+?</th>
+<th style="text-align: center;">limite <span
+class="math inline">\(\Delta t\lambda \to \infty\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">explicite (<span
+class="math inline">\(\theta = 0\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(1 - \Delta
+t\,\lambda\)</span></td>
+<td style="text-align: center;">si et seulement si <span
+class="math inline">\(\Delta t\,\lambda_K \le 2\)</span></td>
+<td style="text-align: center;">instable</td>
+</tr>
+<tr>
+<td style="text-align: center;">Euler implicite (<span
+class="math inline">\(\theta = 1\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{1}{1
++ \Delta t\,\lambda} \in ]0,1[\)</span></td>
+<td style="text-align: center;">toujours</td>
+<td style="text-align: center;"><span class="math inline">\(\to
+0\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;">Crank-Nicolson (<span
+class="math inline">\(\theta = \tfrac12\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\dfrac{1 -
+z}{1 + z}\)</span>, <span class="math inline">\(z = \dfrac{\Delta
+t\,\lambda}{2}\)</span></td>
+<td style="text-align: center;">toujours (<span
+class="math inline">\(\lvert a\rvert &lt; 1\)</span> car <span
+class="math inline">\(z &gt; 0\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\to
+-1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Le schéma explicite est stable sous condition : c'est le mode de plus
+grande valeur propre <span class="math inline">\(\lambda_K\)</span> qui
+est le plus exigeant.</p>
+<p><strong>Où est <span class="math inline">\(\lambda_K\)</span>
+?</strong> Sur la pièce en L avec conditions mixtes, les valeurs propres
+de <span class="math inline">\(A\)</span> ne sont pas explicites. On se
+contente d'une borne : le lemme de Gershgorin (à redémontrer en question
+2.2) donne <span class="math inline">\(\lambda_K \le 8\nu/h^2\)</span>.
+Il en résulte <span class="math display">\[ \Delta t\,\lambda_K \le
+8\sigma \le 2 \quad\Longleftarrow\quad \sigma = \frac{\nu\Delta t}{h^2}
+\le \frac14 . \]</span> La borne est presque atteinte (pour <span
+class="math inline">\(N = 40\)</span>, <span
+class="math inline">\(\lambda_K = 12775\)</span> pour <span
+class="math inline">\(8\nu/h^2 = 12800\)</span>) : la condition <span
+class="math inline">\(\sigma \le 1/4\)</span> est donc quasiment
+nécessaire. Le mode correspondant est celui qui oscille d'une cellule à
+l'autre (en damier), et c'est bien lui qu'on voit exploser pour <span
+class="math inline">\(\sigma = 0.26\)</span>.</p>
+<p><strong>Ce que dit le spectre en plus.</strong> La plus petite valeur
+propre <span class="math inline">\(\lambda_1 &gt; 0\)</span> (elle est
+strictement positive grâce à la fenêtre de Dirichlet) fixe la vitesse à
+laquelle <span class="math inline">\(u(t)\)</span> approche l'état
+stationnaire, en <span class="math inline">\(e^{-\lambda_1 t}\)</span>
+(question 2.3). Et pour Crank-Nicolson, <span
+class="math inline">\(a(\lambda) \to -1\)</span> quand <span
+class="math inline">\(\Delta t\lambda \to \infty\)</span> : les modes
+raides ne sont pas amortis, ils changent de signe à chaque pas (question
+2.6), contrairement à Euler implicite.</p>
+<p><strong>Comparaison avec l'analyse de von Neumann.</strong> Les deux
+analyses utilisent le même facteur <span
+class="math inline">\(a(\lambda)\)</span>, sur des spectres
+différents.</p>
+<ul>
+<li><em>von Neumann</em> est a priori : maillage uniforme, coefficients
+constants, domaine périodique ou infini. Les modes sont des
+exponentielles <span class="math inline">\(e^{i(k_x x + k_y y)}\)</span>
+et <span class="math inline">\(\lambda(k) =
+\frac{4\nu}{h^2}\big(\sin^2\frac{k_xh}{2} + \sin^2\frac{k_yh}{2}\big)
+\in [0, 8\nu/h^2]\)</span> : on retrouve la même condition <span
+class="math inline">\(\sigma \le 1/4\)</span>, mais sans voir les
+conditions aux limites ni la forme de la pièce.</li>
+<li><em>L'analyse de la matrice</em> est exacte pour le problème posé,
+bords compris : le spectre est celui de <span
+class="math inline">\(A\)</span>. Ses plus grandes valeurs propres sont
+locales et presque insensibles aux bords (d'où le même résultat), alors
+que les plus petites en dépendent (<span class="math inline">\(\lambda_1
+&gt; 0\)</span> ici, alors que la version périodique a le mode constant
+<span class="math inline">\(\lambda = 0\)</span>).</li>
+<li><em>Limite.</em> L'égalité <span class="math inline">\(\|G\|_2 =
+\max_j|a(\lambda_j)|\)</span> vient de la symétrie de <span
+class="math inline">\(A\)</span>. Pour un problème non symétrique
+(l'advection du TP 1), le spectre ne suffit plus et von Neumann reste
+l'outil de base.</li>
+</ul>
+<h2 id="7-organisation-du-tp">7. Organisation du TP</h2>
 <ul>
 <li>Le code de départ (géométrie, <code>assemble</code>, début de
 <code>evolve</code>) est dans le <a href="./">sujet</a> ; il est à

@@ -145,9 +145,10 @@ class="math inline">\(u_w\)</span>, à distance <span
 class="math inline">\(h/2\)</span> du centre de la cellule, d'où le flux
 <span class="math inline">\(\nu(u_k - u_w)/(h/2)\)</span>.</li>
 <li><em>Pas de temps.</em> On pose <span class="math inline">\(\sigma :=
-\nu\Delta t/h^2\)</span> (c'est <span class="math inline">\(\sigma_x =
-\sigma_y\)</span> du cours). Le temps final <span
-class="math inline">\(t_f\)</span> est fixé et <span
+\nu\Delta t/h^2\)</span> (la quantité <span
+class="math inline">\(\sigma_x = \sigma_y\)</span> du cours, ici <span
+class="math inline">\(\Delta x = \Delta y = h\)</span>). Le temps final
+<span class="math inline">\(t_f\)</span> est fixé et <span
 class="math inline">\(\Delta t = t_f/N_t\)</span> avec <span
 class="math inline">\(N_t\)</span> le plus petit entier tel que <span
 class="math inline">\(\nu\Delta t/h^2 \le \sigma\)</span> : faire varier
@@ -360,15 +361,17 @@ sont dans <span class="math inline">\(\Omega\)</span>, pas de terme
 source), écrire le schéma de Crank-Nicolson (<span
 class="math inline">\(\theta = \frac12\)</span>) et le comparer à <span
 class="math display">\[ \begin{aligned}
-&amp; u_k^{n+1} - \frac{\sigma_x}{2}(u_{kW}^{n+1} - 2u_k^{n+1} +
+&amp; u_k^{n+1} - \frac{\sigma}{2}(u_{kW}^{n+1} - 2u_k^{n+1} +
 u_{kE}^{n+1})
-- \frac{\sigma_y}{2}(u_{kN}^{n+1} - 2u_k^{n+1} + u_{kS}^{n+1})\\
-&amp; = u^n_k   + \frac{\sigma_x}{2}(u_{kW}^n - 2u_k^n + u_{kE}^{n})
-+ \frac{\sigma_y}{2}(u_{kN}^n - 2u_k^n + u_{kS}^n) + \Delta t\, f_k,
-\end{aligned} \]</span> où <span class="math inline">\(\sigma_x =
-\nu\Delta t/\Delta x^2\)</span> et <span class="math inline">\(\sigma_y
-= \nu\Delta t/\Delta y^2\)</span>. Que deviennent les termes de bord
-(mur isolant, fenêtre) dans l'écriture matricielle ?</p>
+- \frac{\sigma}{2}(u_{kN}^{n+1} - 2u_k^{n+1} + u_{kS}^{n+1})\\
+&amp; = u^n_k   + \frac{\sigma}{2}(u_{kW}^n - 2u_k^n + u_{kE}^{n})
++ \frac{\sigma}{2}(u_{kN}^n - 2u_k^n + u_{kS}^n) + \Delta t\, f_k,
+\end{aligned} \]</span> où <span class="math inline">\(\sigma =
+\nu\Delta t/h^2\)</span> (c'est le schéma du cours avec <span
+class="math inline">\(\sigma_x = \sigma_y = \sigma\)</span>, car <span
+class="math inline">\(\Delta x = \Delta y = h\)</span>). Que deviennent
+les termes de bord (mur isolant, fenêtre) dans l'écriture matricielle
+?</p>
 <p><strong>2.2</strong> <em>Stabilité.</em> Les valeurs propres de <span
 class="math inline">\(A\)</span> sont notées <span
 class="math inline">\(0 &lt; \lambda_1 \le \dots \le \lambda_K\)</span>.
