@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>TP 2 - Équation de la chaleur : présentation</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+type="text/javascript"></script>
+</head>
+<body>
+<nav><a href="../index.html">← Accueil</a> · <span>Dans ce dossier :</span> <a href="index.html">tp2</a></nav>
+<main>
+<p><img src="../logo-pns.png" alt="PNS" /></p>
+<h2 id="mam4---edp1">MAM4 - EDP1</h2>
+<h1 id="tp-2---équation-de-la-chaleur--présentation"><strong>TP 2 -
+Équation de la chaleur : présentation</strong></h1>
+<h2 id="1-le-problème">1. Le problème</h2>
+<p>On simule la température <span
+class="math inline">\(u(t,x,y)\)</span> dans une pièce en forme de L,
+chauffée par un radiateur, dont les parois sont isolantes sauf une
+fenêtre.</p>
+<p><img src="chaleur_piece.png" /></p>
+<ul>
+<li><em>Pièce.</em> <span class="math inline">\(\Omega := ]0,1[^2
+\setminus [0,\tfrac12]\times[\tfrac12,1]\)</span> : le carré unité privé
+de son coin supérieur gauche. Le coin rentrant est en <span
+class="math inline">\((\tfrac12,\tfrac12)\)</span>.</li>
+<li><em>Chauffage.</em> Source <span class="math inline">\(f = f_0 =
+250\)</span> sur le carré <span
+class="math inline">\([0.6,0.8]\times[0.4,0.6]\)</span>, <span
+class="math inline">\(f = 0\)</span> ailleurs.</li>
+<li><em>Paroi isolante.</em> Neumann homogène : <span
+class="math inline">\(\dfrac{\partial u}{\partial n} = 0\)</span> (aucun
+flux de chaleur à travers la paroi).</li>
+<li><em>Fenêtre.</em> Sur <span class="math inline">\(\{(x,0)\,;\
+\tfrac14 \le x \le \tfrac34\}\)</span> (mur du bas), la température est
+imposée : Dirichlet, <span class="math inline">\(u = u_w =
+-1\)</span>.</li>
+<li><em>Paramètres.</em> Diffusion <span class="math inline">\(\nu =
+1\)</span>, temps final <span class="math inline">\(t_f = 4\)</span>,
+pièce initialement à la température de la fenêtre : <span
+class="math inline">\(u_0 \equiv u_w\)</span>.</li>
+</ul>
+<p>Deux types de conditions aux limites sur le même bord : ce mélange
+(Dirichlet-Neumann) est la difficulté « physique » du problème, et la
+raison pour laquelle la solution n'est pas régulière aux extrémités de
+la fenêtre et au coin rentrant.</p>
+<h2 id="2-deux-régimes">2. Deux régimes</h2>
+<p><strong>Régime instationnaire (chaleur).</strong> On cherche <span
+class="math inline">\(u(t,x,y)\)</span> avec <span
+class="math display">\[ \begin{aligned}
+&amp; \frac{\partial u}{\partial t} - \nu\Delta u = f, \quad t &gt; 0,\
+(x,y) \in \Omega,\\
+&amp; u(0,x,y) = u_0(x,y),\\
+&amp; \frac{\partial u}{\partial n} = 0 \ \text{ sur les parois}, \qquad
+u = u_w \ \text{ sur la fenêtre}.
+\end{aligned} \]</span></p>
+<p><strong>Régime stationnaire (Poisson).</strong> On cherche <span
+class="math inline">\(u(x,y)\)</span> indépendante du temps (équilibre :
+<span class="math inline">\(\partial_t u = 0\)</span>) : <span
+class="math display">\[ -\nu\Delta u = f \ \text{ dans }\Omega, \qquad
+\frac{\partial u}{\partial n} = 0 \ \text{ (parois)}, \qquad u = u_w \
+\text{ (fenêtre)}. \]</span> C'est un problème elliptique : un système
+linéaire <span class="math inline">\(Au = b\)</span> à résoudre. Le
+chauffage et la température de la fenêtre ne dépendent pas du temps,
+d'où le lien entre les deux régimes qu'on regardera aux questions 2.3 et
+2.6.</p>
+<p><img src="chaleur_stationnaire.png" /></p>
+<p><em>Plan du TP.</em> Exercice 1 : le problème stationnaire
+(assemblage, résolution, bilan d'énergie, convergence, validation).
+Exercice 2 : le problème instationnaire (schémas en temps, stabilité,
+ordre, pas de temps).</p>
+<h2 id="3-volumes-finis-sur-une-grille-de-cellules">3. Volumes finis sur
+une grille de cellules</h2>
+<p>On découpe <span class="math inline">\(]0,1[^2\)</span> en <span
+class="math inline">\(N \times N\)</span> cellules carrées de côté <span
+class="math inline">\(h = 1/N\)</span> (<span
+class="math inline">\(N\)</span> multiple de <span
+class="math inline">\(20\)</span>) et l'on garde les cellules contenues
+dans <span class="math inline">\(\Omega\)</span>. L'inconnue <span
+class="math inline">\(u_k\)</span> approche la température au centre de
+la cellule <span class="math inline">\(k\)</span> ; il y a <span
+class="math inline">\(K\)</span> cellules.</p>
+<p>On intègre <span class="math inline">\(-\nu\Delta u = f\)</span> sur
+la cellule <span class="math inline">\(k\)</span> et l'on applique la
+formule de Green : <span class="math display">\[ -\nu\int_{\partial
+C_k}\frac{\partial u}{\partial n}\,d\gamma = \int_{C_k} f . \]</span> Le
+bord de la cellule est formé de quatre faces de longueur <span
+class="math inline">\(h\)</span>. Pour une face commune avec la cellule
+voisine <span class="math inline">\(l\)</span>, le flux est approché par
+<span class="math inline">\(-\nu\,\dfrac{u_l - u_k}{h}\,h\)</span>. En
+divisant par <span class="math inline">\(h^2\)</span> :</p>
+<ul>
+<li><em>cellule intérieure</em> (quatre voisines N, S, W, E dans <span
+class="math inline">\(\Omega\)</span>) : le <strong>schéma à 5
+points</strong> <span class="math display">\[ \frac{\nu}{h^2}\big(4u_k -
+u_{kN} - u_{kS} - u_{kW} - u_{kE}\big) = f_k ; \]</span></li>
+<li><em>cellule au bord</em> : on tient compte de la condition aux
+limites (point 4 ci-dessous).</li>
+</ul>
+<p>C'est le même schéma que les différences finies à 5 points, mais les
+conditions aux limites s'écrivent naturellement sur les flux.</p>
+<h2 id="4-la-fonction-assemble">4. La fonction
+<code>assemble</code></h2>
+<p>On cherche la matrice <span class="math inline">\(A \in
+\mathbf{R}^{K\times K}\)</span> et le second membre <span
+class="math inline">\(b \in \mathbf{R}^{K}\)</span> tels que le schéma
+s'écrive <span class="math inline">\(Au = b\)</span> (ligne <span
+class="math inline">\(k\)</span> = équation de la cellule <span
+class="math inline">\(k\)</span>). Deux points à bien comprendre.</p>
+<h3
+id="i-le-terme-général-de-la-matrice-et-les-conditions-aux-limites">(i)
+Le terme général de la matrice et les conditions aux limites</h3>
+<p><em>Terme général.</em> Pour la ligne <span
+class="math inline">\(k\)</span>, on parcourt les quatre voisines. Pour
+chaque voisine <span class="math inline">\(l\)</span> qui est dans <span
+class="math inline">\(\Omega\)</span> :</p>
+<ul>
+<li><span class="math inline">\(A_{kl} = -\nu/h^2\)</span> (coefficient
+hors diagonale),</li>
+<li>et l'on ajoute <span class="math inline">\(\nu/h^2\)</span> à la
+diagonale <span class="math inline">\(A_{kk}\)</span>.</li>
+</ul>
+<p>Une cellule intérieure a donc <span class="math inline">\(A_{kk} =
+4\nu/h^2\)</span> et quatre coefficients <span
+class="math inline">\(-\nu/h^2\)</span> : c'est le schéma à 5 points. Le
+second membre contient la source : <span class="math inline">\(b_k =
+f_k\)</span>.</p>
+<p><em>Neumann (parois).</em> Le flux à travers une paroi isolante est
+nul : le terme correspondant du schéma <strong>n'existe pas</strong>.
+Dans la ligne <span class="math inline">\(k\)</span>, le voisin manquant
+ne donne ni coefficient hors diagonale ni contribution à la diagonale,
+et <span class="math inline">\(b\)</span> n'est pas modifié. Une cellule
+contre un mur a ainsi <span class="math inline">\(A_{kk} =
+3\nu/h^2\)</span> (un seul mur) : la condition de Neumann est « absorbée
+» dans la matrice par l'absence des termes.</p>
+<p><em>Dirichlet (fenêtre).</em> La face de la fenêtre est à la
+température <span class="math inline">\(u_w\)</span>, à la distance
+<span class="math inline">\(h/2\)</span> du centre de la cellule (et non
+<span class="math inline">\(h\)</span>), d'où le flux <span
+class="math inline">\(-\nu\,\dfrac{u_w - u_k}{h/2}\cdot h\)</span> et,
+après division par <span class="math inline">\(h^2\)</span>, le terme
+<span class="math inline">\(\dfrac{2\nu}{h^2}(u_k - u_w)\)</span>. La
+donnée connue <span class="math inline">\(u_w\)</span> passe au second
+membre :</p>
+<ul>
+<li>on ajoute <span class="math inline">\(2\nu/h^2\)</span> à la
+diagonale <span class="math inline">\(A_{kk}\)</span>,</li>
+<li>on ajoute <span
+class="math inline">\(\dfrac{2\nu}{h^2}\,u_w\)</span> à <span
+class="math inline">\(b_k\)</span>.</li>
+</ul>
+<p><em>Bilan.</em> Neumann modifie <strong>la matrice</strong> (termes
+absents), Dirichlet modifie <strong>la matrice et le second
+membre</strong>. <span class="math inline">\(A\)</span> est symétrique ;
+elle est définie positive à cause de la fenêtre (sans elle, <span
+class="math inline">\(A\mathbf{1} = 0\)</span>).</p>
+<h3 id="ii-indices-logiques-et-indices-physiques--le-rôle-de-idx">(ii)
+Indices logiques et indices physiques : le rôle de <code>idx</code></h3>
+<p>Deux façons de repérer une cellule :</p>
+<ul>
+<li><em>indice physique</em> <span class="math inline">\((j,i)\)</span>
+: <span class="math inline">\(j\)</span> = ligne = coordonnée en <span
+class="math inline">\(y\)</span>, <span class="math inline">\(i\)</span>
+= colonne = coordonnée en <span class="math inline">\(x\)</span>, centre
+<span class="math inline">\(\big((i-\tfrac12)h,\
+(j-\tfrac12)h\big)\)</span>. C'est le repérage naturel pour la géométrie
+et pour les dessins. Les tableaux <code>mask</code>, <code>win</code>,
+<code>f</code> (taille <span class="math inline">\(N\times N\)</span>)
+sont indexés ainsi ;</li>
+<li><em>indice logique</em> <span class="math inline">\(k \in
+\{1,\dots,K\}\)</span> : numéro de l'inconnue, position dans les
+vecteurs <span class="math inline">\(u\)</span>, <span
+class="math inline">\(b\)</span> et dans les lignes et colonnes de <span
+class="math inline">\(A\)</span>. Il n'y a que les cellules de <span
+class="math inline">\(\Omega\)</span> : on ne numérote pas le coin
+retiré.</li>
+</ul>
+<p>Le tableau <code>idx</code> (taille <span
+class="math inline">\(N\times N\)</span>) fait le lien :
+<code>idx[j,i]</code> est le numéro <span
+class="math inline">\(k\)</span> de la cellule <span
+class="math inline">\((j,i)\)</span> (et <code>0</code> hors de <span
+class="math inline">\(\Omega\)</span>). On le remplit par
+<code>idx[mask] = 1:K</code> : les cellules de <span
+class="math inline">\(\Omega\)</span> sont numérotées dans l'ordre de
+Julia, <strong>colonne par colonne</strong>. Une cellule voisine <span
+class="math inline">\(n = c + \delta\)</span> est dans <span
+class="math inline">\(\Omega\)</span> si
+<code>checkbounds(Bool, mask, n) &amp;&amp; mask[n]</code>, et son
+numéro est <code>idx[n]</code>.</p>
+<p><em>Exemple miniature</em> (<span class="math inline">\(N =
+4\)</span>, coin <span class="math inline">\(2\times 2\)</span> retiré
+en haut à gauche, fenêtre sous les colonnes <span
+class="math inline">\(2\)</span> et <span
+class="math inline">\(3\)</span> ; <span class="math inline">\(K =
+12\)</span>). Valeurs de <code>idx[j,i]</code>, avec <span
+class="math inline">\(y\)</span> vers le haut :</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><span class="math inline">\(j \backslash
+i\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(1\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(2\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(3\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(4\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(4\)</span></td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;"><span
+class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(12\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(3\)</span></td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;"><span
+class="math inline">\(7\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(11\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(4\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(6\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(10\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(1\)</span></td>
+<td style="text-align: center;"><span class="math inline">\(3\)</span>
+<em>(fenêtre)</em></td>
+<td style="text-align: center;"><span class="math inline">\(5\)</span>
+<em>(fenêtre)</em></td>
+<td style="text-align: center;"><span
+class="math inline">\(9\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Cellule <span class="math inline">\(k = 4\)</span>, en <span
+class="math inline">\((j,i) = (2,2)\)</span> : voisines W <span
+class="math inline">\(= 2\)</span>, E <span class="math inline">\(=
+6\)</span>, S <span class="math inline">\(= 3\)</span> ; la voisine N
+<span class="math inline">\((3,2)\)</span> est hors de <span
+class="math inline">\(\Omega\)</span> (mur, Neumann). Ligne <span
+class="math inline">\(4\)</span> de <span
+class="math inline">\(A\)</span> : <span class="math inline">\(A_{44} =
+3\nu/h^2\)</span> et <span class="math inline">\(A_{42} = A_{43} =
+A_{46} = -\nu/h^2\)</span>.</li>
+<li>Cellule <span class="math inline">\(k = 3\)</span>, en <span
+class="math inline">\((1,2)\)</span> : voisines W <span
+class="math inline">\(= 1\)</span>, E <span class="math inline">\(=
+5\)</span>, N <span class="math inline">\(= 4\)</span> ; au sud, la face
+de la fenêtre. Ligne <span class="math inline">\(3\)</span> : <span
+class="math inline">\(A_{33} = 3\nu/h^2 + 2\nu/h^2 = 5\nu/h^2\)</span>
+(trois voisines, plus Dirichlet), <span class="math inline">\(A_{31} =
+A_{35} = A_{34} = -\nu/h^2\)</span>, et <span class="math inline">\(b_3
+= f_3 + \dfrac{2\nu}{h^2}u_w\)</span>.</li>
+<li>Pour revenir au dessin, <code>field(u, mask)</code> remet le vecteur
+<span class="math inline">\(u\)</span> dans un tableau <span
+class="math inline">\(N\times N\)</span> (avec <code>NaN</code> hors de
+<span class="math inline">\(\Omega\)</span>) : <span
+class="math inline">\(u_k \mapsto U[j,i]\)</span> avec $k = $
+<code>idx[j,i]</code>. Attention : pour tracer,
+<code>contourf(x, y, U)</code> attend <code>U[j,i]</code>, lignes <span
+class="math inline">\(\leftrightarrow y\)</span>.</li>
+</ul>
+<h3 id="le-code">Le code</h3>
+<p>Géométrie (la pièce, la fenêtre, le chauffage sont des tableaux <span
+class="math inline">\(N\times N\)</span>) :</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">lroom</span>(N; heater <span class="op">=</span> heater0)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@assert</span> N <span class="op">%</span> <span class="fl">20</span> <span class="op">==</span> <span class="fl">0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> <span class="fu">trues</span>(N, N)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    mask[N<span class="op">÷</span><span class="fl">2</span><span class="op">+</span><span class="fl">1</span><span class="op">:</span>N, <span class="fl">1</span><span class="op">:</span>N<span class="op">÷</span><span class="fl">2</span>] <span class="op">.=</span> <span class="cn">false</span>               <span class="co"># removed square</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    win <span class="op">=</span> <span class="fu">falses</span>(N, N)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    win[<span class="fl">1</span>, N<span class="op">÷</span><span class="fl">4</span><span class="op">+</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">*</span>N<span class="op">÷</span><span class="fl">4</span>] <span class="op">.=</span> <span class="cn">true</span>                 <span class="co"># window: south wall, 1/4 ≤ x ≤ 3/4</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> ((<span class="fl">1</span><span class="op">:</span>N) <span class="op">.-</span> <span class="fl">0.5</span>) <span class="op">/</span> N                      <span class="co"># cell centres (in x and in y)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    (x0, x1), (y0, y1) <span class="op">=</span> heater</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="fu">zeros</span>(N, N)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    f[y0 <span class="op">.&lt;</span> c <span class="op">.&lt;</span> y1, x0 <span class="op">.&lt;</span> c <span class="op">.&lt;</span> x1] <span class="op">.=</span> f0       <span class="co"># rows ↔ y, columns ↔ x</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="pp">@assert</span> <span class="fu">all</span>(mask[f <span class="op">.&gt;</span> <span class="fl">0</span>])                   <span class="co"># the heater must lie in Ω</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mask, win, f</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>Assemblage :</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finite volume assembly of A ≃ -νΔ and b (heating + Dirichlet data).</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cells are numbered columnwise: idx[mask] = 1:K</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">assemble</span>(mask, win, f, h; ν <span class="op">=</span> <span class="fl">1.0</span>, uw <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    K <span class="op">=</span> <span class="fu">count</span>(mask)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> <span class="fu">zeros</span>(<span class="dt">Int</span>, <span class="fu">size</span>(mask))</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    idx[mask] <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>K</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    rows, cols, vals <span class="op">=</span> <span class="dt">Int</span>[], <span class="dt">Int</span>[], <span class="dt">Float64</span>[]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> f[mask]                                 <span class="co"># new array</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="op">∈</span> <span class="fu">findall</span>(mask)                       <span class="co"># c = CartesianIndex(j, i)</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> idx[c]</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> δ <span class="op">∈</span> (<span class="fu">CartesianIndex</span>(<span class="fl">0</span>, <span class="op">-</span><span class="fl">1</span>), <span class="fu">CartesianIndex</span>(<span class="fl">0</span>, <span class="fl">1</span>), <span class="fu">CartesianIndex</span>(<span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>), <span class="fu">CartesianIndex</span>(<span class="fl">1</span>, <span class="fl">0</span>))</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> c <span class="op">+</span> δ</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="fu">checkbounds</span>(<span class="dt">Bool</span>, mask, n) <span class="op">&amp;&amp;</span> mask[n]    <span class="co"># neighbour in Ω</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>                <span class="fu">push!</span>(rows, k); <span class="fu">push!</span>(cols, idx[n]); <span class="fu">push!</span>(vals, <span class="op">-</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>                d <span class="op">+=</span> ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span>                                          <span class="co"># else: insulating wall, no flux</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> win[c]                                        <span class="co"># Dirichlet face at distance h/2</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>            d <span class="op">+=</span> <span class="fl">2</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>            b[k] <span class="op">+=</span> <span class="fl">2</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> uw</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(rows, k); <span class="fu">push!</span>(cols, k); <span class="fu">push!</span>(vals, d)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">sparse</span>(rows, cols, vals, K, K), b, idx</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<p>Lecture du code :</p>
+<ul>
+<li><code>mask</code>, <code>win</code>, <code>f</code> : cellules de
+<span class="math inline">\(\Omega\)</span>, cellules touchant la
+fenêtre, source (tous indexés par <span
+class="math inline">\((j,i)\)</span>) ;</li>
+<li><code>idx[mask] = 1:K</code> : numérotation logique des cellules de
+<span class="math inline">\(\Omega\)</span> ;</li>
+<li><code>b = f[mask]</code> : le vecteur <span
+class="math inline">\((f_k)_k\)</span>, dans le même ordre que
+<code>idx</code> (indexation logique de Julia) ;</li>
+<li>boucle <code>for c ∈ findall(mask)</code> : une ligne de <span
+class="math inline">\(A\)</span> par cellule ;
+<code>k = idx[c]</code> ;</li>
+<li>boucle sur les quatre <code>δ</code> (W, E, S, N) : voisine dans
+<span class="math inline">\(\Omega\)</span> <span
+class="math inline">\(\Rightarrow\)</span> coefficient <span
+class="math inline">\(-\nu/h^2\)</span> et diagonale <span
+class="math inline">\(+\nu/h^2\)</span> ; sinon, rien (Neumann) ;</li>
+<li><code>if win[c]</code> : Dirichlet, <span
+class="math inline">\(+2\nu/h^2\)</span> à la diagonale et <span
+class="math inline">\(+2\nu/h^2\,u_w\)</span> à <span
+class="math inline">\(b_k\)</span> ;</li>
+<li><code>sparse(rows, cols, vals, K, K)</code> : on stocke les triplets
+(ligne, colonne, valeur) et l'on construit la matrice creuse (cinq
+coefficients non nuls par ligne au plus).</li>
+</ul>
+<p>Puis <code>ustat = cholesky(Symmetric(A)) \ b</code> résout le
+problème stationnaire (factorisation de Cholesky, car <span
+class="math inline">\(A\)</span> est symétrique définie positive).</p>
+<h2 id="5-lévolution-en-temps">5. L'évolution en temps</h2>
+<p>On revient à <span class="math inline">\(\partial_t u - \nu\Delta u =
+f\)</span>. Après la même discrétisation en espace, on obtient le
+système différentiel <span class="math display">\[ \frac{du}{dt} + A u =
+b, \qquad u(0) = (u_w,\dots,u_w), \]</span> avec <strong>les mêmes <span
+class="math inline">\(A\)</span> et <span
+class="math inline">\(b\)</span></strong> que pour le problème
+stationnaire : les conditions aux limites sont déjà dans <span
+class="math inline">\(A\)</span> (Neumann : termes absents ; Dirichlet :
+diagonale) et dans <span class="math inline">\(b\)</span> (Dirichlet) ;
+le terme en temps n'ajoute que l'identité. (Cela suppose <span
+class="math inline">\(f\)</span> et <span
+class="math inline">\(u_w\)</span> indépendants du temps, comme
+ici.)</p>
+<p>On discrétise en temps par le <span
+class="math inline">\(\theta\)</span>-schéma, avec <span
+class="math inline">\(\Delta t\)</span> le pas de temps : <span
+class="math display">\[ \frac{u^{n+1} - u^n}{\Delta t} + A\big(\theta
+u^{n+1} + (1-\theta)u^n\big) = b \iff (I + \theta\Delta t\,A)\,u^{n+1} =
+\big(I - (1-\theta)\Delta t\,A\big)u^n + \Delta t\,b. \]</span></p>
+<ul>
+<li><span class="math inline">\(\theta = 0\)</span> : explicite ; <span
+class="math inline">\(\theta = 1\)</span> : Euler implicite ; <span
+class="math inline">\(\theta = \tfrac12\)</span> : Crank-Nicolson.</li>
+<li>La matrice <span class="math inline">\(I + \theta\Delta
+t\,A\)</span> est symétrique définie positive et ne change pas d'un pas
+à l'autre : on la factorise <strong>une seule fois</strong>
+(<code>cholesky</code>), puis chaque pas coûte une résolution.</li>
+<li>On pilote le pas de temps par <span class="math inline">\(\sigma :=
+\nu\Delta t/h^2\)</span> ; le temps final <span
+class="math inline">\(t_f\)</span> est fixé.</li>
+</ul>
+<p><img src="chaleur_cn.gif" /></p>
+<p>Dans le TP, vous complétez la fonction <code>evolve</code> (les
+<code># TBC</code>), puis vous étudiez la stabilité, l'ordre en temps et
+le comportement pour de grands pas de temps. Pour le schéma explicite,
+observez ce qui se passe quand <span
+class="math inline">\(\sigma\)</span> augmente.</p>
+<h2 id="6-organisation-du-tp">6. Organisation du TP</h2>
+<ul>
+<li>Le code de départ (géométrie, <code>assemble</code>, début de
+<code>evolve</code>) est dans le <a href="./">sujet</a> ; il est à
+exécuter une fois en début de session, puis à compléter pour les
+<code># TBC</code>.</li>
+<li>Julia : paquets <code>SparseArrays</code>,
+<code>LinearAlgebra</code> et <code>Plots</code>.</li>
+<li>Les questions de l'exercice 1 se traitent dans l'ordre : assemblage,
+résolution, bilan d'énergie, déplacement du chauffage, validation sur un
+cas test, convergence en espace.</li>
+<li>Les questions de l'exercice 2 : schéma de Crank-Nicolson et
+conditions aux limites, stabilité, programmation de <code>evolve</code>,
+schéma explicite, ordre en temps, grand pas de temps.</li>
+<li>Points d'attention : repérage <span
+class="math inline">\((j,i)\)</span> = (ligne en <span
+class="math inline">\(y\)</span>, colonne en <span
+class="math inline">\(x\)</span>) ; ne pas confondre indice physique et
+indice logique ; le coefficient de Dirichlet est <span
+class="math inline">\(2\nu/h^2\)</span> (distance <span
+class="math inline">\(h/2\)</span>) ; les tracés sont faits par
+<code>heatplot</code>.</li>
+</ul>
+</main>
+<script>
+// "Copier" button on every code block
+document.querySelectorAll("pre").forEach(function (pre) {
+  var box = pre.parentElement;
+  if (!box.classList.contains("sourceCode")) {
+    box = document.createElement("div");
+    box.className = "codewrap";
+    pre.parentNode.insertBefore(box, pre);
+    box.appendChild(pre);
+  }
+  var btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "copy-btn";
+  btn.textContent = "Copier";
+  btn.addEventListener("click", function () {
+    var text = (pre.querySelector("code") || pre).textContent;
+    var done = function () { btn.textContent = "Copié !"; setTimeout(function () { btn.textContent = "Copier"; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { btn.textContent = "Erreur"; });
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Erreur"; }
+      document.body.removeChild(ta);
+    }
+  });
+  box.appendChild(btn);
+});
+</script>
+<footer>Page générée automatiquement à partir des fichiers Markdown du dépôt (pandoc, MathJax).</footer>
+</body>
+</html>
