@@ -28,7 +28,7 @@ $$ \frac{\partial u}{\partial n} = 0, $$
 
 - *Maillage en cellules.* On découpe le carré $]0,1[^2$ en $N \times N$ cellules carrées de côté $h = 1/N$, et l'on garde les cellules contenues dans $\Omega$ ; $N$ est un multiple de $20$ (pour que le coin retiré, le chauffage et la fenêtre soient formés de cellules entières). L'inconnue $u_k$ approche la température au centre de la cellule $k$. En Julia, la cellule $(j,i)$ est repérée par sa ligne $j$ (en $y$) et sa colonne $i$ (en $x$).
 - *Volumes finis.* On intègre $-\nu\Delta u = f$ sur chaque cellule : le flux à travers une face commune à deux cellules voisines $k$ et $l$ est approché par $-\nu(u_l - u_k)/h$ ; un mur isolant ne donne aucun flux (le terme correspondant est simplement absent) ; une face de la fenêtre est à la température $u_w$, à distance $h/2$ du centre de la cellule, d'où le flux $\nu(u_k - u_w)/(h/2)$.
-- *Pas de temps.* On pose $\sigma := \nu\Delta t/h^2$ (c'est $\sigma_x = \sigma_y$ du cours). Le temps final $t_f$ est fixé et $\Delta t = t_f/N_t$ avec $N_t$ le plus petit entier tel que $\nu\Delta t/h^2 \le \sigma$ : faire varier $\sigma$ ne change pas $t_f$.
+- *Pas de temps.* On pose $\sigma := \nu\Delta t/h^2$ (la quantité $\sigma_x = \sigma_y$ du cours, ici $\Delta x = \Delta y = h$). Le temps final $t_f$ est fixé et $\Delta t = t_f/N_t$ avec $N_t$ le plus petit entier tel que $\nu\Delta t/h^2 \le \sigma$ : faire varier $\sigma$ ne change pas $t_f$.
 - *Distance à l'état stationnaire.* On mesure $\|u\| := \big(h^2\sum_k u_k^2\big)^{1/2}$, la norme $L^2$ discrète.
 
 Le code ci-dessous est à exécuter une fois en début de session.
@@ -198,12 +198,12 @@ où $A$ et $b$ sont ceux de l'exercice 1 ($b$ contient à la fois le chauffage e
 
 **2.1** Pour une cellule intérieure (ses quatre voisines sont dans $\Omega$, pas de terme source), écrire le schéma de Crank-Nicolson ($\theta = \frac12$) et le comparer à
 $$ \begin{aligned}
-  & u_k^{n+1} - \frac{\sigma_x}{2}(u_{kW}^{n+1} - 2u_k^{n+1} + u_{kE}^{n+1})
-              - \frac{\sigma_y}{2}(u_{kN}^{n+1} - 2u_k^{n+1} + u_{kS}^{n+1})\\
-  & = u^n_k   + \frac{\sigma_x}{2}(u_{kW}^n - 2u_k^n + u_{kE}^{n})
-              + \frac{\sigma_y}{2}(u_{kN}^n - 2u_k^n + u_{kS}^n) + \Delta t\, f_k,
+  & u_k^{n+1} - \frac{\sigma}{2}(u_{kW}^{n+1} - 2u_k^{n+1} + u_{kE}^{n+1})
+              - \frac{\sigma}{2}(u_{kN}^{n+1} - 2u_k^{n+1} + u_{kS}^{n+1})\\
+  & = u^n_k   + \frac{\sigma}{2}(u_{kW}^n - 2u_k^n + u_{kE}^{n})
+              + \frac{\sigma}{2}(u_{kN}^n - 2u_k^n + u_{kS}^n) + \Delta t\, f_k,
 \end{aligned} $$
-où $\sigma_x = \nu\Delta t/\Delta x^2$ et $\sigma_y = \nu\Delta t/\Delta y^2$. Que deviennent les termes de bord (mur isolant, fenêtre) dans l'écriture matricielle ?
+où $\sigma = \nu\Delta t/h^2$ (c'est le schéma du cours avec $\sigma_x = \sigma_y = \sigma$, car $\Delta x = \Delta y = h$). Que deviennent les termes de bord (mur isolant, fenêtre) dans l'écriture matricielle ?
 
 **2.2** *Stabilité.* Les valeurs propres de $A$ sont notées $0 < \lambda_1 \le \dots \le \lambda_K$. Exprimer le facteur d'amplification du $\theta$-schéma sur chaque mode propre. Montrer que le schéma de Crank-Nicolson est stable pour tout $\Delta t > 0$. Montrer que $\lambda_K \le 8\nu/h^2$ (lemme de Gershgorin) et en déduire une condition suffisante de stabilité pour le schéma explicite en fonction de $\sigma$.
 

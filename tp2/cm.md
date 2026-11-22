@@ -173,7 +173,45 @@ $$ \frac{u^{n+1} - u^n}{\Delta t} + A\big(\theta u^{n+1} + (1-\theta)u^n\big) = 
 
 Dans le TP, vous complétez la fonction `evolve` (les `# TBC`), puis vous étudiez la stabilité, l'ordre en temps et le comportement pour de grands pas de temps. Pour le schéma explicite, observez ce qui se passe quand $\sigma$ augmente.
 
-## 6. Organisation du TP
+## 6. Stabilité : analyse exacte sur la matrice
+
+*Question.* À $\Delta t$ fixé, une petite perturbation des données (arrondis, erreur sur $u^0$) est-elle amplifiée au cours des pas de temps ? Cela dépend de $\theta$ et de $\sigma$.
+
+**Les conditions aux limites sont dans la matrice.** Si $u^n$ et $\tilde u^n$ sont deux solutions du schéma issues de deux données initiales proches, la différence $e^n := \tilde u^n - u^n$ vérifie, par linéarité (les mêmes $A$ et $b$ sont utilisés et $b$ disparaît dans la différence),
+$$ e^{n+1} = G\,e^n, \qquad G := (I + \theta\Delta t\,A)^{-1}\big(I - (1-\theta)\Delta t\,A\big). $$
+La stabilité est donc celle de la matrice $G$, qui contient les conditions aux limites (Neumann dans la structure de $A$, Dirichlet dans sa diagonale) et la géométrie de la pièce.
+
+**Décomposition sur les vecteurs propres.** $A$ est symétrique définie positive : il existe une base orthonormée de vecteurs propres $v_1,\dots,v_K$, avec $Av_j = \lambda_j v_j$ et $0 < \lambda_1 \le \dots \le \lambda_K$. On décompose la perturbation initiale $e^0 = \sum_j c_j v_j$. Chaque $v_j$ est un vecteur propre de $G$ :
+$$ G v_j = a(\lambda_j)\,v_j, \qquad a(\lambda) := \frac{1 - (1-\theta)\Delta t\,\lambda}{1 + \theta\Delta t\,\lambda}, $$
+donc, composante par composante (chaque direction propre évolue indépendamment des autres),
+$$ e^n = \sum_{j=1}^K c_j\,a(\lambda_j)^n\,v_j, \qquad \|e^n\|^2 = \sum_{j=1}^K c_j^2\,a(\lambda_j)^{2n}\quad\Big(\text{norme } \|e\|^2 = h^2\textstyle\sum_k e_k^2\Big). $$
+Le schéma est donc stable pour la norme $\ell^2$ (c'est-à-dire $\|e^n\| \le \|e^0\|$ pour toute perturbation) **si et seulement si**
+$$ |a(\lambda_j)| \le 1 \quad \text{pour tout } j = 1,\dots,K. $$
+Il n'y a pas de constante : comme $A$ est symétrique (donc normale), $\|G\|_2 = \max_j |a(\lambda_j)|$ exactement. La condition est nécessaire et suffisante, pour ce problème précis (ce domaine, ces conditions aux limites, ce maillage).
+
+**Les trois schémas.** Avec $\lambda = \lambda_j > 0$ :
+
+| schéma | $a(\lambda)$ | $\lvert a\rvert \le 1$ pour tout $j$ ? | limite $\Delta t\lambda \to \infty$ |
+|:-:|:-:|:-:|:-:|
+| explicite ($\theta = 0$) | $1 - \Delta t\,\lambda$ | si et seulement si $\Delta t\,\lambda_K \le 2$ | instable |
+| Euler implicite ($\theta = 1$) | $\dfrac{1}{1 + \Delta t\,\lambda} \in ]0,1[$ | toujours | $\to 0$ |
+| Crank-Nicolson ($\theta = \tfrac12$) | $\dfrac{1 - z}{1 + z}$, $z = \dfrac{\Delta t\,\lambda}{2}$ | toujours ($\lvert a\rvert < 1$ car $z > 0$) | $\to -1$ |
+
+Le schéma explicite est stable sous condition : c'est le mode de plus grande valeur propre $\lambda_K$ qui est le plus exigeant.
+
+**Où est $\lambda_K$ ?** Sur la pièce en L avec conditions mixtes, les valeurs propres de $A$ ne sont pas explicites. On se contente d'une borne : le lemme de Gershgorin (à redémontrer en question 2.2) donne $\lambda_K \le 8\nu/h^2$. Il en résulte
+$$ \Delta t\,\lambda_K \le 8\sigma \le 2 \quad\Longleftarrow\quad \sigma = \frac{\nu\Delta t}{h^2} \le \frac14 . $$
+La borne est presque atteinte (pour $N = 40$, $\lambda_K = 12775$ pour $8\nu/h^2 = 12800$) : la condition $\sigma \le 1/4$ est donc quasiment nécessaire. Le mode correspondant est celui qui oscille d'une cellule à l'autre (en damier), et c'est bien lui qu'on voit exploser pour $\sigma = 0.26$.
+
+**Ce que dit le spectre en plus.** La plus petite valeur propre $\lambda_1 > 0$ (elle est strictement positive grâce à la fenêtre de Dirichlet) fixe la vitesse à laquelle $u(t)$ approche l'état stationnaire, en $e^{-\lambda_1 t}$ (question 2.3). Et pour Crank-Nicolson, $a(\lambda) \to -1$ quand $\Delta t\lambda \to \infty$ : les modes raides ne sont pas amortis, ils changent de signe à chaque pas (question 2.6), contrairement à Euler implicite.
+
+**Comparaison avec l'analyse de von Neumann.** Les deux analyses utilisent le même facteur $a(\lambda)$, sur des spectres différents.
+
+- *von Neumann* est a priori : maillage uniforme, coefficients constants, domaine périodique ou infini. Les modes sont des exponentielles $e^{i(k_x x + k_y y)}$ et $\lambda(k) = \frac{4\nu}{h^2}\big(\sin^2\frac{k_xh}{2} + \sin^2\frac{k_yh}{2}\big) \in [0, 8\nu/h^2]$ : on retrouve la même condition $\sigma \le 1/4$, mais sans voir les conditions aux limites ni la forme de la pièce.
+- *L'analyse de la matrice* est exacte pour le problème posé, bords compris : le spectre est celui de $A$. Ses plus grandes valeurs propres sont locales et presque insensibles aux bords (d'où le même résultat), alors que les plus petites en dépendent ($\lambda_1 > 0$ ici, alors que la version périodique a le mode constant $\lambda = 0$).
+- *Limite.* L'égalité $\|G\|_2 = \max_j|a(\lambda_j)|$ vient de la symétrie de $A$. Pour un problème non symétrique (l'advection du TP 1), le spectre ne suffit plus et von Neumann reste l'outil de base.
+
+## 7. Organisation du TP
 
 - Le code de départ (géométrie, `assemble`, début de `evolve`) est dans le [sujet](tp2.md) ; il est à exécuter une fois en début de session, puis à compléter pour les `# TBC`.
 - Julia : paquets `SparseArrays`, `LinearAlgebra` et `Plots`.
