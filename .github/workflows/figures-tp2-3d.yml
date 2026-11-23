@@ -1,0 +1,29 @@
+# Figures of TP 2 3D: run the Julia code of tp2/tp2-3d-sol.md (see julia-figures.yml)
+name: Figures TP 2 3D
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tp2/tp2-3d-sol.md"
+      - ".github/workflows/julia-figures.yml"
+      - ".github/workflows/figures-tp2-3d.yml"
+  pull_request:
+    paths:
+      - "tp2/tp2-3d-sol.md"
+      - ".github/workflows/julia-figures.yml"
+      - ".github/workflows/figures-tp2-3d.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  figures:
+    uses: ./.github/workflows/julia-figures.yml
+    with:
+      dir: tp2
+      md: tp2-3d-sol.md
+      packages: GLMakie
+      xvfb: true
