@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>2026-27 – TP 2 bis - Équation de la chaleur en 3D</title>
+<link rel="stylesheet" href="../style.css">
+<style>
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+<script
+src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+type="text/javascript"></script>
+</head>
+<body>
+<nav><a href="../index.html">← Accueil</a> · <span>Dans ce dossier :</span> <a href="TP2.pdf">TP2 (PDF)</a> · <a href="cm.html">cm</a> · <a href="cm.pdf">cm (PDF)</a> · <a href="tp2-3d.html">tp2-3d</a> · <a href="tp2-sol.html">tp2-sol</a> · <a href="index.html">tp2</a> · <a href="tp2_CM.pdf">tp2_CM (PDF)</a></nav>
+<main>
+<p><img src="../logo-pns.png" alt="PNS" /></p>
+<h2 id="mam4---edp1">MAM4 - EDP1</h2>
+<h1 id="2026-27">2026-27</h1>
+<h1 id="tp-2-bis---équation-de-la-chaleur-en-3d"><strong>TP 2 bis -
+Équation de la chaleur en 3D</strong></h1>
+<p>On reprend le TP 2 dans une vraie pièce en trois dimensions, avec des
+dimensions réalistes. On souhaite simuler l'évolution de la température
+dans une pièce en forme de L</p>
+<ul>
+<li>chauffée par un poêle situé dans la partie nord de la pièce (à
+l'ordonnée réduite <span class="math inline">\(0.6\)</span> à <span
+class="math inline">\(0.8\)</span>, comme dans le TP 2),</li>
+<li>dont les parois, le sol et le plafond sont isolants,</li>
+<li>à l'exception d'une fenêtre située sur le mur du bas (mur sud), à
+une hauteur réaliste.</li>
+</ul>
+<p>La température suit l'EDP de la chaleur 3D :</p>
+<p><span class="math display">\[ \begin{aligned}
+&amp; \frac{\partial u}{\partial t} - \nu\Delta u = f,\quad t &gt;
+0,\quad (x,y,z) \in \Omega,\\
+&amp; u(0,x,y,z) = u_0,\quad  (x,y,z) \in \Omega,
+\end{aligned} \]</span></p>
+<p>avec des conditions aux limites appropriées sur le bord du
+domaine.</p>
+<p><strong>Le problème.</strong> Les longueurs sont en mètres, les
+températures en °C, le temps en secondes.</p>
+<p><img src="chaleur3d_piece.png" /></p>
+<ul>
+<li><em>Pièce.</em> Le plan est le carré <span
+class="math inline">\(]0,6[^2\)</span> privé du bloc <span
+class="math inline">\([0,2.8]\times[2.8,6]\)</span> (une aile sud de
+<span class="math inline">\(6 \times 2.8\)</span> m et une aile est de
+<span class="math inline">\(3.2 \times 3.2\)</span> m, soit <span
+class="math inline">\(27\)</span> m² au sol), et la hauteur sous plafond
+est <span class="math inline">\(H = 2.4\)</span> m. Sur les parois, le
+sol et le plafond, la condition est de Neumann homogène (isolation) :
+<span class="math display">\[ \frac{\partial u}{\partial n} = 0.
+\]</span></li>
+<li><em>Fenêtre.</em> Elle est sur le mur sud <span
+class="math inline">\(y = 0\)</span>, pour <span
+class="math inline">\(2.4 \le x \le 4\)</span> (largeur <span
+class="math inline">\(1.6\)</span> m) et <span class="math inline">\(0.8
+\le z \le 2\)</span> (hauteur <span class="math inline">\(1.2\)</span>
+m) : l'allège (hauteur du bas de la fenêtre) est de <span
+class="math inline">\(0.8\)</span> m et le haut est à <span
+class="math inline">\(2\)</span> m, ce qui correspond à des valeurs
+usuelles dans le bâtiment (allège de <span
+class="math inline">\(0.8\)</span> à <span
+class="math inline">\(1\)</span> m, haut à hauteur de porte). Sur la
+fenêtre, la température est imposée (Dirichlet inhomogène) : <span
+class="math inline">\(u = u_w = 0\)</span> °C.</li>
+<li><em>Poêle.</em> Un poêle de <span class="math inline">\(0.8 \times
+0.8\)</span> m au sol et <span class="math inline">\(1.2\)</span> m de
+haut, occupant <span
+class="math inline">\([3.2,4]\times[3.6,4.4]\times[0,1.2]\)</span>. Son
+ordonnée correspond à la plage <span
+class="math inline">\([0.6,0.8]\)</span> du TP 2 ramenée à la profondeur
+de <span class="math inline">\(6\)</span> m de la pièce (<span
+class="math inline">\([3.6,4.8]\)</span> m), et il est dans l'aile est,
+à <span class="math inline">\(0.4\)</span> m du mur intérieur. Il
+fournit une puissance <span class="math inline">\(P = 1200\)</span> W,
+répartie uniformément dans son volume <span
+class="math inline">\(V\)</span> : <span class="math inline">\(f =
+P/(\rho c_p V)\)</span> dans le poêle, <span class="math inline">\(f =
+0\)</span> ailleurs, avec <span class="math inline">\(\rho c_p \simeq
+1.2\cdot10^3\)</span> J/(m³ K) pour l'air.</li>
+<li><em>Diffusion.</em> On prend <span class="math inline">\(\nu =
+0.02\)</span> m²/s. C'est une diffusivité <em>effective</em> qui
+modélise le brassage de l'air par de faibles mouvements de convection :
+la valeur moléculaire de l'air (<span
+class="math inline">\(2\cdot10^{-5}\)</span> m²/s) donnerait des temps
+caractéristiques de plusieurs semaines pour une pièce de cette taille.
+C'est donc un modèle simplifié (pas de flottabilité : l'air chaud ne
+monte pas, il n'y a pas de stratification).</li>
+<li><em>Condition initiale.</em> La pièce est à <span
+class="math inline">\(u_0 = 10\)</span> °C. Le temps final est <span
+class="math inline">\(t_f = 2\)</span> h <span class="math inline">\(=
+7200\)</span> s.</li>
+</ul>
+<p><strong>Conventions numériques.</strong></p>
+<ul>
+<li><em>Maillage en cellules.</em> On découpe la boîte <span
+class="math inline">\(]0,6[^2\times]0,H[\)</span> en cellules cubiques
+de côté <span class="math inline">\(h\)</span> (un diviseur commun de
+toutes les dimensions, par exemple <span class="math inline">\(h = 0.4,\
+0.2,\ 0.1\)</span> m) et l'on garde les cellules contenues dans <span
+class="math inline">\(\Omega\)</span>. L'inconnue <span
+class="math inline">\(u_k\)</span> approche la température au centre de
+la cellule <span class="math inline">\(k\)</span>. En Julia, la cellule
+<span class="math inline">\((i,j,k)\)</span> est repérée par ses indices
+en <span class="math inline">\(x\)</span>, <span
+class="math inline">\(y\)</span> et <span
+class="math inline">\(z\)</span>.</li>
+<li><em>Différences finies.</em> On intègre <span
+class="math inline">\(-\nu\Delta u = f\)</span> sur chaque cellule : le
+flux à travers une face commune à deux cellules voisines est approché
+par <span class="math inline">\(-\nu(u_l - u_k)/h\)</span>, un mur
+isolant ne donne aucun flux, et une face de la fenêtre est à la
+température <span class="math inline">\(u_w\)</span>, à distance <span
+class="math inline">\(h/2\)</span> du centre de la cellule.</li>
+<li><em>Pas de temps.</em> On fixe le pas de temps <span
+class="math inline">\(\Delta t\)</span> (en secondes), et on pose <span
+class="math inline">\(\sigma := \nu\Delta t/h^2\)</span>.</li>
+<li><em>Distance à l'état stationnaire.</em> On mesure la distance entre
+deux champs par l'écart quadratique moyen <span
+class="math inline">\(\|u\| := \big(\frac{1}{K}\sum_k
+u_k^2\big)^{1/2}\)</span> (en °C), où <span
+class="math inline">\(K\)</span> est le nombre de cellules.</li>
+</ul>
+<p>Le code ci-dessous est à exécuter une fois en début de session. La
+visualisation utilise Makie (paquet <code>GLMakie</code>) : trois coupes
+de la température en contours remplis (<code>contourf!</code>) : une
+coupe horizontale à <span class="math inline">\(1\)</span> m de hauteur
+et deux coupes verticales passant par le poêle (en rouge) ; la fenêtre
+est en bleu et les cellules hors de la pièce sont en blanc. Une vue 3D
+(rendu volumique, <code>volume3d</code>) représente la chaleur comme un
+gaz coloré.</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">SparseArrays</span>, <span class="bu">LinearAlgebra</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Physical data (SI units, temperatures in °C)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>ν  <span class="op">=</span> <span class="fl">0.02</span>            <span class="co"># effective diffusivity of the air, m²/s</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>uw <span class="op">=</span> <span class="fl">0.0</span>             <span class="co"># window temperature</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>u0 <span class="op">=</span> <span class="fl">10.0</span>            <span class="co"># initial temperature of the room</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>P  <span class="op">=</span> <span class="fl">1200.0</span>          <span class="co"># stove power, W</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>ρc <span class="op">=</span> <span class="fl">1.2</span> <span class="op">*</span> <span class="fl">1005</span>      <span class="co"># volumetric heat capacity ρ c_p of air, J/(m³ K)</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>tf <span class="op">=</span> <span class="fl">7200.0</span>          <span class="co"># final time: 2 h</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Geometry (m). Plan: ]0,6[² minus the block [0,2.8]×[2.8,6]; height H.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Each range is (min, max); the window is on the south wall y = 0.</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>H      <span class="op">=</span> <span class="fl">2.4</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>corner <span class="op">=</span> ((<span class="fl">0.0</span>, <span class="fl">2.8</span>), (<span class="fl">2.8</span>, <span class="fl">6.0</span>))                <span class="co"># removed block: x-range, y-range</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>window <span class="op">=</span> ((<span class="fl">2.4</span>, <span class="fl">4.0</span>), (<span class="fl">0.8</span>, <span class="fl">2.0</span>))                <span class="co"># x-range, z-range (sill 0.8 m, top 2.0 m)</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>stove0 <span class="op">=</span> ((<span class="fl">3.2</span>, <span class="fl">4.0</span>), (<span class="fl">3.6</span>, <span class="fl">4.4</span>), (<span class="fl">0.0</span>, <span class="fl">1.2</span>))    <span class="co"># x-, y-, z-ranges</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Cells of size h (h must divide all the dimensions above). Cell (i, j, k): x, y, z.</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Returns: mask (cells in the room), win (cells touching the window), f (heating, K/s)</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">room</span>(h; stove <span class="op">=</span> stove0)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="kw">function</span> <span class="fu">cells</span>(r)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>        a, b <span class="op">=</span> r <span class="op">./</span> h</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>        <span class="pp">@assert</span> <span class="fu">abs</span>(a <span class="op">-</span> <span class="fu">round</span>(a)) <span class="op">&lt;</span> <span class="fl">1e-8</span> <span class="op">&amp;&amp;</span> <span class="fu">abs</span>(b <span class="op">-</span> <span class="fu">round</span>(b)) <span class="op">&lt;</span> <span class="fl">1e-8</span> <span class="st">&quot;h must divide the dimensions&quot;</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> (<span class="fu">round</span>(<span class="dt">Int</span>, a) <span class="op">+</span> <span class="fl">1</span>)<span class="op">:</span><span class="fu">round</span>(<span class="dt">Int</span>, b)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>    <span class="kw">end</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    Nx, Ny, Nz <span class="op">=</span> <span class="fu">round</span>.(<span class="dt">Int</span>, (<span class="fl">6.0</span>, <span class="fl">6.0</span>, H) <span class="op">./</span> h)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> <span class="fu">trues</span>(Nx, Ny, Nz)</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    mask[<span class="fu">cells</span>(corner[<span class="fl">1</span>]), <span class="fu">cells</span>(corner[<span class="fl">2</span>]), <span class="op">:</span>] <span class="op">.=</span> <span class="cn">false</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    win <span class="op">=</span> <span class="fu">falses</span>(Nx, Ny, Nz)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>    win[<span class="fu">cells</span>(window[<span class="fl">1</span>]), <span class="fl">1</span>, <span class="fu">cells</span>(window[<span class="fl">2</span>])] <span class="op">.=</span> <span class="cn">true</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="fu">zeros</span>(Nx, Ny, Nz)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a>    V <span class="op">=</span> <span class="fu">prod</span>(r[<span class="fl">2</span>] <span class="op">-</span> r[<span class="fl">1</span>] <span class="cf">for</span> r <span class="op">∈</span> stove)          <span class="co"># volume of the stove, m³</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>    f[<span class="fu">cells</span>(stove[<span class="fl">1</span>]), <span class="fu">cells</span>(stove[<span class="fl">2</span>]), <span class="fu">cells</span>(stove[<span class="fl">3</span>])] <span class="op">.=</span> P <span class="op">/</span> (ρc <span class="op">*</span> V)</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> mask, win, f</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Cell values (vector) → 3D array with NaN outside the room</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="fu">field</span>(u, mask) <span class="op">=</span> (U <span class="op">=</span> <span class="fu">fill</span>(<span class="cn">NaN</span>, <span class="fu">size</span>(mask)); U[mask] <span class="op">=</span> u; U)</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">GLMakie</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Room outline, stove (red edges) and window (blue)</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">box!</span>(ax, (x0, x1), (y0, y1), (z0, z1); kw<span class="op">...</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    P <span class="op">=</span> [<span class="fu">Point3f</span>(x, y, z) for x <span class="op">∈</span> (x0, x1), y <span class="op">∈</span> (y0, y1), z <span class="op">∈</span> (z0, z1)]</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (a, b) <span class="op">∈</span> ((<span class="fl">1</span>, <span class="fl">2</span>), (<span class="fl">3</span>, <span class="fl">4</span>), (<span class="fl">5</span>, <span class="fl">6</span>), (<span class="fl">7</span>, <span class="fl">8</span>), (<span class="fl">1</span>, <span class="fl">3</span>), (<span class="fl">2</span>, <span class="fl">4</span>), (<span class="fl">5</span>, <span class="fl">7</span>), (<span class="fl">6</span>, <span class="fl">8</span>), (<span class="fl">1</span>, <span class="fl">5</span>), (<span class="fl">2</span>, <span class="fl">6</span>), (<span class="fl">3</span>, <span class="fl">7</span>), (<span class="fl">4</span>, <span class="fl">8</span>))</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">lines!</span>(ax, [P[a], P[b]]; kw<span class="op">...</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">draw_room!</span>(ax; stove <span class="op">=</span> stove0, overdraw <span class="op">=</span> <span class="cn">false</span>)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    poly <span class="op">=</span> [(<span class="fl">0.0</span>, <span class="fl">0.0</span>), (<span class="fl">6.0</span>, <span class="fl">0.0</span>), (<span class="fl">6.0</span>, <span class="fl">6.0</span>), (corner[<span class="fl">1</span>][<span class="fl">2</span>], <span class="fl">6.0</span>), (corner[<span class="fl">1</span>][<span class="fl">2</span>], corner[<span class="fl">2</span>][<span class="fl">1</span>]), (<span class="fl">0.0</span>, corner[<span class="fl">2</span>][<span class="fl">1</span>])]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> z <span class="op">∈</span> (<span class="fl">0.0</span>, H)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>        <span class="fu">lines!</span>(ax, [<span class="fu">Point3f</span>(x, y, z) for (x, y) <span class="op">∈</span> [poly; poly[<span class="fl">1</span>]]]; color <span class="op">=</span> <span class="op">:</span>black, overdraw <span class="op">=</span> overdraw)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> (x, y) <span class="op">∈</span> poly</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>        <span class="fu">lines!</span>(ax, [<span class="fu">Point3f</span>(x, y, <span class="fl">0</span>), <span class="fu">Point3f</span>(x, y, H)]; color <span class="op">=</span> <span class="op">:</span>black, overdraw <span class="op">=</span> overdraw)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">box!</span>(ax, stove<span class="op">...</span>; color <span class="op">=</span> <span class="op">:</span>red, linewidth <span class="op">=</span> <span class="fl">3</span>, overdraw <span class="op">=</span> overdraw)</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    (x0, x1), (z0, z1) <span class="op">=</span> window</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mesh!</span>(ax, <span class="fu">Rect3f</span>(<span class="fu">Vec3f</span>(x0, <span class="op">-</span><span class="fl">0.01</span>, z0), <span class="fu">Vec3f</span>(x1 <span class="op">-</span> x0, <span class="fl">0.02</span>, z1 <span class="op">-</span> z0)); color <span class="op">=</span> (<span class="op">:</span>deepskyblue, <span class="fl">0.6</span>), transparency <span class="op">=</span> <span class="cn">true</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Filled contour plots of three orthogonal slices of the temperature U (an Observable 3D array,</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a><span class="co"># NaN outside the room); cells outside the room are drawn in white</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>levels <span class="op">=</span> <span class="fu">range</span>(<span class="fl">0</span>, <span class="fl">42</span>, length <span class="op">=</span> <span class="fl">15</span>)          <span class="co"># one contour every 3 °C</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a><span class="fu">nanfill</span>(A) <span class="op">=</span> <span class="fu">map</span>(a <span class="op">-&gt;</span> <span class="fu">isnan</span>(a) ? <span class="op">-</span><span class="fl">1.0</span> <span class="op">:</span> a, A)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">scene3d</span>(U, x, y, z, title; stove <span class="op">=</span> stove0, at <span class="op">=</span> (<span class="fl">3.6</span>, <span class="fl">4.0</span>, <span class="fl">1.0</span>))</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    i, j, k <span class="op">=</span> [<span class="fu">argmin</span>(<span class="fu">abs</span>.(c <span class="op">.-</span> a)) for (c, a) <span class="op">∈</span> <span class="fu">zip</span>((x, y, z), at)]</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>    (sx, sy, sz), (wx, wz) <span class="op">=</span> stove, window</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    kw <span class="op">=</span> (colormap <span class="op">=</span> <span class="op">:</span>inferno, levels <span class="op">=</span> levels, extendlow <span class="op">=</span> <span class="op">:</span>white, extendhigh <span class="op">=</span> <span class="op">:</span>auto)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">1250</span>, <span class="fl">400</span>))</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Label</span>(fig[<span class="fl">0</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>], title; fontsize <span class="op">=</span> <span class="fl">18</span>, font <span class="op">=</span> <span class="op">:</span>bold)</span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (a) horizontal slice z = at[3]</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    ax1 <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>, <span class="fl">1</span>]; aspect <span class="op">=</span> <span class="fu">DataAspect</span>(), xlabel <span class="op">=</span> <span class="st">&quot;x (m)&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;y (m)&quot;</span>, title <span class="op">=</span> <span class="st">&quot;horizontal slice, z = </span><span class="sc">$</span>(at[<span class="fl">3</span>])<span class="st"> m&quot;</span>)</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>    co <span class="op">=</span> <span class="fu">contourf!</span>(ax1, x, y, <span class="fu">lift</span>(U <span class="op">-&gt;</span> <span class="fu">nanfill</span>(U[<span class="op">:</span>, <span class="op">:</span>, k]), U); kw<span class="op">...</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>    poly <span class="op">=</span> [(<span class="fl">0.0</span>, <span class="fl">0.0</span>), (<span class="fl">6.0</span>, <span class="fl">0.0</span>), (<span class="fl">6.0</span>, <span class="fl">6.0</span>), (corner[<span class="fl">1</span>][<span class="fl">2</span>], <span class="fl">6.0</span>), (corner[<span class="fl">1</span>][<span class="fl">2</span>], corner[<span class="fl">2</span>][<span class="fl">1</span>]), (<span class="fl">0.0</span>, corner[<span class="fl">2</span>][<span class="fl">1</span>]), (<span class="fl">0.0</span>, <span class="fl">0.0</span>)]</span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax1, <span class="fu">Point2f</span>.(poly); color <span class="op">=</span> <span class="op">:</span>black)</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax1, <span class="fu">Point2f</span>.([(sx[<span class="fl">1</span>], sy[<span class="fl">1</span>]), (sx[<span class="fl">2</span>], sy[<span class="fl">1</span>]), (sx[<span class="fl">2</span>], sy[<span class="fl">2</span>]), (sx[<span class="fl">1</span>], sy[<span class="fl">2</span>]), (sx[<span class="fl">1</span>], sy[<span class="fl">1</span>])]); color <span class="op">=</span> <span class="op">:</span>red, linewidth <span class="op">=</span> <span class="fl">2</span>)</span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax1, [<span class="fu">Point2f</span>(wx[<span class="fl">1</span>], <span class="fl">0</span>), <span class="fu">Point2f</span>(wx[<span class="fl">2</span>], <span class="fl">0</span>)]; color <span class="op">=</span> <span class="op">:</span>deepskyblue, linewidth <span class="op">=</span> <span class="fl">5</span>)</span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (b) vertical slice y = at[2], through the stove</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>    ax2 <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>, <span class="fl">2</span>]; aspect <span class="op">=</span> <span class="fu">DataAspect</span>(), xlabel <span class="op">=</span> <span class="st">&quot;x (m)&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;z (m)&quot;</span>, title <span class="op">=</span> <span class="st">&quot;vertical slice, y = </span><span class="sc">$</span>(at[<span class="fl">2</span>])<span class="st"> m&quot;</span>)</span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contourf!</span>(ax2, x, z, <span class="fu">lift</span>(U <span class="op">-&gt;</span> <span class="fu">nanfill</span>(U[<span class="op">:</span>, j, <span class="op">:</span>]), U); kw<span class="op">...</span>)</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax2, <span class="fu">Point2f</span>.([(sx[<span class="fl">1</span>], sz[<span class="fl">1</span>]), (sx[<span class="fl">2</span>], sz[<span class="fl">1</span>]), (sx[<span class="fl">2</span>], sz[<span class="fl">2</span>]), (sx[<span class="fl">1</span>], sz[<span class="fl">2</span>]), (sx[<span class="fl">1</span>], sz[<span class="fl">1</span>])]); color <span class="op">=</span> <span class="op">:</span>red, linewidth <span class="op">=</span> <span class="fl">2</span>)</span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>    <span class="co"># (c) vertical slice x = at[1], through the stove and the window</span></span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>    ax3 <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>, <span class="fl">3</span>]; aspect <span class="op">=</span> <span class="fu">DataAspect</span>(), xlabel <span class="op">=</span> <span class="st">&quot;y (m)&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;z (m)&quot;</span>, title <span class="op">=</span> <span class="st">&quot;vertical slice, x = </span><span class="sc">$</span>(at[<span class="fl">1</span>])<span class="st"> m&quot;</span>)</span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>    <span class="fu">contourf!</span>(ax3, y, z, <span class="fu">lift</span>(U <span class="op">-&gt;</span> <span class="fu">nanfill</span>(U[i, <span class="op">:</span>, <span class="op">:</span>]), U); kw<span class="op">...</span>)</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax3, <span class="fu">Point2f</span>.([(sy[<span class="fl">1</span>], sz[<span class="fl">1</span>]), (sy[<span class="fl">2</span>], sz[<span class="fl">1</span>]), (sy[<span class="fl">2</span>], sz[<span class="fl">2</span>]), (sy[<span class="fl">1</span>], sz[<span class="fl">2</span>]), (sy[<span class="fl">1</span>], sz[<span class="fl">1</span>])]); color <span class="op">=</span> <span class="op">:</span>red, linewidth <span class="op">=</span> <span class="fl">2</span>)</span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines!</span>(ax3, [<span class="fu">Point2f</span>(<span class="fl">0</span>, wz[<span class="fl">1</span>]), <span class="fu">Point2f</span>(<span class="fl">0</span>, wz[<span class="fl">2</span>])]; color <span class="op">=</span> <span class="op">:</span>deepskyblue, linewidth <span class="op">=</span> <span class="fl">5</span>)</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Colorbar</span>(fig[<span class="fl">1</span>, <span class="fl">4</span>], co; label <span class="op">=</span> <span class="st">&quot;temperature (°C)&quot;</span>)</span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig, (ax1, ax2, ax3)</span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co"># 3D view: the heat is seen as a coloured gas (volume rendering). Cells at u₀ = 10 °C or colder are</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co"># transparent; the hotter the cell, the brighter and the more opaque. U is an Observable 3D array.</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-60"><a href="#cb2-60" aria-hidden="true" tabindex="-1"></a><span class="kw">const</span> cmap <span class="op">=</span> Makie.<span class="fu">to_colormap</span>(<span class="op">:</span>inferno)</span>
+<span id="cb2-61"><a href="#cb2-61" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">heatgas</span>(u; ulow <span class="op">=</span> u0, uhigh <span class="op">=</span> <span class="fl">42.0</span>)</span>
+<span id="cb2-62"><a href="#cb2-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">isnan</span>(u) <span class="op">&amp;&amp;</span> <span class="cf">return</span> <span class="fu">RGBAf</span>(<span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">0</span>)</span>
+<span id="cb2-63"><a href="#cb2-63" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fu">clamp</span>((u <span class="op">-</span> ulow) <span class="op">/</span> (uhigh <span class="op">-</span> ulow), <span class="fl">0</span>, <span class="fl">1</span>)</span>
+<span id="cb2-64"><a href="#cb2-64" aria-hidden="true" tabindex="-1"></a>    c <span class="op">=</span> cmap[<span class="fl">1</span> <span class="op">+</span> <span class="fu">round</span>(<span class="dt">Int</span>, s <span class="op">*</span> (<span class="fu">length</span>(cmap) <span class="op">-</span> <span class="fl">1</span>))]</span>
+<span id="cb2-65"><a href="#cb2-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">RGBAf</span>(c.r, c.g, c.b, s)</span>
+<span id="cb2-66"><a href="#cb2-66" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb2-67"><a href="#cb2-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-68"><a href="#cb2-68" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">volume3d</span>(U, title; stove <span class="op">=</span> stove0)</span>
+<span id="cb2-69"><a href="#cb2-69" aria-hidden="true" tabindex="-1"></a>    fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">800</span>, <span class="fl">600</span>))</span>
+<span id="cb2-70"><a href="#cb2-70" aria-hidden="true" tabindex="-1"></a>    ax <span class="op">=</span> <span class="fu">Axis3</span>(fig[<span class="fl">1</span>, <span class="fl">1</span>]; aspect <span class="op">=</span> <span class="op">:</span>data, azimuth <span class="op">=</span> <span class="fl">1.7</span>π, elevation <span class="op">=</span> <span class="fl">0.35</span>, title <span class="op">=</span> title,</span>
+<span id="cb2-71"><a href="#cb2-71" aria-hidden="true" tabindex="-1"></a>               xlabel <span class="op">=</span> <span class="st">&quot;x (m)&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;y (m)&quot;</span>, zlabel <span class="op">=</span> <span class="st">&quot;z (m)&quot;</span>)</span>
+<span id="cb2-72"><a href="#cb2-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">volume!</span>(ax, (<span class="fl">0</span>, <span class="fl">6</span>), (<span class="fl">0</span>, <span class="fl">6</span>), (<span class="fl">0</span>, H), <span class="fu">lift</span>(U <span class="op">-&gt;</span> <span class="fu">heatgas</span>.(U), U); algorithm <span class="op">=</span> <span class="op">:</span>absorptionrgba, absorption <span class="op">=</span> <span class="fl">5.0f0</span>)</span>
+<span id="cb2-73"><a href="#cb2-73" aria-hidden="true" tabindex="-1"></a>    <span class="fu">draw_room!</span>(ax; stove <span class="op">=</span> stove, overdraw <span class="op">=</span> <span class="cn">true</span>)    <span class="co"># edges drawn on top of the gas</span></span>
+<span id="cb2-74"><a href="#cb2-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Colorbar</span>(fig[<span class="fl">1</span>, <span class="fl">2</span>]; colormap <span class="op">=</span> <span class="op">:</span>inferno, limits <span class="op">=</span> (u0, <span class="fl">42</span>), label <span class="op">=</span> <span class="st">&quot;temperature (°C), transparent at u₀ = 10 °C&quot;</span>)</span>
+<span id="cb2-75"><a href="#cb2-75" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> fig, ax</span>
+<span id="cb2-76"><a href="#cb2-76" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
+<h2 id="exercice-1">Exercice 1</h2>
+<p>On commence par le problème stationnaire (Poisson) : trouver <span
+class="math inline">\(u\)</span> telle que <span
+class="math inline">\(-\nu\Delta u = f\)</span> dans <span
+class="math inline">\(\Omega\)</span> avec les conditions aux limites
+ci-dessus. Le code suivant assemble la matrice <span
+class="math inline">\(A\)</span> et le second membre <span
+class="math inline">\(b\)</span> du système linéaire <span
+class="math inline">\(Au = b\)</span>.</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finite difference assembly of A ≃ -νΔ and b (heating + Dirichlet data): 7-point stencil.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cells are numbered with idx[mask] = 1:K (x runs fastest)</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">assemble</span>(mask, win, f, h; ν <span class="op">=</span> <span class="fl">1.0</span>, uw <span class="op">=</span> <span class="fl">0.0</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    K <span class="op">=</span> <span class="fu">count</span>(mask)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> <span class="fu">zeros</span>(<span class="dt">Int</span>, <span class="fu">size</span>(mask))</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    idx[mask] <span class="op">=</span> <span class="fl">1</span><span class="op">:</span>K</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    rows, cols, vals <span class="op">=</span> <span class="dt">Int</span>[], <span class="dt">Int</span>[], <span class="dt">Float64</span>[]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> f[mask]                                        <span class="co"># new array</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    nbrs <span class="op">=</span> (<span class="fu">CartesianIndex</span>(<span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>), <span class="fu">CartesianIndex</span>(<span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>), <span class="fu">CartesianIndex</span>(<span class="fl">0</span>, <span class="op">-</span><span class="fl">1</span>, <span class="fl">0</span>),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">CartesianIndex</span>(<span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0</span>), <span class="fu">CartesianIndex</span>(<span class="fl">0</span>, <span class="fl">0</span>, <span class="op">-</span><span class="fl">1</span>), <span class="fu">CartesianIndex</span>(<span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span>))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> c <span class="op">∈</span> <span class="fu">findall</span>(mask)                              <span class="co"># c = CartesianIndex(i, j, k)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        k <span class="op">=</span> idx[c]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>        d <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> δ <span class="op">∈</span> nbrs</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            n <span class="op">=</span> c <span class="op">+</span> δ</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>            <span class="cf">if</span> <span class="fu">checkbounds</span>(<span class="dt">Bool</span>, mask, n) <span class="op">&amp;&amp;</span> mask[n]   <span class="co"># neighbour in the room</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>                <span class="fu">push!</span>(rows, k); <span class="fu">push!</span>(cols, idx[n]); <span class="fu">push!</span>(vals, <span class="op">-</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                d <span class="op">+=</span> ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            <span class="cf">end</span>                                        <span class="co"># else: insulating wall, no flux</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> win[c]                                      <span class="co"># Dirichlet face at distance h/2</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>            d <span class="op">+=</span> <span class="fl">2</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>            b[k] <span class="op">+=</span> <span class="fl">2</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> uw</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(rows, k); <span class="fu">push!</span>(cols, k); <span class="fu">push!</span>(vals, d)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">sparse</span>(rows, cols, vals, <span class="fu">length</span>(b), <span class="fu">length</span>(b)), b, idx</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>h <span class="op">=</span> <span class="fl">0.2</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>mask, win, f <span class="op">=</span> <span class="fu">room</span>(h)</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>A, b, idx <span class="op">=</span> <span class="fu">assemble</span>(mask, win, f, h; ν <span class="op">=</span> ν, uw <span class="op">=</span> uw)</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>K <span class="op">=</span> <span class="fu">size</span>(A, <span class="fl">1</span>)</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>x, y, z <span class="op">=</span> [((<span class="fl">1</span><span class="op">:</span>n) <span class="op">.-</span> <span class="fl">0.5</span>) <span class="op">*</span> h for n <span class="op">∈</span> <span class="fu">size</span>(mask)]    <span class="co"># cell centres</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Stationary solution: -νΔu = f (A is symmetric positive definite)</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>ustat <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(A)) <span class="op">\</span> b</span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> K <span class="fu">extrema</span>(ustat) <span class="fu">sum</span>(ustat) <span class="op">/</span> K</span></code></pre></div>
+<p><strong>1.1</strong> Montrer que, pour une cellule <span
+class="math inline">\(k\)</span>, la ligne <span
+class="math inline">\(k\)</span> du système s'écrit <span
+class="math display">\[ \frac{\nu}{h^2}\Big( n_k u_k - \sum_{l \sim k}
+u_l \Big) + \frac{2\nu}{h^2}\,u_k\,\mathbf{1}_{k \in W} = f_k +
+\frac{2\nu}{h^2}\,u_w\,\mathbf{1}_{k \in W}, \]</span> où <span
+class="math inline">\(l \sim k\)</span> désigne les cellules voisines de
+<span class="math inline">\(k\)</span> <em>dans</em> <span
+class="math inline">\(\Omega\)</span> (au plus six), <span
+class="math inline">\(n_k\)</span> leur nombre et <span
+class="math inline">\(W\)</span> l'ensemble des cellules de la fenêtre.
+En déduire que <span class="math inline">\(A\)</span> est symétrique
+définie positive.</p>
+<p><strong>Réponse.</strong> On intègre <span
+class="math inline">\(-\nu\Delta u = f\)</span> sur la cellule <span
+class="math inline">\(k\)</span> (volume <span
+class="math inline">\(h^3\)</span>) et on applique la formule de Green.
+Chaque face commune avec une cellule voisine <span
+class="math inline">\(l \in \Omega\)</span> (aire <span
+class="math inline">\(h^2\)</span>) contribue <span
+class="math inline">\(h^2\cdot\nu(u_k - u_l)/h\)</span>. Une face sur un
+mur isolant contribue <span class="math inline">\(0\)</span>. Une face
+de la fenêtre contribue <span class="math inline">\(h^2\cdot\nu(u_k -
+u_w)/(h/2)\)</span>. En divisant par <span
+class="math inline">\(h^3\)</span> on obtient la ligne annoncée. Donc
+<span class="math display">\[ A = \frac{\nu}{h^2}\,L +
+\frac{2\nu}{h^2}\,D_W, \qquad b = f +
+\frac{2\nu}{h^2}\,u_w\,\mathbf{1}_W, \]</span> avec <span
+class="math inline">\(L\)</span> le laplacien du graphe des cellules,
+symétrique, et <span class="math inline">\(D_W\)</span> la diagonale de
+l'indicatrice de <span class="math inline">\(W\)</span>. Pour tout <span
+class="math inline">\(v\)</span>, <span class="math display">\[ v^\top A
+v = \frac{\nu}{h^2}\sum_{\{k,l\}\ \text{voisines}} (v_k - v_l)^2 +
+\frac{2\nu}{h^2}\sum_{k \in W} v_k^2 \ \ge\ 0, \]</span> et si cette
+quantité est nulle, <span class="math inline">\(v\)</span> est constant
+(la pièce est connexe) puis nul sur <span
+class="math inline">\(W\)</span>, qui est non vide : <span
+class="math inline">\(A\)</span> est définie positive. Sans la fenêtre,
+les constantes seraient dans le noyau de <span
+class="math inline">\(A\)</span> et le problème stationnaire n'aurait
+pas de solution (une pièce isolée et chauffée s'échauffe
+indéfiniment).</p>
+<p><strong>1.2</strong> Vérifier numériquement, puis démontrer au niveau
+discret, le bilan d'énergie : la puissance du poêle <span
+class="math inline">\(\rho c_p h^3\sum_k f_k\)</span> est égale au flux
+de chaleur sortant par la fenêtre <span class="math inline">\(\rho c_p
+h^3\sum_{k\in W}\frac{2\nu}{h^2}(u_k - u_w)\)</span>.</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Energy balance: stove power = heat flux through the window (in W)</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>power <span class="op">=</span> ρc <span class="op">*</span> h<span class="op">^</span><span class="fl">3</span> <span class="op">*</span> <span class="fu">sum</span>(f)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>flux  <span class="op">=</span> ρc <span class="op">*</span> h<span class="op">^</span><span class="fl">3</span> <span class="op">*</span> <span class="fu">sum</span>(<span class="fl">2</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span> <span class="op">*</span> (ustat[idx[win]] <span class="op">.-</span> uw))</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> power flux</span></code></pre></div>
+<p><strong>Réponse.</strong> Les deux quantités valent <span
+class="math inline">\(1200\)</span> W (à <span
+class="math inline">\(10^{-12}\)</span> près en valeur relative).
+Démonstration : on somme les lignes du système, <span
+class="math inline">\(\mathbf{1}^\top A u = \mathbf{1}^\top b\)</span>.
+Comme <span class="math inline">\(L\)</span> est symétrique et <span
+class="math inline">\(L\mathbf{1} = 0\)</span>, on a <span
+class="math inline">\(\mathbf{1}^\top L = 0\)</span>, et il reste <span
+class="math display">\[ \frac{2\nu}{h^2}\sum_{k\in W} u_k = \sum_k f_k +
+\frac{2\nu}{h^2}\,u_w\,|W|, \quad\text{i.e.}\quad \sum_{k\in
+W}\frac{2\nu}{h^2}(u_k - u_w) = \sum_k f_k, \]</span> et il suffit de
+multiplier par <span class="math inline">\(\rho c_p h^3\)</span>.</p>
+<p><strong>1.3</strong> Tracer la solution stationnaire (contours
+remplis sur trois coupes). Commenter les températures observées :
+maximum, minimum, moyenne, et température loin du poêle.</p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Contour plots of the stationary temperature (move the stove with room(h; stove = ...))</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>fig, _ <span class="op">=</span> <span class="fu">scene3d</span>(<span class="fu">Observable</span>(<span class="fu">field</span>(ustat, mask)), x, y, z, <span class="st">&quot;stationary solution&quot;</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">display</span>(fig)</span></code></pre></div>
+<p><strong>Réponse.</strong> Pour <span class="math inline">\(h =
+0.2\)</span> (<span class="math inline">\(K = 8112\)</span> cellules),
+la température stationnaire varie de <span
+class="math inline">\(1.6\)</span> °C (cellules contre la fenêtre) à
+<span class="math inline">\(40.3\)</span> °C (dans le poêle), avec une
+moyenne de <span class="math inline">\(20.8\)</span> °C ; en un point à
+<span class="math inline">\(1.2\)</span> m de hauteur près de <span
+class="math inline">\((1,1)\)</span>, loin du poêle et près de la
+fenêtre, elle vaut <span class="math inline">\(12.5\)</span> °C. Le
+modèle est purement diffusif : il n'y a pas de stratification verticale,
+et les isothermes s'organisent autour du poêle (source) et de la fenêtre
+(puits).</p>
+<p><img src="chaleur3d_stationnaire.png" /></p>
+<p>Vue 3D de la même solution : la chaleur est représentée comme un gaz
+coloré (rendu volumique <code>volume!</code> de Makie), transparent à la
+température initiale <span class="math inline">\(u_0 = 10\)</span> °C et
+d'autant plus lumineux et opaque que la température est élevée. Le poêle
+est en rouge, la fenêtre en bleu.</p>
+<p><img src="chaleur3d_volume.png" /></p>
+<p><strong>1.4</strong> Déplacer le poêle (argument <code>stove</code>
+de <code>room</code>, par exemple <span
+class="math inline">\([3.2,4]\times[0.4,1.2]\times[0,1.2]\)</span>, près
+de la fenêtre, puis <span
+class="math inline">\([4.8,5.6]\times[4.4,5.2]\times[0,1.2]\)</span>, au
+fond de l'aile est), à puissance égale. Que deviennent les températures
+moyenne et maximale ? Le bilan d'énergie change-t-il ?</p>
+<p><strong>Réponse.</strong> Le bilan ne change pas : le flux par la
+fenêtre vaut toujours <span class="math inline">\(1200\)</span> W. Pour
+<span class="math inline">\(h = 0.2\)</span> :</p>
+<table>
+<thead>
+<tr>
+<th>poêle</th>
+<th>moyenne</th>
+<th>maximum</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>position du TP (<span
+class="math inline">\([3.2,4]\times[3.6,4.4]\)</span>)</td>
+<td><span class="math inline">\(20.8\)</span> °C</td>
+<td><span class="math inline">\(40.3\)</span> °C</td>
+</tr>
+<tr>
+<td>près de la fenêtre (<span
+class="math inline">\([3.2,4]\times[0.4,1.2]\)</span>)</td>
+<td><span class="math inline">\(11.4\)</span> °C</td>
+<td><span class="math inline">\(20.1\)</span> °C</td>
+</tr>
+<tr>
+<td>au fond de l'aile est (<span
+class="math inline">\([4.8,5.6]\times[4.4,5.2]\)</span>)</td>
+<td><span class="math inline">\(22.1\)</span> °C</td>
+<td><span class="math inline">\(47.1\)</span> °C</td>
+</tr>
+</tbody>
+</table>
+<p>Près de la fenêtre, la chaleur est évacuée avant de s'être répartie :
+la pièce est nettement plus froide (<span
+class="math inline">\(11.4\)</span> °C en moyenne). Éloigner le poêle de
+la fenêtre réchauffe la pièce, mais de moins en moins : au fond de
+l'aile est, la moyenne ne gagne que <span
+class="math inline">\(1.2\)</span> °C par rapport à la position du TP,
+tandis que le maximum monte de <span class="math inline">\(7\)</span> °C
+(le poêle est dans un cul-de-sac où la chaleur diffuse mal). La position
+du poêle par rapport à la fenêtre compte donc davantage que la puissance
+seule.</p>
+<p><strong>1.5</strong> <em>Validation.</em> Pour vérifier le code
+d'assemblage 3D, on prend le cube <span
+class="math inline">\(]0,1[^3\)</span> avec <span
+class="math inline">\(u = 0\)</span> sur toute la face du bas et Neumann
+ailleurs, et <span class="math inline">\(f(x,y,z) =
+\nu\frac{\pi^2}{4}\sin\big(\frac{\pi z}{2}\big)\)</span>. Donner la
+solution exacte, puis calculer l'erreur maximale pour <span
+class="math inline">\(N = 8, 16, 32\)</span> cellules par côté et en
+déduire l'ordre observé.</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Validation: unit cube, u = 0 on the whole bottom face, Neumann elsewhere,</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># f = (π²/4) sin(πz/2) (ν = 1); exact solution u = sin(πz/2)</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">test_cube</span>(N)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    h <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> N</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    mask <span class="op">=</span> <span class="fu">trues</span>(N, N, N)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    win <span class="op">=</span> <span class="fu">falses</span>(N, N, N)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    win[<span class="op">:</span>, <span class="op">:</span>, <span class="fl">1</span>] <span class="op">.=</span> <span class="cn">true</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    z <span class="op">=</span> ((<span class="fl">1</span><span class="op">:</span>N) <span class="op">.-</span> <span class="fl">0.5</span>) <span class="op">*</span> h</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    f <span class="op">=</span> <span class="fu">repeat</span>(<span class="fu">reshape</span>(<span class="cn">π</span><span class="op">^</span><span class="fl">2</span> <span class="op">/</span> <span class="fl">4</span> <span class="op">*</span> <span class="fu">sin</span>.(<span class="cn">π</span> <span class="op">*</span> z <span class="op">/</span> <span class="fl">2</span>), <span class="fl">1</span>, <span class="fl">1</span>, N), N, N, <span class="fl">1</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    A, b, _ <span class="op">=</span> <span class="fu">assemble</span>(mask, win, f, h)                <span class="co"># ν = 1, uw = 0</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(A)) <span class="op">\</span> b</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">maximum</span>(<span class="fu">abs</span>.(u <span class="op">-</span> <span class="fu">vec</span>(<span class="fu">repeat</span>(<span class="fu">reshape</span>(<span class="fu">sin</span>.(<span class="cn">π</span> <span class="op">*</span> z <span class="op">/</span> <span class="fl">2</span>), <span class="fl">1</span>, <span class="fl">1</span>, N), N, N, <span class="fl">1</span>))))</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> N <span class="op">∈</span> (<span class="fl">8</span>, <span class="fl">16</span>, <span class="fl">32</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">&quot;N = </span><span class="sc">$</span>N<span class="st">: max error = </span><span class="sc">$</span>(<span class="fu">test_cube</span>(N))<span class="st">&quot;</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> La solution exacte est <span
+class="math inline">\(u(x,y,z) = \sin(\pi z/2)\)</span> : elle vérifie
+<span class="math inline">\(-\nu u_{zz} = \nu\frac{\pi^2}{4}\sin(\pi
+z/2)\)</span>, <span class="math inline">\(u = 0\)</span> en <span
+class="math inline">\(z = 0\)</span>, <span
+class="math inline">\(\partial_z u(\cdot,\cdot,1) =
+\frac{\pi}{2}\cos\frac{\pi}{2} = 0\)</span> et <span
+class="math inline">\(\partial_x u = \partial_y u = 0\)</span>. Les
+erreurs sont <span class="math inline">\(3.2\cdot10^{-3}\)</span>, <span
+class="math inline">\(8.0\cdot10^{-4}\)</span>, <span
+class="math inline">\(2.0\cdot10^{-4}\)</span> : divisées par <span
+class="math inline">\(4\)</span> quand <span
+class="math inline">\(h\)</span> est divisé par <span
+class="math inline">\(2\)</span>, soit un ordre <span
+class="math inline">\(2\)</span>.</p>
+<p><strong>1.6</strong> <em>Convergence et coût sur la pièce.</em> Pour
+<span class="math inline">\(h = 0.4,\ 0.2,\ 0.1\)</span>, calculer le
+nombre d'inconnues <span class="math inline">\(K\)</span>, la
+température moyenne et maximale, et le nombre de coefficients non nuls
+de <span class="math inline">\(A\)</span> et de son facteur de Cholesky
+<span class="math inline">\(L\)</span>. Quel ordre observe-t-on ?
+Estimer le coût mémoire pour <span class="math inline">\(h =
+0.05\)</span>.</p>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convergence on the room: mean and maximum temperature, size of the factors</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">steady</span>(h)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    mask, win, f <span class="op">=</span> <span class="fu">room</span>(h)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    A, b, idx <span class="op">=</span> <span class="fu">assemble</span>(mask, win, f, h; ν <span class="op">=</span> ν, uw <span class="op">=</span> uw)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(A))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> F <span class="op">\</span> b</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="fu">size</span>(A, <span class="fl">1</span>), <span class="fu">sum</span>(u) <span class="op">/</span> <span class="fu">size</span>(A, <span class="fl">1</span>), <span class="fu">maximum</span>(u), <span class="fu">nnz</span>(A), <span class="fu">nnz</span>(<span class="fu">sparse</span>(F.L))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> h <span class="op">∈</span> (<span class="fl">0.4</span>, <span class="fl">0.2</span>, <span class="fl">0.1</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    K, m, M, nA, nL <span class="op">=</span> <span class="fu">steady</span>(h)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">&quot;h = </span><span class="sc">$</span>h<span class="st">: K = </span><span class="sc">$</span>K<span class="st">, mean = </span><span class="sc">$</span>m<span class="st">, max = </span><span class="sc">$</span>M<span class="st">, nnz(A) = </span><span class="sc">$</span>nA<span class="st">, nnz(L) = </span><span class="sc">$</span>nL<span class="st">&quot;</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> On obtient</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(h\)</span></th>
+<th><span class="math inline">\(0.4\)</span></th>
+<th><span class="math inline">\(0.2\)</span></th>
+<th><span class="math inline">\(0.1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span class="math inline">\(K\)</span></td>
+<td><span class="math inline">\(1014\)</span></td>
+<td><span class="math inline">\(8112\)</span></td>
+<td><span class="math inline">\(64896\)</span></td>
+</tr>
+<tr>
+<td>température moyenne (°C)</td>
+<td><span class="math inline">\(22.60\)</span></td>
+<td><span class="math inline">\(20.84\)</span></td>
+<td><span class="math inline">\(20.03\)</span></td>
+</tr>
+<tr>
+<td>température maximale (°C)</td>
+<td><span class="math inline">\(42.50\)</span></td>
+<td><span class="math inline">\(40.26\)</span></td>
+<td><span class="math inline">\(39.22\)</span></td>
+</tr>
+<tr>
+<td><code>nnz(A)</code></td>
+<td><span class="math inline">\(6400\)</span></td>
+<td><span class="math inline">\(53992\)</span></td>
+<td><span class="math inline">\(443104\)</span></td>
+</tr>
+<tr>
+<td><code>nnz(L)</code></td>
+<td><span class="math inline">\(39480\)</span></td>
+<td><span class="math inline">\(747749\)</span></td>
+<td><span class="math inline">\(17889103\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>Les différences successives de la moyenne sont <span
+class="math inline">\(1.76\)</span> puis <span
+class="math inline">\(0.81\)</span> : leur rapport est proche de <span
+class="math inline">\(2\)</span>, donc la convergence est d'ordre <span
+class="math inline">\(1\)</span>, comme dans le cas 2D (singularités de
+la solution aux arêtes de la fenêtre, où la condition passe de Dirichlet
+à Neumann, et au coin rentrant de la pièce) ; celle du maximum est du
+même type. Le nombre d'inconnues est multiplié par <span
+class="math inline">\(8\)</span> à chaque raffinement, mais
+<code>nnz(L)</code> par <span class="math inline">\(19\)</span> puis
+<span class="math inline">\(24\)</span> : le remplissage du facteur de
+Cholesky croît plus vite que <span class="math inline">\(K\)</span> en
+3D (comme <span class="math inline">\(K^{4/3}\)</span> pour un bon
+ordonnancement), alors que <code>nnz(A)</code> est de l'ordre de <span
+class="math inline">\(7K\)</span>. Pour <span class="math inline">\(h =
+0.05\)</span> on aurait <span class="math inline">\(K \simeq
+5\cdot10^{5}\)</span> et <code>nnz(L)</code> de l'ordre de <span
+class="math inline">\(4\cdot10^{8}\)</span>, soit plus de <span
+class="math inline">\(3\)</span> Go : une factorisation directe devient
+coûteuse, et l'on passerait à des méthodes itératives (gradient conjugué
+préconditionné).</p>
+<h2 id="exercice-2">Exercice 2</h2>
+<p>On calcule maintenant l'évolution temporelle de la température, avec
+le <span class="math inline">\(\theta\)</span>-schéma <span
+class="math display">\[ (I + \theta\Delta t\,A)\,u^{n+1} = \big(I -
+(1-\theta)\Delta t\,A\big)u^n + \Delta t\,b, \]</span> où <span
+class="math inline">\(A\)</span> et <span
+class="math inline">\(b\)</span> sont ceux de l'exercice 1. Le cas <span
+class="math inline">\(\theta = 0\)</span> est le schéma explicite, <span
+class="math inline">\(\theta = 1\)</span> le schéma d'Euler implicite et
+<span class="math inline">\(\theta = \tfrac12\)</span> le schéma de
+Crank-Nicolson.</p>
+<p><strong>2.1</strong> <em>Stabilité.</em> Montrer que, comme en 2D, le
+schéma de Crank-Nicolson est stable pour tout <span
+class="math inline">\(\Delta t &gt; 0\)</span>. Montrer que <span
+class="math inline">\(\lambda_{\max}(A) \le 12\nu/h^2\)</span> et en
+déduire une condition suffisante de stabilité du schéma explicite.
+Calculer le pas de temps maximal en secondes pour <span
+class="math inline">\(h = 0.2\)</span> et le nombre de pas pour
+atteindre <span class="math inline">\(t_f\)</span>.</p>
+<p><strong>Réponse.</strong> <span class="math inline">\(A\)</span> est
+symétrique définie positive, de valeurs propres <span
+class="math inline">\(0 &lt; \lambda_1 \le \dots \le \lambda_K\)</span>.
+Sur un mode propre, le <span
+class="math inline">\(\theta\)</span>-schéma multiplie l'amplitude par
+<span class="math inline">\(a = \frac{1 - (1-\theta)\Delta t\lambda}{1 +
+\theta\Delta t\lambda}\)</span>. Pour <span class="math inline">\(\theta
+= \frac12\)</span>, <span class="math inline">\(|a| &lt; 1\)</span> pour
+tout <span class="math inline">\(\Delta t &gt; 0\)</span>. Pour <span
+class="math inline">\(\theta = 0\)</span>, <span
+class="math inline">\(|a| \le 1\)</span> pour tous les modes si et
+seulement si <span class="math inline">\(\Delta t\lambda_K \le
+2\)</span>. D'après Gershgorin, chaque valeur propre est dans un disque
+de centre <span class="math inline">\(A_{kk} \le 6\nu/h^2\)</span> et de
+rayon <span class="math inline">\(\frac{\nu}{h^2}n_k \le
+6\nu/h^2\)</span> (pour une cellule de la fenêtre, <span
+class="math inline">\(A_{kk} = (n_k + 2)\nu/h^2\)</span> avec <span
+class="math inline">\(n_k \le 5\)</span>), donc <span
+class="math inline">\(\lambda_K \le 12\nu/h^2\)</span> et <span
+class="math inline">\(\sigma = \nu\Delta t/h^2 \le \frac16\)</span>
+suffit. Pour <span class="math inline">\(h = 0.2\)</span> : <span
+class="math inline">\(\Delta t \le h^2/(6\nu) = 0.33\)</span> s, donc
+plus de <span class="math inline">\(21\,000\)</span> pas pour <span
+class="math inline">\(t_f = 7200\)</span> s, contre <span
+class="math inline">\(240\)</span> pas pour Crank-Nicolson avec <span
+class="math inline">\(\Delta t = 30\)</span> s. Numériquement <span
+class="math inline">\(\lambda_K = 5.9 \simeq 12\nu/h^2 = 6\)</span> : la
+condition est quasiment nécessaire.</p>
+<p><strong>2.2</strong> Compléter la fonction <code>evolve</code>
+(<code># TBC</code>) pour programmer le <span
+class="math inline">\(\theta\)</span>-schéma, puis exécuter
+Crank-Nicolson avec <span class="math inline">\(\Delta t = 30\)</span>
+s. Relever la température moyenne et la température en un point à <span
+class="math inline">\(1.2\)</span> m de hauteur près de <span
+class="math inline">\((1,1)\)</span> au bout de <span
+class="math inline">\(10\)</span> min, <span
+class="math inline">\(30\)</span> min, <span
+class="math inline">\(1\)</span> h et <span
+class="math inline">\(2\)</span> h. Comparer la distance à la solution
+stationnaire à la vitesse <span class="math inline">\(e^{-\lambda_1
+t}\)</span> du mode le plus lent, où <span
+class="math inline">\(\lambda_1\)</span> est la plus petite valeur
+propre de <span class="math inline">\(A\)</span>.</p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># θ-scheme: (I + θΔt A) uⁿ⁺¹ = (I - (1-θ)Δt A) uⁿ + Δt b.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># θ = 0: explicit, θ = 1/2: Crank-Nicolson, θ = 1: implicit Euler.</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co"># `startup = true` replaces the first step by two implicit Euler steps of size Δt/2 (question 2.4)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>Id <span class="op">=</span> <span class="fu">sparse</span>(<span class="fl">1.0</span>I, K, K)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">nsteps</span>(Δt, T) <span class="op">=</span> <span class="fu">ceil</span>(<span class="dt">Int</span>, T <span class="op">/</span> Δt <span class="op">-</span> <span class="fl">1e-9</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dist</span>(u) <span class="op">=</span> <span class="fu">norm</span>(u <span class="op">-</span> ustat) <span class="op">/</span> <span class="fu">sqrt</span>(K)               <span class="co"># r.m.s. distance to the stationary solution, °C</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">evolve</span>(θ, Δt; T <span class="op">=</span> tf, startup <span class="op">=</span> <span class="cn">false</span>, callback <span class="op">=</span> (n, t, u) <span class="op">-&gt;</span> <span class="cn">nothing</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    Nt <span class="op">=</span> <span class="fu">nsteps</span>(Δt, T)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    Δt <span class="op">=</span> T <span class="op">/</span> Nt</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(Id <span class="op">+</span> θ <span class="op">*</span> Δt <span class="op">*</span> A))     <span class="co"># factorisation, once and for all</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    E <span class="op">=</span> Id <span class="op">-</span> (<span class="fl">1</span> <span class="op">-</span> θ) <span class="op">*</span> Δt <span class="op">*</span> A</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    u <span class="op">=</span> <span class="fu">fill</span>(u0, K)                              <span class="co"># initial temperature</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    err <span class="op">=</span> [<span class="fu">dist</span>(u)]</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">callback</span>(<span class="fl">0</span>, <span class="fl">0.0</span>, u)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> n <span class="op">∈</span> <span class="fl">1</span><span class="op">:</span>Nt</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> startup <span class="op">&amp;&amp;</span> n <span class="op">==</span> <span class="fl">1</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            Fh <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(Id <span class="op">+</span> Δt <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> A))</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>            u <span class="op">=</span> Fh <span class="op">\</span> (u <span class="op">+</span> Δt <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> b)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>            u <span class="op">=</span> Fh <span class="op">\</span> (u <span class="op">+</span> Δt <span class="op">/</span> <span class="fl">2</span> <span class="op">*</span> b)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span></span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            u <span class="op">=</span> F <span class="op">\</span> (E <span class="op">*</span> u <span class="op">+</span> Δt <span class="op">*</span> b)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">end</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">push!</span>(err, <span class="fu">dist</span>(u))</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>        <span class="fu">callback</span>(n, n <span class="op">*</span> Δt, u)</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> u, err, Δt</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Crank-Nicolson, Δt = 30 s (σ = νΔt/h² = 15): temperature at a point and mean temperature</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>ipt <span class="op">=</span> idx[<span class="fu">argmin</span>(<span class="fu">abs</span>.(x <span class="op">.-</span> <span class="fl">1.0</span>)), <span class="fu">argmin</span>(<span class="fu">abs</span>.(y <span class="op">.-</span> <span class="fl">1.0</span>)), <span class="fu">argmin</span>(<span class="fu">abs</span>.(z <span class="op">.-</span> <span class="fl">1.2</span>))]    <span class="co"># near (1, 1, 1.2)</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>Tpt, Tmean <span class="op">=</span> <span class="dt">Float64</span>[], <span class="dt">Float64</span>[]</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>u, err, Δt <span class="op">=</span> <span class="fu">evolve</span>(<span class="fl">0.5</span>, <span class="fl">30.0</span>; callback <span class="op">=</span> (n, t, u) <span class="op">-&gt;</span> (<span class="fu">push!</span>(Tpt, u[ipt]); <span class="fu">push!</span>(Tmean, <span class="fu">sum</span>(u) <span class="op">/</span> K)))</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> Tpt[[<span class="fl">1</span>, <span class="fl">21</span>, <span class="fl">61</span>, <span class="fl">121</span>, <span class="fl">241</span>]] Tmean[[<span class="fl">1</span>, <span class="fl">21</span>, <span class="fl">61</span>, <span class="fl">121</span>, <span class="fl">241</span>]] ustat[ipt] <span class="fu">sum</span>(ustat) <span class="op">/</span> K</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Slowest mode of A: inverse iteration (a Cholesky factorisation, reused at each step);</span></span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a><span class="co"># fastest mode: power iteration</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">extreme_eigenvalues</span>(A)</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    K <span class="op">=</span> <span class="fu">size</span>(A, <span class="fl">1</span>)</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    F <span class="op">=</span> <span class="fu">cholesky</span>(<span class="fu">Symmetric</span>(A))</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> <span class="fu">randn</span>(K)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="op">∈</span> <span class="fl">1</span><span class="op">:</span><span class="fl">30</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> F <span class="op">\</span> v</span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>        v <span class="op">/=</span> <span class="fu">norm</span>(v)</span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    λ<span class="fl">1</span> <span class="op">=</span> <span class="fu">dot</span>(v, A <span class="op">*</span> v)</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    v <span class="op">=</span> <span class="fu">randn</span>(K)</span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> _ <span class="op">∈</span> <span class="fl">1</span><span class="op">:</span><span class="fl">300</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>        v <span class="op">=</span> A <span class="op">*</span> v</span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>        v <span class="op">/=</span> <span class="fu">norm</span>(v)</span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">end</span></span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> λ<span class="fl">1</span>, <span class="fu">dot</span>(v, A <span class="op">*</span> v)</span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>λ<span class="fl">1</span>, λK <span class="op">=</span> <span class="fu">extreme_eigenvalues</span>(A)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a><span class="pp">@show</span> λ<span class="fl">1</span> <span class="fl">1</span> <span class="op">/</span> λ<span class="fl">1</span> λK <span class="fl">12</span>ν <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span> err[<span class="kw">end</span>] <span class="op">/</span> err[<span class="fl">1</span>] <span class="fu">exp</span>(<span class="op">-</span>λ<span class="fl">1</span> <span class="op">*</span> tf)</span></code></pre></div>
+<p><strong>Réponse.</strong> Pour <span class="math inline">\(\Delta t =
+30\)</span> s (<span class="math inline">\(\sigma = 15\)</span>) :</p>
+<table>
+<thead>
+<tr>
+<th><span class="math inline">\(t\)</span></th>
+<th><span class="math inline">\(0\)</span></th>
+<th><span class="math inline">\(10\)</span> min</th>
+<th><span class="math inline">\(30\)</span> min</th>
+<th><span class="math inline">\(1\)</span> h</th>
+<th><span class="math inline">\(2\)</span> h</th>
+<th>stationnaire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>température moyenne (°C)</td>
+<td><span class="math inline">\(10.0\)</span></td>
+<td><span class="math inline">\(13.6\)</span></td>
+<td><span class="math inline">\(18.2\)</span></td>
+<td><span class="math inline">\(20.3\)</span></td>
+<td><span class="math inline">\(20.8\)</span></td>
+<td><span class="math inline">\(20.8\)</span></td>
+</tr>
+<tr>
+<td>point près de <span class="math inline">\((1,1,1.2)\)</span>
+(°C)</td>
+<td><span class="math inline">\(10.0\)</span></td>
+<td><span class="math inline">\(7.6\)</span></td>
+<td><span class="math inline">\(10.5\)</span></td>
+<td><span class="math inline">\(12.0\)</span></td>
+<td><span class="math inline">\(12.5\)</span></td>
+<td><span class="math inline">\(12.5\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La température moyenne monte vite (le poêle chauffe tout le volume),
+mais le point proche de la fenêtre et éloigné du poêle commence par se
+refroidir (<span class="math inline">\(7.6\)</span> °C au bout de <span
+class="math inline">\(10\)</span> min : la fenêtre agit avant que la
+chaleur du poêle n'arrive), et ne regagne sa température initiale
+qu'après environ <span class="math inline">\(20\)</span> min. La
+distance à la solution stationnaire décroît comme <span
+class="math inline">\(e^{-\lambda_1 t}\)</span> avec <span
+class="math inline">\(\lambda_1 = 8.47\cdot10^{-4}\)</span> s⁻¹, soit
+une constante de temps <span class="math inline">\(1/\lambda_1 \simeq
+1180\)</span> s <span class="math inline">\(\simeq 20\)</span> min : en
+<span class="math inline">\(2\)</span> h elle est divisée par <span
+class="math inline">\(482\)</span> (observé), contre <span
+class="math inline">\(e^{-\lambda_1 t_f} = 1/445\)</span> (prédit) : les
+modes plus rapides se sont éteints, et le mode le plus lent domine à
+<span class="math inline">\(8\,\%\)</span> près.</p>
+<p><img src="chaleur3d_temps.png" /></p>
+<p><img src="chaleur3d_cn.gif" /></p>
+<p>La même évolution en 3D (rendu volumique, une image par minute, la
+caméra fait un tour complet) : on voit la chaleur se former au poêle,
+monter et remplir l'aile est, puis gagner l'aile sud, tandis que la zone
+devant la fenêtre reste froide.</p>
+<p><img src="chaleur3d_volume.gif" /></p>
+<p><strong>2.3</strong> <em>Schéma explicite.</em> Exécuter le schéma
+explicite pendant <span class="math inline">\(600\)</span> s avec <span
+class="math inline">\(\Delta t = 0.3\)</span> s puis <span
+class="math inline">\(\Delta t = 0.34\)</span> s. Commenter.</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Explicit scheme just below and just above Δt = h²/(6ν), over 600 s</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> Δt <span class="op">∈</span> (<span class="fl">0.3</span>, <span class="fl">0.34</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    uex, <span class="cn">e</span>, _ <span class="op">=</span> <span class="fu">evolve</span>(<span class="fl">0.0</span>, Δt; T <span class="op">=</span> <span class="fl">600.0</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(<span class="st">&quot;explicit, Δt = </span><span class="sc">$</span><span class="st">Δ</span>t<span class="st"> (σ = </span><span class="sc">$</span>(ν <span class="op">*</span> Δt <span class="op">/</span> h<span class="op">^</span><span class="fl">2</span>)<span class="st">): max|u| = </span><span class="sc">$</span>(<span class="fu">maximum</span>(abs, uex))<span class="st">&quot;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> Avec <span class="math inline">\(\Delta t =
+0.3\)</span> s (<span class="math inline">\(\sigma = 0.15 &lt;
+\frac16\)</span>), la solution reste bornée (<span
+class="math inline">\(\max|u| = 31\)</span>), alors que pour <span
+class="math inline">\(\Delta t = 0.34\)</span> s (<span
+class="math inline">\(\sigma = 0.17 &gt; \frac16\)</span>) le schéma
+explose : <span class="math inline">\(\max|u| = 1\cdot10^{11}\)</span>
+au bout de <span class="math inline">\(600\)</span> s. Le seuil observé
+coïncide avec <span class="math inline">\(\Delta t_{\max} = 2/\lambda_K
+= 0.34\)</span> s. Le pas explicite est borné par la plus petite
+maille ; le schéma implicite n'a pas cette contrainte.</p>
+<p><strong>2.4</strong> <em>Donnée initiale incompatible.</em> La donnée
+initiale (<span class="math inline">\(10\)</span> °C) est incompatible
+avec la condition à la fenêtre (<span class="math inline">\(0\)</span>
+°C). Comparer, à <span class="math inline">\(t = 120,\ 600,\
+1800\)</span> s, la plus grande erreur <span
+class="math inline">\(\max_k|u_k - u_k^{\mathrm{ref}}|\)</span> de
+Crank-Nicolson avec <span class="math inline">\(\Delta t = 30\)</span> s
+et d'Euler implicite avec <span class="math inline">\(\Delta t =
+30\)</span> s, par rapport à une référence (Crank-Nicolson avec <span
+class="math inline">\(\Delta t = 1\)</span> s). Expliquer, à l'aide du
+facteur d'amplification <span class="math inline">\(a(\lambda)\)</span>
+des modes rapides, ce qui se passe pour Crank-Nicolson. Proposer et
+programmer un remède : le <em>démarrage de Rannacher</em>, qui remplace
+le premier pas de Crank-Nicolson par deux pas d'Euler implicite de
+taille <span class="math inline">\(\Delta t/2\)</span> (option
+<code>startup</code> de <code>evolve</code>).</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Crank-Nicolson with Δt = 30 s, with and without startup, and implicit Euler,</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># compared with a reference (Crank-Nicolson, Δt = 1 s, with startup): max |u - u_ref| in °C</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>times <span class="op">=</span> (<span class="fl">120.0</span>, <span class="fl">600.0</span>, <span class="fl">1800.0</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">snapshots</span>(θ, Δt; startup <span class="op">=</span> <span class="cn">false</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    out <span class="op">=</span> <span class="fu">Dict</span><span class="dt">{Float64, Vector{Float64}}</span>()</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">evolve</span>(θ, Δt; T <span class="op">=</span> <span class="fl">1800.0</span>, startup <span class="op">=</span> startup, callback <span class="op">=</span> (n, t, u) <span class="op">-&gt;</span> (t <span class="op">∈</span> times <span class="op">&amp;&amp;</span> (out[t] <span class="op">=</span> <span class="fu">copy</span>(u))))</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> out</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>ref <span class="op">=</span> <span class="fu">snapshots</span>(<span class="fl">0.5</span>, <span class="fl">1.0</span>; startup <span class="op">=</span> <span class="cn">true</span>)</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (name, θ, startup) <span class="op">∈</span> ((<span class="st">&quot;CN&quot;</span>, <span class="fl">0.5</span>, <span class="cn">false</span>), (<span class="st">&quot;CN + startup&quot;</span>, <span class="fl">0.5</span>, <span class="cn">true</span>), (<span class="st">&quot;implicit Euler&quot;</span>, <span class="fl">1.0</span>, <span class="cn">false</span>))</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    s <span class="op">=</span> <span class="fu">snapshots</span>(θ, <span class="fl">30.0</span>; startup <span class="op">=</span> startup)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">println</span>(name, <span class="st">&quot;: &quot;</span>, [<span class="fu">round</span>(<span class="fu">maximum</span>(<span class="fu">abs</span>.(s[t] <span class="op">-</span> ref[t])), digits <span class="op">=</span> <span class="fl">3</span>) for t <span class="op">∈</span> times])</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+<p><strong>Réponse.</strong> Les erreurs maximales (en °C) à <span
+class="math inline">\(t = 120,\ 600,\ 1800\)</span> s sont :</p>
+<table>
+<thead>
+<tr>
+<th>schéma</th>
+<th><span class="math inline">\(120\)</span> s</th>
+<th><span class="math inline">\(600\)</span> s</th>
+<th><span class="math inline">\(1800\)</span> s</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Crank-Nicolson</td>
+<td><span class="math inline">\(4.68\)</span></td>
+<td><span class="math inline">\(1.18\)</span></td>
+<td><span class="math inline">\(0.17\)</span></td>
+</tr>
+<tr>
+<td>Crank-Nicolson avec démarrage</td>
+<td><span class="math inline">\(0.039\)</span></td>
+<td><span class="math inline">\(0.002\)</span></td>
+<td><span class="math inline">\(&lt; 10^{-3}\)</span></td>
+</tr>
+<tr>
+<td>Euler implicite</td>
+<td><span class="math inline">\(0.39\)</span></td>
+<td><span class="math inline">\(0.14\)</span></td>
+<td><span class="math inline">\(0.07\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>La donnée initiale présente un saut de <span
+class="math inline">\(10\)</span> °C à la fenêtre, donc elle contient
+beaucoup de modes rapides. Pour Crank-Nicolson, <span
+class="math inline">\(a(\lambda) = \frac{1 - z}{1 + z}\)</span> avec
+<span class="math inline">\(z = \Delta t\lambda/2\)</span> ; pour les
+modes les plus raides, <span class="math inline">\(z \simeq 30\cdot5.9/2
+\simeq 89\)</span> et <span class="math inline">\(a \simeq
+-0.98\)</span> : ces modes sont à peine amortis et changent de signe à
+chaque pas, ce qui donne des oscillations dont l'amplitude atteint <span
+class="math inline">\(4.7\)</span> °C. Euler implicite amortit ces modes
+(<span class="math inline">\(a = 1/(1+z) \simeq 0.01\)</span>) mais
+n'est que d'ordre <span class="math inline">\(1\)</span>, d'où une
+erreur plus grande en temps long. Le démarrage de Rannacher fait
+disparaître les oscillations (deux pas d'Euler implicite de taille <span
+class="math inline">\(\Delta t/2\)</span> amortissent les modes rapides)
+et conserve l'ordre <span class="math inline">\(2\)</span> ensuite :
+c'est le meilleur des trois.</p>
+<h2 id="annexe-figures-et-animations">Annexe. Figures et animations</h2>
+<p>Le code suivant produit les figures et les GIF du corrigé ; il
+utilise les objets définis plus haut (GLMakie ouvre une fenêtre : pour
+exécuter l'annexe sans écran, par exemple sur un serveur, lancer Julia
+avec <code>xvfb-run</code>).</p>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Geometry of the room (used in the statement)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">800</span>, <span class="fl">600</span>))</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> <span class="fu">Axis3</span>(fig[<span class="fl">1</span>, <span class="fl">1</span>]; aspect <span class="op">=</span> <span class="op">:</span>data, azimuth <span class="op">=</span> <span class="fl">1.7</span>π, elevation <span class="op">=</span> <span class="fl">0.3</span>, xlabel <span class="op">=</span> <span class="st">&quot;x (m)&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;y (m)&quot;</span>, zlabel <span class="op">=</span> <span class="st">&quot;z (m)&quot;</span>,</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>           title <span class="op">=</span> <span class="st">&quot;L-shaped room: stove (red) and window (blue)&quot;</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">draw_room!</span>(ax)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="st">&quot;chaleur3d_piece.png&quot;</span>, fig)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Stationary temperature (question 1.3)</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>fig, _ <span class="op">=</span> <span class="fu">scene3d</span>(<span class="fu">Observable</span>(<span class="fu">field</span>(ustat, mask)), x, y, z, <span class="st">&quot;stationary solution&quot;</span>)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="st">&quot;chaleur3d_stationnaire.png&quot;</span>, fig)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Stationary temperature in 3D (question 1.3)</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>fig, _ <span class="op">=</span> <span class="fu">volume3d</span>(<span class="fu">Observable</span>(<span class="fu">field</span>(ustat, mask)), <span class="st">&quot;stationary solution&quot;</span>)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="st">&quot;chaleur3d_volume.png&quot;</span>, fig)</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Temperature in time (question 2.2): Crank-Nicolson, Δt = 30 s</span></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>ts <span class="op">=</span> <span class="fl">0</span><span class="op">:</span><span class="fl">30</span><span class="op">:</span>tf</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> <span class="fu">Figure</span>(size <span class="op">=</span> (<span class="fl">900</span>, <span class="fl">380</span>))</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>ax1 <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>, <span class="fl">1</span>]; xlabel <span class="op">=</span> <span class="st">&quot;t (s)&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;temperature (°C)&quot;</span>)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax1, ts, Tmean; label <span class="op">=</span> <span class="st">&quot;mean&quot;</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax1, ts, Tpt; label <span class="op">=</span> <span class="st">&quot;point near (1, 1, 1.2)&quot;</span>)</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a><span class="fu">hlines!</span>(ax1, [<span class="fu">sum</span>(ustat) <span class="op">/</span> K, ustat[ipt]]; color <span class="op">=</span> <span class="op">:</span>gray, linestyle <span class="op">=</span> <span class="op">:</span>dash)</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a><span class="fu">axislegend</span>(ax1; position <span class="op">=</span> <span class="op">:</span>rb)</span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>ax2 <span class="op">=</span> <span class="fu">Axis</span>(fig[<span class="fl">1</span>, <span class="fl">2</span>]; xlabel <span class="op">=</span> <span class="st">&quot;t (s)&quot;</span>, ylabel <span class="op">=</span> <span class="st">&quot;distance to u_stat (°C)&quot;</span>, yscale <span class="op">=</span> log10)</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax2, ts, err; label <span class="op">=</span> <span class="st">&quot;Crank-Nicolson&quot;</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a><span class="fu">lines!</span>(ax2, ts, err[<span class="fl">1</span>] <span class="op">*</span> <span class="fu">exp</span>.(<span class="op">-</span>λ<span class="fl">1</span> <span class="op">*</span> ts); color <span class="op">=</span> <span class="op">:</span>black, linestyle <span class="op">=</span> <span class="op">:</span>dash, label <span class="op">=</span> <span class="st">&quot;exp(-λ₁ t)&quot;</span>)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="fu">axislegend</span>(ax2; position <span class="op">=</span> <span class="op">:</span>rt)</span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="fu">save</span>(<span class="st">&quot;chaleur3d_temps.png&quot;</span>, fig)</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation (question 2.2): 61 frames, one every 2 minutes</span></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>frames <span class="op">=</span> <span class="dt">Tuple</span>{<span class="dt">Float64</span>, <span class="dt">Vector</span>{<span class="dt">Float64</span>}}[]</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="fu">evolve</span>(<span class="fl">0.5</span>, <span class="fl">30.0</span>; startup <span class="op">=</span> <span class="cn">true</span>, callback <span class="op">=</span> (n, t, u) <span class="op">-&gt;</span> (n <span class="op">%</span> <span class="fl">4</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="fu">push!</span>(frames, (t, <span class="fu">copy</span>(u)))))</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">Observable</span>(<span class="fu">field</span>(<span class="fu">fill</span>(u0, K), mask))</span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>title <span class="op">=</span> <span class="fu">Observable</span>(<span class="st">&quot;t = 0 min&quot;</span>)</span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>fig, _ <span class="op">=</span> <span class="fu">scene3d</span>(U, x, y, z, title)</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="fu">record</span>(fig, <span class="st">&quot;chaleur3d_cn.gif&quot;</span>, <span class="fu">eachindex</span>(frames); framerate <span class="op">=</span> <span class="fl">10</span>) <span class="cf">do</span> i</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a>    t, u <span class="op">=</span> frames[i]</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a>    U[] <span class="op">=</span> <span class="fu">field</span>(u, mask)</span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    title[] <span class="op">=</span> <span class="st">&quot;Crank-Nicolson, t = </span><span class="sc">$</span>(<span class="fu">round</span>(<span class="dt">Int</span>, t <span class="op">/</span> <span class="fl">60</span>))<span class="st"> min&quot;</span></span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a><span class="co"># Animation in 3D (question 2.2): 121 frames, one every minute, the camera making one full turn</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>frames <span class="op">=</span> <span class="dt">Tuple</span>{<span class="dt">Float64</span>, <span class="dt">Vector</span>{<span class="dt">Float64</span>}}[]</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a><span class="fu">evolve</span>(<span class="fl">0.5</span>, <span class="fl">30.0</span>; startup <span class="op">=</span> <span class="cn">true</span>, callback <span class="op">=</span> (n, t, u) <span class="op">-&gt;</span> (n <span class="op">%</span> <span class="fl">2</span> <span class="op">==</span> <span class="fl">0</span> <span class="op">&amp;&amp;</span> <span class="fu">push!</span>(frames, (t, <span class="fu">copy</span>(u)))))</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>U <span class="op">=</span> <span class="fu">Observable</span>(<span class="fu">field</span>(<span class="fu">fill</span>(u0, K), mask))</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> <span class="fu">volume3d</span>(U, <span class="st">&quot;&quot;</span>)</span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a><span class="fu">record</span>(fig, <span class="st">&quot;chaleur3d_volume.gif&quot;</span>, <span class="fu">eachindex</span>(frames); framerate <span class="op">=</span> <span class="fl">12</span>) <span class="cf">do</span> i</span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>    t, u <span class="op">=</span> frames[i]</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>    U[] <span class="op">=</span> <span class="fu">field</span>(u, mask)</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>    ax.title[] <span class="op">=</span> <span class="st">&quot;Crank-Nicolson, t = </span><span class="sc">$</span>(<span class="fu">round</span>(<span class="dt">Int</span>, t <span class="op">/</span> <span class="fl">60</span>))<span class="st"> min&quot;</span></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>    ax.azimuth[] <span class="op">=</span> <span class="fl">1.7</span>π <span class="op">+</span> <span class="fl">2</span>π <span class="op">*</span> (i <span class="op">-</span> <span class="fl">1</span>) <span class="op">/</span> <span class="fu">length</span>(frames)</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="cf">end</span></span></code></pre></div>
+</main>
+<script>
+// "Copier" button on every code block
+document.querySelectorAll("pre").forEach(function (pre) {
+  var box = pre.parentElement;
+  if (!box.classList.contains("sourceCode")) {
+    box = document.createElement("div");
+    box.className = "codewrap";
+    pre.parentNode.insertBefore(box, pre);
+    box.appendChild(pre);
+  }
+  var btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "copy-btn";
+  btn.textContent = "Copier";
+  btn.addEventListener("click", function () {
+    var text = (pre.querySelector("code") || pre).textContent;
+    var done = function () { btn.textContent = "Copié !"; setTimeout(function () { btn.textContent = "Copier"; }, 1500); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { btn.textContent = "Erreur"; });
+    } else {
+      var ta = document.createElement("textarea");
+      ta.value = text; document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = "Erreur"; }
+      document.body.removeChild(ta);
+    }
+  });
+  box.appendChild(btn);
+});
+</script>
+<footer>Page générée automatiquement à partir des fichiers Markdown du dépôt (pandoc, MathJax).</footer>
+</body>
+</html>
