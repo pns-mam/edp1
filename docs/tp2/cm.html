@@ -139,8 +139,8 @@ d'où le lien entre les deux régimes qu'on regardera aux questions 2.3 et
 (assemblage, résolution, bilan d'énergie, convergence, validation).
 Exercice 2 : le problème instationnaire (schémas en temps, stabilité,
 ordre, pas de temps).</p>
-<h2 id="3-volumes-finis-sur-une-grille-de-cellules">3. Volumes finis sur
-une grille de cellules</h2>
+<h2 id="3-différences-finies-sur-une-grille-de-cellules">3. Différences
+finies sur une grille de cellules</h2>
 <p>On découpe <span class="math inline">\(]0,1[^2\)</span> en <span
 class="math inline">\(N \times N\)</span> cellules carrées de côté <span
 class="math inline">\(h = 1/N\)</span> (<span
@@ -167,8 +167,9 @@ u_{kN} - u_{kS} - u_{kW} - u_{kE}\big) = f_k ; \]</span></li>
 <li><em>cellule au bord</em> : on tient compte de la condition aux
 limites (point 4 ci-dessous).</li>
 </ul>
-<p>C'est le même schéma que les différences finies à 5 points, mais les
-conditions aux limites s'écrivent naturellement sur les flux.</p>
+<p>C'est le schéma des différences finies à 5 points, obtenu ici en
+intégrant sur la cellule : les conditions aux limites s'écrivent
+naturellement sur les flux.</p>
 <h2 id="4-la-fonction-assemble">4. La fonction
 <code>assemble</code></h2>
 <p>On cherche la matrice <span class="math inline">\(A \in
@@ -375,7 +376,7 @@ class="sourceCode julia"><code class="sourceCode julia"><span id="cb1-1"><a href
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span></code></pre></div>
 <p>Assemblage :</p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finite volume assembly of A ≃ -νΔ and b (heating + Dirichlet data).</span></span>
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finite difference assembly of A ≃ -νΔ and b (heating + Dirichlet data).</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cells are numbered columnwise: idx[mask] = 1:K</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">assemble</span>(mask, win, f, h; ν <span class="op">=</span> <span class="fl">1.0</span>, uw <span class="op">=</span> <span class="fl">0.0</span>)</span>

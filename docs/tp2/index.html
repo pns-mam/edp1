@@ -133,7 +133,7 @@ la cellule <span class="math inline">\(k\)</span>. En Julia, la cellule
 class="math inline">\(y\)</span>) et sa colonne <span
 class="math inline">\(i\)</span> (en <span
 class="math inline">\(x\)</span>).</li>
-<li><em>Volumes finis.</em> On intègre <span
+<li><em>Différences finies.</em> On intègre <span
 class="math inline">\(-\nu\Delta u = f\)</span> sur chaque cellule : le
 flux à travers une face commune à deux cellules voisines <span
 class="math inline">\(k\)</span> et <span
@@ -214,7 +214,7 @@ class="math inline">\(A\)</span> et le second membre <span
 class="math inline">\(b\)</span> du système linéaire <span
 class="math inline">\(Au = b\)</span>.</p>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finite volume assembly of A ≃ -νΔ and b (heating + Dirichlet data).</span></span>
+class="sourceCode julia"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Finite difference assembly of A ≃ -νΔ and b (heating + Dirichlet data).</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Cells are numbered columnwise: idx[mask] = 1:K</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="kw">function</span> <span class="fu">assemble</span>(mask, win, f, h; ν <span class="op">=</span> <span class="fl">1.0</span>, uw <span class="op">=</span> <span class="fl">0.0</span>)</span>
