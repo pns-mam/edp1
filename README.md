@@ -29,7 +29,7 @@
 [TP 2 - Chaleur](tp2/tp2.md)
 ([prés](tp2/cm.pdf))
 ([solution](tp2/tp2-sol.md))
-([3D](tp2/tp2-3d.md), [solution 3D](tp2/tp2-3d-sol.md))
+([3D](tp2/tp2-3d-sol.md))
 
 [Exam CC 1](exam-cc1/exam-cc1.md)
 
