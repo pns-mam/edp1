@@ -34,7 +34,7 @@ C'est un problème elliptique : un système linéaire $Au = b$ à résoudre. Le
 
 *Plan du TP.* Exercice 1 : le problème stationnaire (assemblage, résolution, bilan d'énergie, convergence, validation). Exercice 2 : le problème instationnaire (schémas en temps, stabilité, ordre, pas de temps).
 
-## 3. Volumes finis sur une grille de cellules
+## 3. Différences finies sur une grille de cellules
 
 On découpe $]0,1[^2$ en $N \times N$ cellules carrées de côté $h = 1/N$ ($N$ multiple de $20$) et l'on garde les cellules contenues dans $\Omega$. L'inconnue $u_k$ approche la température au centre de la cellule $k$ ; il y a $K$ cellules.
 
@@ -46,7 +46,7 @@ Le bord de la cellule est formé de quatre faces de longueur $h$. Pour une face 
 $$ \frac{\nu}{h^2}\big(4u_k - u_{kN} - u_{kS} - u_{kW} - u_{kE}\big) = f_k ; $$
 - *cellule au bord* : on tient compte de la condition aux limites (point 4 ci-dessous).
 
-C'est le même schéma que les différences finies à 5 points, mais les conditions aux limites s'écrivent naturellement sur les flux.
+C'est le schéma des différences finies à 5 points, obtenu ici en intégrant sur la cellule : les conditions aux limites s'écrivent naturellement sur les flux.
 
 ## 4. La fonction `assemble`
 
@@ -115,7 +115,7 @@ end
 Assemblage :
 
 ```julia
-# Finite volume assembly of A ≃ -νΔ and b (heating + Dirichlet data).
+# Finite difference assembly of A ≃ -νΔ and b (heating + Dirichlet data).
 # Cells are numbered columnwise: idx[mask] = 1:K
 
 function assemble(mask, win, f, h; ν = 1.0, uw = 0.0)
