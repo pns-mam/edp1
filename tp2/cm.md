@@ -79,17 +79,22 @@ Deux façons de repérer une cellule :
 
 Le tableau `idx` (taille $N\times N$) fait le lien : `idx[j,i]` est le numéro $k$ de la cellule $(j,i)$ (et `0` hors de $\Omega$). On le remplit par `idx[mask] = 1:K` : les cellules de $\Omega$ sont numérotées dans l'ordre de Julia, **colonne par colonne**. Une cellule voisine $n = c + \delta$ est dans $\Omega$ si `checkbounds(Bool, mask, n) && mask[n]`, et son numéro est `idx[n]`.
 
-*Exemple miniature* ($N = 4$, coin $2\times 2$ retiré en haut à gauche, fenêtre sous les colonnes $2$ et $3$ ; $K = 12$). Valeurs de `idx[j,i]`, avec $y$ vers le haut :
+*Exemple miniature* ($N = 6$, coin $3\times 3$ retiré en haut à gauche, fenêtre sous les colonnes $2$ à $4$ ; $K = 27$). Valeurs de `idx[j,i]`, avec $y$ vers le haut :
 
-| $j \backslash i$ | $1$ | $2$ | $3$ | $4$ |
-|:-:|:-:|:-:|:-:|:-:|
-| $4$ | · | · | $8$ | $12$ |
-| $3$ | · | · | $7$ | $11$ |
-| $2$ | $2$ | $4$ | $6$ | $10$ |
-| $1$ | $1$ | $3$ *(fenêtre)* | $5$ *(fenêtre)* | $9$ |
+| $j \backslash i$ | $1$ | $2$ | $3$ | $4$ | $5$ | $6$ |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+| $6$ | · | · | · | $15$ | $21$ | $27$ |
+| $5$ | · | · | · | $14$ | $20$ | $26$ |
+| $4$ | · | · | · | $13$ | $19$ | $25$ |
+| $3$ | $3$ | $6$ | $9$ | $12$ | $18$ | $24$ |
+| $2$ | $2$ | $5$ | $8$ | $11$ | $17$ | $23$ |
+| $1$ | $1$ | $\mathbf{4}$ | $\mathbf{7}$ | $\mathbf{10}$ | $16$ | $22$ |
 
-- Cellule $k = 4$, en $(j,i) = (2,2)$ : voisines W $= 2$, E $= 6$, S $= 3$ ; la voisine N $(3,2)$ est hors de $\Omega$ (mur, Neumann). Ligne $4$ de $A$ : $A_{44} = 3\nu/h^2$ et $A_{42} = A_{43} = A_{46} = -\nu/h^2$.
-- Cellule $k = 3$, en $(1,2)$ : voisines W $= 1$, E $= 5$, N $= 4$ ; au sud, la face de la fenêtre. Ligne $3$ : $A_{33} = 3\nu/h^2 + 2\nu/h^2 = 5\nu/h^2$ (trois voisines, plus Dirichlet), $A_{31} = A_{35} = A_{34} = -\nu/h^2$, et $b_3 = f_3 + \dfrac{2\nu}{h^2}u_w$.
+(les cellules de la fenêtre sont en gras, en bas)
+
+- Cellule **intérieure** $k = 17$, en $(j,i) = (2,5)$ : ses quatre voisines sont dans $\Omega$ : W $= 11$, E $= 23$, S $= 16$, N $= 18$. Ligne $17$ de $A$ : $A_{17,17} = 4\nu/h^2$ et $A_{17,11} = A_{17,23} = A_{17,16} = A_{17,18} = -\nu/h^2$ (schéma à 5 points) ; $b_{17} = f_{17}$.
+- Cellule **contre un mur** $k = 6$, en $(3,2)$ : voisines W $= 3$, E $= 9$, S $= 5$ ; la voisine N $(4,2)$ est hors de $\Omega$ (mur, Neumann). Ligne $6$ : $A_{66} = 3\nu/h^2$ et $A_{63} = A_{69} = A_{65} = -\nu/h^2$.
+- Cellule de la **fenêtre** $k = 7$, en $(1,3)$ : voisines W $= 4$, E $= 10$, N $= 8$ ; au sud, la face de la fenêtre. Ligne $7$ : $A_{77} = 3\nu/h^2 + 2\nu/h^2 = 5\nu/h^2$ (trois voisines, plus Dirichlet), $A_{74} = A_{7,10} = A_{78} = -\nu/h^2$, et $b_7 = f_7 + \dfrac{2\nu}{h^2}u_w$.
 - Pour revenir au dessin, `field(u, mask)` remet le vecteur $u$ dans un tableau $N\times N$ (avec `NaN` hors de $\Omega$) : $u_k \mapsto U[j,i]$ avec $k = $ `idx[j,i]`. Attention : pour tracer, `contourf(x, y, U)` attend `U[j,i]`, lignes $\leftrightarrow y$.
 
 ### Le code
