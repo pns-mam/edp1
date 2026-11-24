@@ -260,11 +260,11 @@ class="math inline">\(\Omega\)</span> si
 <code>checkbounds(Bool, mask, n) &amp;&amp; mask[n]</code>, et son
 numéro est <code>idx[n]</code>.</p>
 <p><em>Exemple miniature</em> (<span class="math inline">\(N =
-4\)</span>, coin <span class="math inline">\(2\times 2\)</span> retiré
+6\)</span>, coin <span class="math inline">\(3\times 3\)</span> retiré
 en haut à gauche, fenêtre sous les colonnes <span
-class="math inline">\(2\)</span> et <span
-class="math inline">\(3\)</span> ; <span class="math inline">\(K =
-12\)</span>). Valeurs de <code>idx[j,i]</code>, avec <span
+class="math inline">\(2\)</span> à <span
+class="math inline">\(4\)</span> ; <span class="math inline">\(K =
+27\)</span>). Valeurs de <code>idx[j,i]</code>, avec <span
 class="math inline">\(y\)</span> vers le haut :</p>
 <table>
 <thead>
@@ -279,75 +279,134 @@ class="math inline">\(2\)</span></th>
 class="math inline">\(3\)</span></th>
 <th style="text-align: center;"><span
 class="math inline">\(4\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(5\)</span></th>
+<th style="text-align: center;"><span
+class="math inline">\(6\)</span></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: center;"><span
+class="math inline">\(6\)</span></td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;"><span
+class="math inline">\(15\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(21\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(27\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(5\)</span></td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;">·</td>
+<td style="text-align: center;"><span
+class="math inline">\(14\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(20\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(26\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
 class="math inline">\(4\)</span></td>
 <td style="text-align: center;">·</td>
 <td style="text-align: center;">·</td>
+<td style="text-align: center;">·</td>
 <td style="text-align: center;"><span
-class="math inline">\(8\)</span></td>
+class="math inline">\(13\)</span></td>
 <td style="text-align: center;"><span
-class="math inline">\(12\)</span></td>
+class="math inline">\(19\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(25\)</span></td>
 </tr>
 <tr>
 <td style="text-align: center;"><span
 class="math inline">\(3\)</span></td>
-<td style="text-align: center;">·</td>
-<td style="text-align: center;">·</td>
 <td style="text-align: center;"><span
-class="math inline">\(7\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(11\)</span></td>
-</tr>
-<tr>
-<td style="text-align: center;"><span
-class="math inline">\(2\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(2\)</span></td>
-<td style="text-align: center;"><span
-class="math inline">\(4\)</span></td>
+class="math inline">\(3\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(6\)</span></td>
 <td style="text-align: center;"><span
-class="math inline">\(10\)</span></td>
+class="math inline">\(9\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(12\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(18\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(24\)</span></td>
+</tr>
+<tr>
+<td style="text-align: center;"><span
+class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(2\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(5\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(8\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(11\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(17\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(23\)</span></td>
 </tr>
 <tr>
 <td style="text-align: center;"><span
 class="math inline">\(1\)</span></td>
 <td style="text-align: center;"><span
 class="math inline">\(1\)</span></td>
-<td style="text-align: center;"><span class="math inline">\(3\)</span>
-<em>(fenêtre)</em></td>
-<td style="text-align: center;"><span class="math inline">\(5\)</span>
-<em>(fenêtre)</em></td>
 <td style="text-align: center;"><span
-class="math inline">\(9\)</span></td>
+class="math inline">\(\mathbf{4}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\mathbf{7}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(\mathbf{10}\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(16\)</span></td>
+<td style="text-align: center;"><span
+class="math inline">\(22\)</span></td>
 </tr>
 </tbody>
 </table>
+<p>(les cellules de la fenêtre sont en gras, en bas)</p>
 <ul>
-<li>Cellule <span class="math inline">\(k = 4\)</span>, en <span
-class="math inline">\((j,i) = (2,2)\)</span> : voisines W <span
-class="math inline">\(= 2\)</span>, E <span class="math inline">\(=
-6\)</span>, S <span class="math inline">\(= 3\)</span> ; la voisine N
-<span class="math inline">\((3,2)\)</span> est hors de <span
-class="math inline">\(\Omega\)</span> (mur, Neumann). Ligne <span
-class="math inline">\(4\)</span> de <span
-class="math inline">\(A\)</span> : <span class="math inline">\(A_{44} =
-3\nu/h^2\)</span> et <span class="math inline">\(A_{42} = A_{43} =
-A_{46} = -\nu/h^2\)</span>.</li>
-<li>Cellule <span class="math inline">\(k = 3\)</span>, en <span
-class="math inline">\((1,2)\)</span> : voisines W <span
-class="math inline">\(= 1\)</span>, E <span class="math inline">\(=
-5\)</span>, N <span class="math inline">\(= 4\)</span> ; au sud, la face
-de la fenêtre. Ligne <span class="math inline">\(3\)</span> : <span
-class="math inline">\(A_{33} = 3\nu/h^2 + 2\nu/h^2 = 5\nu/h^2\)</span>
-(trois voisines, plus Dirichlet), <span class="math inline">\(A_{31} =
-A_{35} = A_{34} = -\nu/h^2\)</span>, et <span class="math inline">\(b_3
-= f_3 + \dfrac{2\nu}{h^2}u_w\)</span>.</li>
+<li>Cellule <strong>intérieure</strong> <span class="math inline">\(k =
+17\)</span>, en <span class="math inline">\((j,i) = (2,5)\)</span> : ses
+quatre voisines sont dans <span class="math inline">\(\Omega\)</span> :
+W <span class="math inline">\(= 11\)</span>, E <span
+class="math inline">\(= 23\)</span>, S <span class="math inline">\(=
+16\)</span>, N <span class="math inline">\(= 18\)</span>. Ligne <span
+class="math inline">\(17\)</span> de <span
+class="math inline">\(A\)</span> : <span class="math inline">\(A_{17,17}
+= 4\nu/h^2\)</span> et <span class="math inline">\(A_{17,11} = A_{17,23}
+= A_{17,16} = A_{17,18} = -\nu/h^2\)</span> (schéma à 5 points) ; <span
+class="math inline">\(b_{17} = f_{17}\)</span>.</li>
+<li>Cellule <strong>contre un mur</strong> <span class="math inline">\(k
+= 6\)</span>, en <span class="math inline">\((3,2)\)</span> : voisines W
+<span class="math inline">\(= 3\)</span>, E <span
+class="math inline">\(= 9\)</span>, S <span class="math inline">\(=
+5\)</span> ; la voisine N <span class="math inline">\((4,2)\)</span> est
+hors de <span class="math inline">\(\Omega\)</span> (mur, Neumann).
+Ligne <span class="math inline">\(6\)</span> : <span
+class="math inline">\(A_{66} = 3\nu/h^2\)</span> et <span
+class="math inline">\(A_{63} = A_{69} = A_{65} = -\nu/h^2\)</span>.</li>
+<li>Cellule de la <strong>fenêtre</strong> <span class="math inline">\(k
+= 7\)</span>, en <span class="math inline">\((1,3)\)</span> : voisines W
+<span class="math inline">\(= 4\)</span>, E <span
+class="math inline">\(= 10\)</span>, N <span class="math inline">\(=
+8\)</span> ; au sud, la face de la fenêtre. Ligne <span
+class="math inline">\(7\)</span> : <span class="math inline">\(A_{77} =
+3\nu/h^2 + 2\nu/h^2 = 5\nu/h^2\)</span> (trois voisines, plus
+Dirichlet), <span class="math inline">\(A_{74} = A_{7,10} = A_{78} =
+-\nu/h^2\)</span>, et <span class="math inline">\(b_7 = f_7 +
+\dfrac{2\nu}{h^2}u_w\)</span>.</li>
 <li>Pour revenir au dessin, <code>field(u, mask)</code> remet le vecteur
 <span class="math inline">\(u\)</span> dans un tableau <span
 class="math inline">\(N\times N\)</span> (avec <code>NaN</code> hors de
